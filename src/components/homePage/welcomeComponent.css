@@ -1,0 +1,666 @@
+/* =========================
+   MAIN COMPONENT
+========================= */
+
+.welcome-component {
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    padding: 15px;
+
+    border-radius: 18px;
+
+    background: rgba(1, 5, 19, 0.75);
+
+    border: 1px solid rgba(120, 133, 79, 0.35);
+
+    box-shadow:
+        inset 0 0 25px rgba(253, 170, 45, 0.18);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+
+/* =========================
+   WELCOME INFO
+========================= */
+
+.welcome-info {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: baseline;
+
+    gap: 12px;
+
+    overflow: hidden;
+}
+
+
+.welcome-text {
+    font-size: 32px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    color: white;
+
+    font-family: "Georgia", serif;
+
+    flex-shrink: 0;
+}
+
+
+.welcome-description {
+    min-width: 0;
+
+    font-size: 18px;
+    line-height: 1.5;
+
+    color: rgba(255, 255, 255, 0.774);
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   HOME SEARCH
+========================= */
+
+.home-search {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    margin-top: 5px;
+}
+
+
+.home-search-toolbar {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-around;
+
+    gap: 10px;
+
+    overflow: visible;
+}
+
+
+/* =========================
+   HOME SEARCH INPUTS
+========================= */
+
+.home-search-input {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    height: 45px;
+
+    width: 0;
+    min-width: 0;
+
+    flex: 1 1 0;
+
+    box-sizing: border-box;
+
+    background: rgba(1, 5, 19, 0.75);
+
+    border: 1px solid #78854f;
+
+    border-radius: 10px;
+}
+
+
+.home-search-input i {
+    margin-left: 13px;
+    margin-right: 8px;
+
+    color: rgba(255, 255, 255, 0.932);
+
+    flex-shrink: 0;
+}
+
+
+.home-search-input input {
+    width: 100%;
+    min-width: 0;
+
+    height: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    padding: 0 10px 0 0;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   PLACEHOLDER
+========================= */
+.home-search input::placeholder {
+
+    color: rgba(255, 255, 255, 0.733);
+}
+
+
+/* =========================
+   CREATOR SEARCH
+========================= */
+
+.home-creator-search {
+    position: relative;
+}
+
+
+/* =========================
+   CREATOR SUGGESTIONS
+========================= */
+
+.home-creator-suggestions {
+    position: absolute;
+
+    top: calc(100% + 6px);
+    left: 0;
+
+    width: 100%;
+
+    max-height: 400px;
+
+    overflow-y: auto;
+
+    background: #2b301a;
+
+    border: 1px solid rgba(120, 133, 79, 0.6);
+
+    border-radius: 10px;
+
+    padding: 5px;
+
+    box-sizing: border-box;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.2);
+
+    scrollbar-width: none;
+}
+
+
+.home-creator-suggestions::-webkit-scrollbar {
+    display: none;
+}
+
+
+.home-creator-suggestions button {
+    width: 100%;
+
+    display: block;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.home-creator-suggestions button:hover {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+/* =========================================================
+   HOME CATEGORY
+========================================================= */
+
+.home-category-select {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+
+    flex: 1 1 0;
+
+    box-sizing: border-box;
+}
+
+
+.home-category-select-button {
+    width: 100%;
+
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #78854f;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.home-category-select-button:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+
+.home-category-select-button:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+.home-category-select-button span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.home-category-select-button i {
+    font-size: 11px;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    margin-left: 8px;
+
+    flex-shrink: 0;
+
+    transition: transform 0.2s ease;
+}
+
+
+.home-category-select-button i.rotate {
+    transform: rotate(180deg);
+}
+
+
+/* =========================
+   CATEGORY OPTIONS
+========================= */
+
+.home-category-select-options {
+    position: absolute;
+
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+
+    max-height: 180px;
+
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #2b301a;
+
+    border: 1px solid rgba(120, 133, 79, 0.6);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+
+    scrollbar-width: none;
+}
+
+
+.home-category-select-options::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================
+   CATEGORY OPTION
+========================= */
+
+.home-category-select-option {
+    width: 100%;
+
+    padding: 9px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.home-category-select-option:hover {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+.home-category-select-option.selected {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+.home-select-button:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+.home-select-button:focus {
+    border-color: #fdaa2d;
+
+    box-shadow: 0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+/* =========================================================
+   HOME CUISINE
+========================================================= */
+
+.home-cuisine-select {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+
+    flex: 1 1 0;
+
+    box-sizing: border-box;
+}
+
+
+.home-cuisine-select-button {
+    width: 100%;
+
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #78854f;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.home-cuisine-select-button:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+
+.home-cuisine-select-button:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+.home-cuisine-select-button span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.home-cuisine-select-button i {
+    font-size: 11px;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    margin-left: 8px;
+
+    flex-shrink: 0;
+
+    transition: transform 0.2s ease;
+}
+
+
+.home-cuisine-select-button i.rotate {
+    transform: rotate(180deg);
+}
+
+
+/* =========================
+   CUISINE OPTIONS
+========================= */
+
+.home-cuisine-select-options {
+    position: absolute;
+
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+
+    max-height: 180px;
+
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #2b301a;
+
+    border: 1px solid rgba(120, 133, 79, 0.6);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+
+    scrollbar-width: none;
+}
+
+
+.home-cuisine-select-options::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================
+   CUISINE OPTION
+========================= */
+
+.home-cuisine-select-option {
+    width: 100%;
+
+    padding: 9px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.home-cuisine-select-option:hover {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+.home-cuisine-select-option.selected {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+/* =========================================================
+   HOME SEARCH BUTTON
+========================================================= */
+
+.home-search-button {
+    width: 40px;
+    min-width: 40px;
+
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background-color: #fdaa2d;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.home-search-button:hover {
+    transform: translateY(-1px);
+
+    background-color: #fdaa2d;
+}
+
+
+.home-search-button i {
+    font-size: 15px;
+}
+
+.home-search-input:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+.home-search-input:focus-within {
+    border-color: #fdaa2d;
+    box-shadow: 0 0 0 2px rgba(253, 170, 45, 0.1);
+}

@@ -1,0 +1,507 @@
+/* =========================
+   RECIPE CARD
+========================= */
+
+.recipe-card {
+    width: 360px;
+    min-width: 360px;
+    max-width: 360px;
+
+    box-sizing: border-box;
+
+    background: rgba(1, 5, 19, 0.9);
+
+    border: 1px solid rgba(120, 133, 79, 0.3);
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.recipe-card:hover {
+
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(120, 133, 79, 0.7);
+
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.recipe-card-image {
+    position: relative;
+
+    width: 100%;
+    height: 120px;
+}
+
+
+.recipe-card-image img {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    color: #fff;
+
+    font-family: monospace;
+
+    background: #000;
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+.recipe-category {
+
+    position: absolute;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    bottom: -10px;
+
+    padding:
+        8px 18px;
+
+    background:
+        #78854f;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    border-radius:
+        12px 0 12px 0;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.recipe-card-content {
+
+    padding: 17px;
+
+    min-height: 200px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================
+   RECIPE NAME
+========================= */
+
+.recipe-name {
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   BOTTOM INFORMATION
+========================= */
+
+.recipe-bottom-info {
+
+    margin-top: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   CREATOR
+========================= */
+
+.recipe-creator {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #c5c5c5;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+
+.recipe-creator i {
+
+    color: #78854f;
+
+    font-size: 12px;
+}
+
+
+.recipe-creator span {
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   DETAILS
+========================= */
+
+.recipe-details {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   RATING
+========================= */
+
+.recipe-rating {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.stars {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 2px;
+}
+
+
+.star {
+
+    position: relative;
+
+    width: 14px;
+
+    height: 14px;
+
+    display: block;
+}
+
+
+.star > i {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+}
+
+
+.star-fill {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+}
+
+
+.star-fill i {
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+}
+
+
+.stars i {
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+}
+
+
+.rating-number {
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   TOTAL TIME
+========================= */
+
+.recipe-total-time {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #c5c5c5;
+
+    font-size: 13px;
+}
+
+
+.recipe-total-time i {
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   BUTTON WRAPPER
+========================= */
+
+.recipe-button-wraper {
+
+    display: flex;
+
+    flex-direction: row;
+
+    gap: 20px;
+
+    margin-top: 0;
+}
+
+
+/* =========================
+   BOOKMARK BUTTON
+========================= */
+
+.bookmark-recipe-button {
+
+    width: 100%;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #78854f;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.bookmark-recipe-button:hover {
+
+    background: #fdaa2d;
+
+    transform: translateY(-1px);
+}
+
+
+.bookmark-recipe-button i {
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   REMOVE BOOKMARK BUTTON
+========================= */
+
+.remove-bookmark-recipe-button {
+
+    width: 100%;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #854f4f;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.remove-bookmark-recipe-button:hover {
+
+    background: #fdaa2d;
+
+    transform: translateY(-1px);
+}
+
+
+.remove-bookmark-recipe-button i {
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   REMOVE RECIPE
+========================= */
+
+.remove-recipe-button {
+
+    width: 40px;
+
+    height: 40px;
+
+    min-width: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #855a4f;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.remove-recipe-button:hover {
+
+    background: #fdaa2d;
+
+    transform: translateY(-1px);
+}
+
+
+.remove-recipe-button i {
+
+    font-size: 15px;
+}

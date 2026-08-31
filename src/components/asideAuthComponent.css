@@ -1,0 +1,120 @@
+
+/* AKO E REGISTER*/
+
+.aside-auth-register {
+    width: 30%;
+    min-height: 550px;
+
+    background-image: url("../assets/AsideAuthImage.png");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;   
+    justify-content: end;
+    align-items: flex-end;
+    
+    padding-right: 2%;
+
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    
+}
+
+.aside-auth-register span {
+    display: block;
+
+    color: rgb(24, 23, 23);
+    text-align: right;
+    letter-spacing: 1px;
+}
+
+.aside-auth-register span:first-child {
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 600;
+    max-width: 80%;
+    margin-bottom: 13%;
+    line-height: 1.2;
+    letter-spacing: 5%;
+}
+
+.aside-auth-register span:last-child {
+    font-family: Arial, sans-serif;
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    font-weight: 400;
+    line-height: 1.6;
+    padding-bottom: 15%;
+    max-width: 64%;
+    margin-top: 12px;
+    letter-spacing: 15%;
+}
+
+
+
+
+
+/* AKO E LOGIN */
+
+.aside-auth-login {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+
+    width: 30%;
+    min-height: 642px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: flex-start;
+
+    padding-left: 2%;
+    box-sizing: border-box;
+    border-radius: 30px;
+}
+
+.aside-auth-login::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    border-radius: 30px;
+    background-image: url("../assets/AsideAuthImage-login.png");
+    background-size: cover;
+    background-position: center 95%;
+    background-repeat: no-repeat;
+
+    transform: scaleX(-1);
+
+    z-index: 0;
+}
+.aside-auth-login span {
+    position: relative;
+    z-index: 1;
+
+    display: block;
+    color: rgb(24, 23, 23);
+    text-align: left;
+}
+
+.aside-auth-login span:first-child {
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 7%;
+    padding-top: 10%;
+    max-width: 80%;
+}
+
+.aside-auth-login span:last-child {
+    font-family: Arial, sans-serif;
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    font-weight: 400;   
+    line-height: 1.6;
+    max-width: 64%;
+    margin-top: 15%;
+    letter-spacing: 15%;
+} 

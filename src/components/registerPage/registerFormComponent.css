@@ -1,0 +1,149 @@
+/*glavnio div*/
+
+.register-form {
+    width: 30%;
+    min-height: 67vh;
+  /*  max-height: 65vh; */
+
+    background: linear-gradient(
+        #fdaa2d,
+        #78854f,
+        #78854f,
+        #2b301a
+    );
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2.5rem;
+    box-sizing: border-box;
+
+    border-radius: 30px;
+    gap: 0.5rem;
+}
+
+
+/* za bukvite najgore*/
+
+.register-form > div:first-child {
+    font-family: Georgia, serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 600;
+
+    color: #181818;
+
+    margin-bottom: 1rem;
+}
+
+
+/*za inputite*/
+
+.register-form input,
+.register-form select {
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+
+    padding: 0.75rem 1rem;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #f5ebdd;
+    color: #131212;
+
+    font-size: 1rem;
+    outline: none;
+}
+
+.register-form input:focus {
+    box-shadow: 0 0 0 2px #5f6b3f;
+}
+
+
+.register-form input::placeholder {
+    color: #777;
+}
+
+
+
+/*klasa so ja imat divovoite u koj ima input i error msg*/
+
+.form-field-register {
+    width: 100%;
+    max-width: 320px;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 4.0rem;
+}
+
+.form-field-register > div, 
+.form-field-button-register > div{
+    color: #8b2e2e;
+    font-size: 0.80rem;
+
+    height: 1rem;
+    margin-top: 0.2rem;
+}
+
+.form-field-button-register {
+    width: 100%;
+    max-width: 180px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: 4.0rem;
+}
+
+
+
+/* za kopceto so e */
+
+.register-form button {
+    width: 100%;
+    padding: 0.70rem;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #f5ebdd;
+    color: #1c1d1c;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.register-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+
+/*za dole linko so e */
+
+.register-form a {
+    color: #fdaa2d;
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-align: justify;
+}
+
+.register-form a:hover {
+    text-decoration: underline;
+}

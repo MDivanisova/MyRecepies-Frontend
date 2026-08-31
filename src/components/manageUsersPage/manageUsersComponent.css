@@ -1,0 +1,474 @@
+/* =========================
+   MAIN COMPONENT
+   ========================= */
+
+.manage-users-component {
+    flex: 1;
+    min-width: 0;
+
+    height: calc(100% - 40px);
+
+    margin: 20px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 0;
+
+    padding: 0px;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   TOP DIV - TOOLBAR
+   ========================= */
+
+.users-toolbar {
+    width: 100%;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px 20px;
+
+    box-sizing: border-box;
+
+    border-radius: 15px;
+
+    background: rgba(120, 133, 79, 0.28);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+
+}
+
+.users-toolbar-left {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+
+
+
+.users-search {
+    flex: 1 1 0;
+    min-width: 0;
+
+    width: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 14px;
+
+    height: 44px;
+
+    box-sizing: border-box;
+
+    border-radius: 10px;
+
+    border: 1px solid #78854f;
+    background: rgba(1, 5, 19, 0.65) !important;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+.users-search:hover {
+    cursor: pointer;
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+.users-search:focus-within {
+    border-color: #fdaa2d;
+    box-shadow: 0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+.users-search i {
+
+    color: rgba(255, 255, 255, 0.932);
+
+    font-size: 14px;
+}
+
+.users-search input {
+
+    flex: 1;
+    min-width: 0;
+
+    height: 100%;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    color: white;
+
+    font-size: 14px;
+}
+
+.users-search input::placeholder {
+
+    color: rgba(255, 255, 255, 0.733);
+}
+
+
+
+
+/* =========================
+   USERS COUNT
+   ========================= */
+
+.users-count {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    flex: 0 1 auto;
+    min-width: 110px;
+
+    padding: 0 16px;
+    height: 44px;
+
+    box-sizing: border-box;
+
+    border-radius: 10px;
+
+    background: rgba(253, 170, 45, 0.08);
+
+    border: 1px solid rgba(253, 170, 45, 0.3);
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.users-count span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   BOTTOM DIV - LIST CONTAINER
+   ========================= */
+.users-list-container {
+    flex: 1;
+    min-height: 0;
+
+    width: auto;
+
+    box-sizing: border-box;
+
+    border-radius: 15px;
+
+
+    background: transparent;
+    box-shadow: none;
+
+    
+    padding-top: 40px;
+    padding-left: 40px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: none;
+}
+
+
+
+/* =========================
+   ROLE SELECT
+   ========================= */
+
+.role-select {
+    position: relative;
+
+    flex: 0 1 160px;
+    width: 160px;
+    min-width: 110px;
+}
+
+.role-select-button {
+    width: 100%;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+    outline: none;
+
+    border: 1px solid #78854f;
+
+    border-radius: 10px;
+
+    background: rgba(1, 5, 19, 0.65);
+
+    color: white;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.role-select-button:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+.role-select-button:focus {
+    border-color: #fdaa2d;
+
+    box-shadow: 0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+.role-select-button i {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+
+    transition: transform 0.2s ease;
+}
+
+.role-select-button i.open {
+    transform: rotate(180deg);
+}
+
+
+/* =========================
+   ROLE OPTIONS - opens DOWNWARD
+   ========================= */
+
+.role-select-options {
+    position: absolute;
+
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+    max-height: 220px;
+
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #2b301a;
+
+    border: 1px solid rgba(120, 133, 79, 0.6);
+
+    border-radius: 12px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+}
+
+.role-select-option {
+    width: 100%;
+
+    padding: 9px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.role-select-option:hover {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+.role-select-option.selected {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+.role-select-options::-webkit-scrollbar {
+    width: 5px;
+}
+
+.role-select-options::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.role-select-options::-webkit-scrollbar-thumb {
+    background: rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.users-pagination {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-top: auto;
+    padding: 5px;
+}
+
+.users-pagination span {
+    color: white;
+    font-size: 15px;
+}
+
+
+
+
+
+.pagination-button {
+    height: 45px;
+    padding: 0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+    border-radius: 9px;
+
+    background-color: #78854f;
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #fdaa2d;
+    transform: translateY(-1px);
+}
+
+.pagination-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+.pagination-button i {
+    font-size: 15px;
+}
+
+.pagination-button:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: rgba(120, 133, 79, 0.3);
+}
+
+
+
+/* =========================
+   NO USERS FOUND
+========================= */
+
+.no-users-found {
+
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    box-sizing: border-box;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    text-align: center;
+}
+
+
+.no-users-found i {
+
+    font-size: 55px;
+
+    color: #fdaa2d;
+
+    opacity: 0.9;
+}
+
+
+.no-users-found span {
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    color: rgba(255, 255, 255, 0.8);
+
+}

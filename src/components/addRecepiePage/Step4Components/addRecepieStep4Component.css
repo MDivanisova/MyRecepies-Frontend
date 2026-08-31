@@ -1,0 +1,323 @@
+/* =========================
+   STEP 4 - INSTRUCTIONS
+   ========================= */
+
+.instructions-section {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    min-height: 0;
+
+    flex: 1;
+}
+
+
+/* =========================
+   INSTRUCTIONS TABLE
+   ========================= */
+
+.instructions-table {
+
+    width: 100%;
+
+    min-height: 0;
+
+    flex: 1;
+
+    padding: 5px;
+
+    box-sizing: border-box;
+
+    border-radius: 14px;
+
+    background: rgba(1, 5, 19, 0.25);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   INSTRUCTIONS LIST
+   ========================= */
+
+.instructions-list {
+
+    max-height: 390px;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding-right: 2px;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(253, 170, 45, 0.5)
+        transparent;
+}
+
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+.instructions-list::-webkit-scrollbar {
+
+    width: 5px;
+}
+
+.instructions-list::-webkit-scrollbar-track {
+
+    background: transparent;
+}
+
+.instructions-list::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   INSTRUCTION ROW
+   ========================= */
+.instruction-row {
+    display: grid;
+
+    grid-template-columns:
+        40px
+        minmax(0, 1fr)
+        38px;
+
+    gap: 8px;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    min-height: 65px;
+
+    margin-bottom: 10px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   STEP NUMBER
+   ========================= */
+
+.instruction-number {
+    width: 40px;
+
+    min-height: 65px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    border-radius: 9px;
+
+    background:
+        rgba(1, 5, 19, 0.4);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+
+    color: #fdaa2d;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   TEXTAREA
+   ========================= */
+
+.instruction-row textarea {
+    width: 100%;
+
+    min-height: 65px;
+    height: 65px;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    resize: none;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background:
+        rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* =========================
+   PLACEHOLDER
+   ========================= */
+
+.instruction-row textarea::placeholder {
+
+    color:
+        rgba(255, 255, 255, 0.35);
+}
+
+
+/* =========================
+   TEXTAREA FOCUS
+   ========================= */
+
+.instruction-row textarea:focus {
+
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(253, 170, 45, 0.1);
+}
+
+
+/* =========================
+   REMOVE BUTTON
+   ========================= */
+
+.remove-instruction-button {
+
+    width: 40px;
+
+    height: 40px;
+
+    align-self: center;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    background:
+        rgba(1, 5, 19, 0.35);
+
+    color:
+        rgba(255, 255, 255, 0.45);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.remove-instruction-button:hover {
+
+    background:
+        rgba(220, 60, 60, 0.15);
+
+    border-color:
+        rgba(220, 60, 60, 0.5);
+
+    color: #ff6b6b;
+}
+
+
+.remove-instruction-button i {
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   ADD INSTRUCTION
+   ========================= */
+
+.add-instruction-button {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 11px 16px;
+
+    box-sizing: border-box;
+
+    margin-top: 5px;
+
+    border:
+        1px solid rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+
+    background:
+        rgba(253, 170, 45, 0.08);
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.add-instruction-button:hover {
+
+    background:
+        rgba(253, 170, 45, 0.18);
+
+    border-color: #fdaa2d;
+
+    transform: translateY(-1px);
+}

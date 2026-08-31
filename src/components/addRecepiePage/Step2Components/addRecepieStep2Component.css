@@ -1,0 +1,401 @@
+ /* =========================
+   STEP 2 - TIME & COOKING
+   ========================= */
+
+.step2-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    margin-top: 5px;
+
+    width: 100%;
+}
+
+
+.step-heading{
+    p{
+        margin-top: 0;
+        font-size: 15px;
+    };
+    h2{
+        margin-bottom: 10px;
+    }
+}
+
+/* =========================
+   PREPARATION + COOKING TIME
+   ========================= */
+
+.time-fields {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 35px;
+
+    width: 100%;
+}
+
+
+/* =========================
+   FORM FIELD
+   ========================= */
+
+.time-fields .form-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    width: 160px;
+}
+
+.time-fields .form-field label {
+    display: block;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: white;
+}
+
+
+/* =========================
+   INPUT + UNIT
+   ========================= */
+
+.input-with-unit {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+
+}
+
+.input-with-unit input {
+    width: 100px;
+    height: 42px;
+
+    padding: 0 8px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    color-scheme: dark;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.input-with-unit input[type="number"] {
+    appearance: auto;
+}
+
+
+.input-with-unit input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.input-with-unit input:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+
+/* =========================
+   MINUTES
+   ========================= */
+
+.input-with-unit span {
+    color: rgba(249, 250, 250, 0.7);
+
+    font-size: 13px;
+
+    white-space: nowrap;
+    
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  
+    background: rgba(1, 5, 19, 0.4);
+    padding: 5px;
+    margin-left: -1px;
+
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+
+
+
+
+
+
+
+/* =========================
+   COOKING METHOD SELECT
+   ========================= */
+
+.cooking-method-select {
+    position: relative;
+
+    width: 100%;
+}
+
+.cooking-method-select-button {
+    width: 100%;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.cooking-method-select-button:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+.cooking-method-select-button:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+/* =========================
+   COOKING METHOD OPTIONS
+   ========================= */
+
+.cooking-method-select-options {
+    position: absolute;
+
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+    max-height: 180px;
+
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #2b301a;
+
+    border: 1px solid rgba(120, 133, 79, 0.6);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+}
+
+.cooking-method-select-option {
+    width: 100%;
+
+    padding: 9px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.cooking-method-select-option:hover {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+/* =========================
+   TOOL SELECT
+   ========================= */
+
+.tool-select {
+    position: relative;
+
+    width: 100%;
+}
+
+.tool-select-button {
+    width: 100%;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.tool-select-button:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+.tool-select-button:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+/* =========================
+   TOOL OPTIONS
+   ========================= */
+
+.tool-select-options {
+    position: absolute;
+
+    bottom: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+    max-height: 180px;
+
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #2b301a;
+
+    border: 1px solid rgba(120, 133, 79, 0.6);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+}
+
+.tool-select-option {
+    width: 100%;
+
+    padding: 9px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.tool-select-option:hover {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+/* =========================
+   SCROLLBARS
+   ========================= */
+
+.cooking-method-select-options::-webkit-scrollbar,
+.tool-select-options::-webkit-scrollbar,
+.recipe-form .tag-box::-webkit-scrollbar {
+    width: 5px;
+}
+
+.cooking-method-select-options::-webkit-scrollbar-track,
+.tool-select-options::-webkit-scrollbar-track,
+.recipe-form .tag-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cooking-method-select-options::-webkit-scrollbar-thumb,
+.tool-select-options::-webkit-scrollbar-thumb,
+.recipe-form .tag-box::-webkit-scrollbar-thumb {
+    background: rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+}

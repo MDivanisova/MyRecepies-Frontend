@@ -1,0 +1,312 @@
+.profile-recipe-card {
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+
+    box-sizing: border-box;
+
+    background: rgba(1, 5, 19, 0.9);
+
+    border: 1px solid rgba(120, 133, 79, 0.3);
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.profile-recipe-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(120, 133, 79, 0.7);
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.profile-recipe-card-image {
+    position: relative;
+
+    width: 100%;
+    height: 120px;
+}
+
+
+.profile-recipe-card-image img {
+    width: 100%;
+    height: 100%;
+
+    color: #fff;
+
+    font-family: monospace;
+
+    background: #000;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+.profile-recipe-category {
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    bottom: -10px;
+
+    padding: 8px 18px;
+
+    background: #78854f;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    border-radius: 12px 0 12px 0;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.profile-recipe-card-content {
+    padding: 17px;
+
+    min-height: 180px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   NAME
+========================= */
+
+.profile-recipe-name {
+    width: 100%;
+    min-width: 0;
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    text-align: left;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   DETAILS
+========================= */
+
+.profile-recipe-details {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    box-sizing: border-box;
+
+    /*
+       Pushes rating + time to the bottom,
+       directly above the delete button.
+    */
+    margin-top: auto;
+
+    margin-bottom: 13px;
+}
+
+
+/* =========================
+   RATING
+========================= */
+
+.profile-recipe-rating {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-shrink: 0;
+}
+
+
+.profile-recipe-stars {
+    display: flex;
+
+    align-items: center;
+
+    gap: 2px;
+}
+
+
+.profile-recipe-star {
+    position: relative;
+
+    width: 14px;
+    height: 14px;
+
+    display: block;
+
+    flex-shrink: 0;
+}
+
+
+.profile-recipe-star > i {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+}
+
+
+.profile-recipe-star-fill {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+}
+
+
+.profile-recipe-star-fill i {
+    color: #fdaa2d;
+
+    font-size: 14px;
+}
+
+
+.profile-recipe-rating-number {
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   TOTAL TIME
+========================= */
+
+.profile-recipe-total-time {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #c5c5c5;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+
+.profile-recipe-total-time i {
+    color: #fdaa2d;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.profile-recipe-button-wrapper {
+    display: flex;
+
+    flex-direction: row;
+
+    width: 100%;
+}
+
+
+.delete-profile-recipe-button {
+    width: 100%;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #854f4f;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.delete-profile-recipe-button:hover {
+    background: #fdaa2d;
+
+    transform: translateY(-1px);
+}
+
+
+.delete-profile-recipe-button i {
+    font-size: 15px;
+}

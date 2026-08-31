@@ -1,0 +1,111 @@
+/* =========================
+   STEP 7
+   ========================= */
+
+.step7-container {
+    width: 100%;
+    height: 100%;
+
+    flex: 1;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.step7-content {
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================
+   TITLE - иконки + наслов на средина
+   ========================= */
+
+.step7-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.step7-title h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.step7-title i {
+    font-size: 26px;
+    color: #fdaa2d;
+}
+
+.step7-content h2 {
+    margin-top: 12px;
+    font-family: "Caveat", cursive;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.step7-buttons {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 10px;
+}
+
+.step7-real-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 180px !important;
+    height: 50px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    box-sizing: border-box !important;
+
+    background-color: #fdaa2d !important;
+
+    border: 2px solid #fdaa2d !important;
+    border-radius: 12px !important;
+
+    color: #010513 !important;
+
+    text-decoration: none !important;
+
+    font-size: 15px !important;
+    font-weight: 700 !important;
+
+    cursor: pointer !important;
+
+    transition: 0.2s ease !important;
+}
+
+.step7-real-button:hover {
+    background-color: #78854f !important;
+    border-color: #78854f !important;
+    color: white !important;
+
+    transform: translateY(-2px);
+}

@@ -1,0 +1,278 @@
+
+/* =========================
+   USER CARD
+========================= */
+
+.user-card {
+    min-width: 360px;
+    max-width: 360px;
+    height: 320px;
+
+    background: #0d1220;
+    border-radius: 25px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(120, 133, 79, 0.7);
+}
+
+
+/* =========================
+   TOP
+========================= */
+
+.user-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
+.user-avatar {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 12px;
+
+    background: #252b3a;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+
+.user-card-status {
+    display: flex;
+    min-width: 130px;
+    max-height: 10px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+}
+
+
+.verified-badge,
+.role-badge,
+.notverified-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+.verified-badge {
+    color: #a6b671;
+    background: rgba(37, 151, 113, 0.12);
+}
+
+.notverified-badge {
+    color: #b67f71;
+    background: rgba(151, 69, 37, 0.12);
+}
+
+.role-badge {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ddd;
+}
+
+
+.role-admin {
+    color: #fdaa2d;
+    background: rgba(247, 178, 87, 0.12);
+}
+
+
+/* =========================
+   USER INFO
+========================= */
+
+.user-card-info {
+    text-align: center;
+
+    margin-top: 18px;
+}
+
+
+.user-card-info h3 {
+    margin: 0;
+
+    font-size: 21px;
+    font-weight: 600;
+}
+
+
+.user-card-info p {
+    margin: 6px 0 0;
+    color: #bec3d1;
+    font-size: 14px;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.user-card-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 25px;
+
+    margin-top: 18px;
+    padding-top: 13px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.user-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #bec3d1;
+    font-size: 14px;
+}
+
+
+
+.user-stat i {
+    font-size: 14px;
+}
+
+
+/* =========================
+   LAST SEEN
+========================= */
+
+.user-last-seen {
+    text-align: center;
+
+    margin-top: 10px;
+
+    color: #bec3d1;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.user-card-actions {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: auto;
+    padding-top: 15px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.user-card-actions button {
+    border: none;
+    border-radius: 8px;
+
+    padding: 8px 14px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+
+
+
+.edit-user-button {
+    background: rgba(86, 155, 190, 0.12);
+    color: #569bbe;
+}
+.edit-user-button:hover {
+    border: 1px solid #569bbe;
+}
+
+
+.save-edit-user-button {
+    background: rgba(74, 194, 26, 0.12);
+    color: #569bbe;
+}
+.save-edit-user-button:hover {
+    border: 1px solid #569bbe;
+}
+
+
+.delete-user-button {
+    background: rgba(214, 93, 93, 0.12);
+    color: #d65d5d;
+}
+.delete-user-button:hover {
+    border: 1px solid #d65d5d;
+}
+
+
+
+
+.verified {
+    color: #43aaa0;
+}
+
+.not-verified {
+    color: #d65d5d;
+}
+
+
+
+
+
+
+.category-select-button.role-selected {
+    background: rgba(253, 170, 45, 0.15);
+    border-color: rgba(253, 170, 45, 0.6);
+    color: #fdaa2d;
+}
+.category-select-option.selected {
+    background: rgba(253, 170, 45, 0.18);
+    color: #fdaa2d;
+}
+.category-select-option:hover {
+    background: rgba(253, 170, 45, 0.12);
+    color: #fdaa2d;
+}

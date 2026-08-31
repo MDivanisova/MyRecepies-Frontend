@@ -1,0 +1,198 @@
+/* =========================
+   STEP 5 - NUTRITION
+   ========================= */
+
+.nutrition-section {
+    width: 100%;
+    margin-top: 15px;
+}
+
+
+/* =========================
+   NUTRITION GRID
+   ========================= */
+
+.nutrition-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px 18px;
+
+    width: 100%;
+}
+
+
+/* =========================
+   NUTRITION FIELD
+   ========================= */
+
+.nutrition-field {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 14px 16px;
+
+    box-sizing: border-box;
+
+    border-radius: 12px;
+
+    background: rgba(1, 5, 19, 0.25);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================
+   LABEL
+   ========================= */
+
+.nutrition-field label {
+    flex-shrink: 0;
+
+    min-width: 115px;
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   INPUT + UNIT
+   ========================= */
+
+.nutrition-input {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* =========================
+   INPUT
+   ========================= */
+
+.nutrition-input input {
+    width: 100%;
+
+    min-width: 0;
+
+    height: 42px;
+
+    padding: 0 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    text-align: center;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* =========================
+   PLACEHOLDER
+   ========================= */
+
+.nutrition-input input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+
+/* =========================
+   INPUT FOCUS
+   ========================= */
+
+.nutrition-input input:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+/* =========================
+   UNIT
+   ========================= */
+
+.nutrition-input span {
+    flex-shrink: 0;
+
+    min-width: 28px;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   REMOVE NUMBER ARROWS
+   ========================= */
+
+.nutrition-input input::-webkit-outer-spin-button,
+.nutrition-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+
+    margin: 0;
+}
+
+.nutrition-input input[type="number"] {
+    appearance: textfield;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 800px) {
+
+    .nutrition-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

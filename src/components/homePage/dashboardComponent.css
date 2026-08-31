@@ -1,0 +1,217 @@
+.dashboard-component {
+    width: 100%;
+    height: 100vh;
+    max-height: 5000px;
+
+    box-sizing: border-box;
+
+    padding: 20px 20px;
+    padding-left: 40px;
+
+    border-radius: 18px;
+
+    background: rgba(40, 45, 26, 0.6);
+
+    border: 1px solid rgba(120, 133, 79, 0.35);
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   RECIPES LIST
+========================= */
+
+.list-recepies {
+    width: 100%;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-left: 10px;
+
+    border-radius: 25px;
+
+    flex: 1;
+
+    scrollbar-width: none;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.list-recepies::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================
+   RECIPES GRID
+========================= */
+
+.recipes-grid {
+    margin-top: 5px;
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    align-content: flex-start;
+
+    gap: 20px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.recipes-pagination {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 35px;
+
+    margin-top: auto;
+
+    padding-top: 20px;
+}
+
+
+.recipes-pagination button {
+    height: 45px;
+
+    padding: 0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background-color: #78854f;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.recipes-pagination button:hover:not(:disabled) {
+    background-color: #fdaa2d;
+
+    transform: translateY(-1px);
+}
+
+
+.recipes-pagination button:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+
+.recipes-pagination span {
+    color: white;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.recipes-loading {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 50px 0;
+
+    color: white;
+}
+
+
+/* =========================
+   SPINNER
+========================= */
+
+.recipes-spinner {
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+
+/* =========================
+   NO RECIPES FOUND
+========================= */
+
+.no-recipes-found {
+    width: 100%;
+    min-height: 700px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: white;
+}
+
+
+.no-recipes-found > i {
+    font-size: 55px;
+
+    color: #fdaa2d;
+
+    margin-bottom: 20px;
+
+    opacity: 0.9;
+}
+
+
+.no-recipes-title {
+    font-size: 35px;
+    font-weight: 700;
+
+    color: white;
+
+    margin-bottom: 10px;
+}

@@ -1,0 +1,388 @@
+/* =========================
+   STEP 6
+   ========================= */
+
+.step6-section {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    gap: 18px;
+
+    margin-top: 15px;
+
+    flex: 1;
+
+    min-height: 0;
+
+}
+
+
+/* =========================
+   CARDS
+   ========================= */
+
+.step6-image-card,
+.step6-visibility-card {
+
+    width: 100%;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    border-radius: 14px;
+
+    background: rgba(1, 5, 19, 0.25);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* =========================
+   CARD TITLE
+   ========================= */
+
+.step6-card-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 4px;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+}
+
+.step6-card-title i {
+
+    color: #fdaa2d;
+
+    font-size: 15px;
+
+}
+
+
+/* =========================
+   DESCRIPTION
+   ========================= */
+
+.step6-card-description {
+
+    margin: 4px 0 18px;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 13px;
+
+}
+
+
+/* =========================
+   IMAGE FIELD
+   ========================= */
+
+.step6-form-field {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+.step6-form-field label {
+
+    color: rgba(255, 255, 255, 0.8);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+.step6-form-field input {
+
+    width: 100%;
+
+    height: 43px;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+.step6-form-field input::placeholder {
+
+    color: rgba(255, 255, 255, 0.3);
+
+}
+
+.step6-form-field input:focus {
+
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+
+}
+
+
+/* =========================
+   VISIBILITY OPTIONS
+   ========================= */
+
+.step6-visibility-options {
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+
+/* =========================
+   VISIBILITY OPTION
+   ========================= */
+
+.step6-visibility-option {
+
+    position: relative;
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 70px;
+
+    padding: 12px 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 11px;
+
+    background: rgba(1, 5, 19, 0.3);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+.step6-visibility-option:hover {
+
+    background: rgba(1, 5, 19, 0.45);
+
+    border-color: rgba(253, 170, 45, 0.35);
+
+}
+
+
+/* SELECTED */
+
+.step6-visibility-option.selected {
+
+    background: rgba(253, 170, 45, 0.08);
+
+    border-color: rgba(253, 170, 45, 0.65);
+
+    box-shadow:
+        0 0 0 1px rgba(253, 170, 45, 0.08);
+
+}
+
+
+/* =========================
+   HIDE REAL RADIO
+   ========================= */
+
+.step6-visibility-option input {
+
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================
+   VISIBILITY ICON
+   ========================= */
+
+.step6-visibility-icon {
+
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: rgba(120, 133, 79, 0.25);
+
+    color: #78854f;
+
+    font-size: 15px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+
+}
+
+.step6-visibility-option.selected
+.step6-visibility-icon {
+
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+
+}
+
+
+/* =========================
+   TEXT
+   ========================= */
+
+.step6-visibility-text {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+
+}
+
+.step6-visibility-text strong {
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+.step6-visibility-text span {
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   CUSTOM RADIO
+   ========================= */
+
+.step6-radio {
+
+    width: 18px;
+
+    height: 18px;
+
+    flex-shrink: 0;
+
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 50%;
+
+    box-sizing: border-box;
+
+}
+
+.step6-radio span {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+.step6-visibility-option.selected
+.step6-radio {
+
+    border-color: #fdaa2d;
+
+}
+
+.step6-visibility-option.selected
+.step6-radio span {
+
+    background: #fdaa2d;
+
+    transform: scale(1);
+
+}

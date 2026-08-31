@@ -1,0 +1,848 @@
+/* =========================
+   MAIN COMPONENT
+   ========================= */
+
+.add-recepie-component {
+
+    flex: 1;
+
+    min-width: 0;
+
+    height: calc(100% - 40px);
+
+    margin: 20px;
+
+    padding-bottom: 20px;
+
+    box-sizing: border-box;
+
+    border-radius: 18px;
+
+    background: rgba(43, 48, 26, 0.6);
+
+    color: white;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    scrollbar-width: none;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.add-recepie-header {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding-top: 5px;
+
+    box-sizing: border-box;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   TITLE
+   ========================= */
+
+.add-recepie-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+}
+
+
+.add-recepie-title h1 {
+
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #ffffff;
+
+    text-shadow:
+
+        1px 1px 0 #78854f,
+
+        3px 3px 0 rgba(120, 133, 79, 0.45),
+
+        4px 6px 9px rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================
+   DECORATIVE LINES
+   ========================= */
+
+.add-recepie-title span {
+
+    width: 65px;
+
+    height: 1px;
+
+    flex-shrink: 0;
+
+    background: linear-gradient(
+
+        to right,
+
+        transparent,
+
+        #78854f,
+
+        #fdaa2d
+
+    );
+
+    border-radius: 20px;
+}
+
+
+.add-recepie-title span:nth-of-type(2) {
+
+    background: linear-gradient(
+
+        to left,
+
+        transparent,
+
+        #78854f,
+
+        #fdaa2d
+
+    );
+}
+
+
+/* =========================
+   UTENSILS
+   ========================= */
+
+.add-recepie-title i {
+
+    font-size: 16px;
+
+    color: #fdaa2d;
+
+    text-shadow:
+
+        0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+
+/* =========================
+   SUBTITLE
+   ========================= */
+
+.add-recepie-header p {
+
+    margin: 7px 0 0;
+
+    font-family: "Satisfy", cursive;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.7px;
+
+    color: #ffffff;
+
+    text-shadow:
+
+        0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================
+   RECIPE COMPLETENESS
+   ========================= */
+
+.recipe-completeness {
+
+    width: calc(100% - 80px);
+
+    margin: 15px auto 0;
+
+    padding: 18px 25px;
+
+    box-sizing: border-box;
+
+    border-radius: 15px;
+
+    background: rgba(120, 133, 79, 0.28);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+
+        0 6px 18px rgba(0, 0, 0, 0.18);
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   COMPLETENESS TOP
+   ========================= */
+
+.completeness-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+/* =========================
+   COMPLETENESS LEFT
+   ========================= */
+
+.completeness-left h2 {
+
+    margin: 0;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+
+.completeness-left p {
+
+    margin: 3px 0 0;
+
+    font-size: 14px;
+
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* =========================
+   PROGRESS
+   ========================= */
+
+.completeness-progress {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+}
+
+
+.completeness-progress span {
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    color: #ffffff;
+
+    text-shadow:
+
+        2px 2px 0 rgba(120, 133, 79, 0.5);
+}
+
+
+.completeness-progress p {
+
+    margin: 3px 0 0;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* =========================
+   PROGRESS BAR
+   ========================= */
+
+.progress-bar {
+
+    width: 100%;
+
+    height: 4px;
+
+    margin-top: 14px;
+
+    background: rgba(1, 5, 19, 0.55);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.progress-bar-fill {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+
+        90deg,
+
+        #78854f,
+
+        #fdaa2d
+
+    );
+
+    transition: width 0.25s ease;
+}
+
+
+/* =========================
+   RECIPE STEPS
+   ========================= */
+
+.recipe-steps {
+
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 157px;
+
+    margin-top: 14px;
+}
+
+
+.recipe-step {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    white-space: nowrap;
+}
+
+
+.step-circle {
+
+    width: 11px;
+
+    height: 11px;
+
+    flex-shrink: 0;
+
+    border: 1.5px solid #78854f;
+
+    border-radius: 50%;
+
+    box-sizing: border-box;
+
+    background: transparent;
+}
+
+
+.recipe-step.active .step-circle {
+
+    background: #fdaa2d;
+
+    border-color: #fdaa2d;
+
+    box-shadow:
+
+        0 0 7px rgba(253, 170, 45, 0.35);
+}
+
+
+/* =========================
+   TWO MAIN FORM CARDS
+   ========================= */
+
+.recipe-form-sections {
+
+    display: flex;
+
+    gap: 20px;
+
+    width: calc(100% - 80px);
+
+    margin: 25px auto 0;
+
+    flex: 1;
+
+    min-height: 0;
+}
+
+
+/* =========================
+   FORM CARD
+   ========================= */
+
+.recipe-form-card-left {
+
+    flex: 1;
+
+    min-width: 0;
+
+    min-height: 0;
+
+    height: auto;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    border-radius: 18px;
+
+    background: rgba(120, 133, 79, 0.28);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+
+        0 15px 35px rgba(0, 0, 0, 0.45),
+
+        0 5px 15px rgba(0, 0, 0, 0.3),
+
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+
+    overflow: hidden;
+
+    scrollbar-width: none;
+
+    /* IMPORTANT */
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.recipe-form-card-right{
+
+
+    flex: 1;
+
+    min-width: 0;
+
+    min-height: 0;
+
+    height: auto;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background: rgba(120, 133, 79, 0.28);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+
+        0 15px 35px rgba(0, 0, 0, 0.45),
+
+        0 5px 15px rgba(0, 0, 0, 0.3),
+
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+
+    overflow: hidden;
+
+    scrollbar-width: none;
+
+    /* IMPORTANT */
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================
+   STEP CONTENT
+   ========================= */
+
+.recipe-step-content {
+
+    flex: 1;
+
+    min-height: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================
+   INPUT + UNIT
+   ========================= */
+
+.input-with-unit {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.input-with-unit input {
+    width: 100px;
+    height: 42px;
+
+    padding: 0 8px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    color-scheme: dark;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.input-with-unit input.input-error {
+    border-color: #ff4d4d;
+    box-shadow:
+        0 0 0 2px rgba(255, 77, 77, 0.1);
+}
+
+.input-with-unit input:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+.input-with-unit input.input-error:focus {
+    border-color: #ff4d4d;
+
+    box-shadow:
+        0 0 0 2px rgba(255, 77, 77, 0.1);
+}
+
+
+.input-with-unit span {
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   ADD BUTTONS
+   ========================= */
+
+.add-item-button {
+
+    width: fit-content;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 16px;
+
+    border: 1px solid rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+
+    background: rgba(253, 170, 45, 0.08);
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.add-item-button:hover {
+
+    background: rgba(253, 170, 45, 0.18);
+
+    border-color: #fdaa2d;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   STEP NAVIGATION
+   ========================= */
+
+.step-navigation {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    /* IMPORTANT */
+
+    margin-top: auto;
+
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   NAVIGATION BUTTONS
+   ========================= */
+
+.back-button,
+.continue-button,
+.finish-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 11px 20px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+/* =========================
+   BACK
+   ========================= */
+
+.back-button {
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background: transparent;
+
+    color: rgba(255, 255, 255, 0.75);
+}
+
+
+.back-button:hover {
+
+    background: rgba(255, 255, 255, 0.06);
+
+    color: white;
+}
+
+
+/* =========================
+   CONTINUE + FINISH
+   ========================= */
+
+.continue-button,
+.finish-button {
+
+    margin-left: auto;
+
+    border: none;
+
+    background: #fdaa2d;
+
+    color: #010513;
+}
+
+
+.continue-button:hover,
+.finish-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+
+        0 6px 15px rgba(253, 170, 45, 0.25);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   NO ERRORS
+   ========================= */
+
+.recipe-form-sections.no-errors {
+    justify-content: center;
+}
+
+.recipe-form-sections.no-errors .recipe-form-card-left {
+    flex: none;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* =========================
+   HAS ERRORS
+   ========================= */
+
+.recipe-form-sections.has-errors {
+    justify-content: space-between;
+}
+
+.recipe-form-sections.has-errors .recipe-form-card-left,
+.recipe-form-sections.has-errors .recipe-form-card-right {
+    flex: 1;
+}
+
+
+/* =========================
+   ERROR CARD
+   ========================= */
+
+.recipe-errors {
+    width: 100%;
+}
+
+.recipe-errors-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recipe-errors-header i {
+    color: #fdaa2d;
+    font-size: 20px;
+}
+
+.recipe-errors-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.recipe-errors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    max-height: 590px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+
+    margin-top: 20px;
+
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(253, 170, 45, 0.5) transparent;
+}
+
+.recipe-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: rgba(1, 5, 19, 0.3);
+
+    color: rgba(255, 255, 255, 0.85);
+
+    font-size: 14px;
+}
+
+.recipe-error i {
+    color: #fdaa2d;
+    margin-top: 2px;
+}
+
+
+
+.recepie-input-error {
+    border: 1px solid #ff4d4d !important;
+}
+

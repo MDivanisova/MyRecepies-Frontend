@@ -1,0 +1,25 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #fafafa;
+  color: #1a1a1a;
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #d84315;
+  margin-bottom: 0.5rem;
+}
+
+.error-message {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #555;
+}

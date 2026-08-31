@@ -1,0 +1,310 @@
+/* =========================
+   STEP 3 - INGREDIENTS
+   ========================= */
+
+.ingredients-section {
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    min-height: 0;
+
+    flex: 1;
+}
+
+
+/* =========================
+   INGREDIENTS TABLE
+   ========================= */
+
+.ingredients-table {
+    width: 100%;
+
+    min-height: 0;
+
+    flex: 1;
+
+    padding: 5px;
+
+    box-sizing: border-box;
+
+    border-radius: 14px;
+
+    background: rgba(1, 5, 19, 0.25);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   INGREDIENT ROW
+   ========================= */
+
+.ingredient-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 2fr)
+        minmax(90px, 1fr)
+        minmax(100px, 1fr)
+        minmax(150px, 1.5fr)
+        40px;
+
+    gap: 10px;
+
+    padding: 8px 0;
+
+    align-items: center;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.ingredient-header {
+    height: 32px;
+
+    padding: 0 4px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* =========================
+   INGREDIENT LIST
+   ========================= */
+.ingredients-list {
+    max-height: 350px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(253, 170, 45, 0.5) transparent;
+}
+
+
+/* =========================
+   INGREDIENTS SCROLLBAR
+   ========================= */
+
+.ingredients-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.ingredients-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ingredients-list::-webkit-scrollbar-thumb {
+    background: rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+}
+
+.ingredients-list {
+    scrollbar-width: thin;
+}
+
+
+
+/* =========================
+   INGREDIENT ROW
+   ========================= */
+
+.ingredients-list .ingredient-row {
+    flex-shrink: 0;
+
+    min-height: 42px;
+}
+
+
+/* =========================
+   INPUTS
+   ========================= */
+
+.ingredient-row input {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 0 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* =========================
+   PLACEHOLDER
+   ========================= */
+
+.ingredient-row input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+
+/* =========================
+   INPUT FOCUS
+   ========================= */
+
+.ingredient-row input:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+/* =========================
+   REMOVE BUTTON
+   ========================= */
+
+.remove-ingredient-button {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 9px;
+
+    background: rgba(1, 5, 19, 0.35);
+
+    color: rgba(255, 255, 255, 0.45);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.remove-ingredient-button:hover {
+    background: rgba(220, 60, 60, 0.15);
+
+    border-color: rgba(220, 60, 60, 0.5);
+
+    color: #ff6b6b;
+}
+
+
+.remove-ingredient-button i {
+    font-size: 12px;
+}
+
+
+/* =========================
+   ADD INGREDIENT
+   ========================= */
+
+.add-ingredient-button {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+    margin-top: 7px;
+    padding: 11px 16px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+
+    background: rgba(253, 170, 45, 0.08);
+
+    color: #fdaa2d;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.add-ingredient-button:hover {
+    background: rgba(253, 170, 45, 0.18);
+
+    border-color: #fdaa2d;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+.ingredients-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.ingredients-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ingredients-list::-webkit-scrollbar-thumb {
+    background: rgba(253, 170, 45, 0.5);
+
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
