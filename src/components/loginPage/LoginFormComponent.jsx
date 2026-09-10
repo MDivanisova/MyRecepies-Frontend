@@ -5,6 +5,8 @@ import { useAuth } from "../../context/useAuth";
 import Spiner from "../Spiner";
 import "./loginFormComponent.css"
 
+import { getRecommendations } from "../../utils/RecommendationEndpoint";
+
 export default function LoginFormComponent (){
     
     const emailInput = useRef(null);
@@ -33,7 +35,31 @@ export default function LoginFormComponent (){
         setLoading(false);
         if(data.succ === true){
             login(data.token, data.user);
-            navigate("/")
+
+             getRecommendations(data.token)
+                .then(data => {
+
+                    if (data.recommendations) {
+
+                        const recommendations =
+                            data.recommendations.map(
+                                item => item.recipe ?? item
+                            );
+
+                        localStorage.setItem(
+                            "recommendations",
+                            JSON.stringify(recommendations)
+                        );
+
+                        window.dispatchEvent(
+                            new Event("recommendationsUpdated")
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error("Recommendation error:", error);
+                });
+            navigate("/profile/me")
         }
         else{
             if(data.status === 500){

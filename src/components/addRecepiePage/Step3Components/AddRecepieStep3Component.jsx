@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./addRecepieStep3Component.css";
 
-export default function AddRecepieStep3Component({handleChange,recipeData,setRecipeData}) 
+export default function AddRecepieStep3Component({handleChange, recipeData,setRecipeData, errMessageIngredients, setErrMessageIngredients}) 
 {
 
     const ingredientsListRef = useRef(null);
@@ -50,6 +50,26 @@ export default function AddRecepieStep3Component({handleChange,recipeData,setRec
         }, 0);
     }
 
+    function validateIngredient(index, field, value) {
+
+        setErrMessageIngredients(prev => {
+
+            const errors = [...prev];
+
+            if (!errors[index]) {
+                errors[index] = {};
+            }
+
+            if (value.trim() === "") {
+                errors[index][field] = `${field} is required`;
+            } else {
+                errors[index][field] = "";
+            }
+
+            return errors;
+        });
+    }
+
 
     function updateIngredient(index, field, value) {
 
@@ -68,6 +88,8 @@ export default function AddRecepieStep3Component({handleChange,recipeData,setRec
             };
 
         });
+
+        validateIngredient(index, field, value);
 
     }
 
@@ -90,23 +112,17 @@ export default function AddRecepieStep3Component({handleChange,recipeData,setRec
             };
 
         });
+        setErrMessageIngredients(prev =>
+            prev.filter((_, i) => i !== index)
+        );
 
     }
 
 
-    function handleQuantityChange(index, value) {
+   function handleQuantityChange(index, value) {
 
-        // Dozvoli prazno pole dodeka se vnesuva
-        if (value === "") {
-            updateIngredient(index, "quantity", value);
-            return;
-        }
-
-        // Mora da ima brojka pred i posle tockata
-        if (!/^\d+(\.\d+)?$/.test(value)) {
-            return;
-        }
-
+        // Dozvoli slobodno vnesuvanje - brojki, bukvi, razmaci, kosa crta itn.
+        // (na pr. "1/2", "pola", "неколку", "2.5")
         updateIngredient(
             index,
             "quantity",
@@ -178,67 +194,79 @@ export default function AddRecepieStep3Component({handleChange,recipeData,setRec
                             >
 
                                 {/* INGREDIENT */}
-
-                                <input
-                                    type="text"
-                                    value={item.ingredient}
-                                    placeholder="Ingredient"
-                                    onChange={(e) =>
-                                        handleTextChange(
-                                            index,
-                                            "ingredient",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-
+                                <div className="ingredient-field">
+                                    <input
+                                        type="text"
+                                        value={item.ingredient}
+                                        placeholder="Ingredient"
+                                        onChange={(e) =>
+                                            handleTextChange(
+                                                index,
+                                                "ingredient",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <div className="form-error">
+                                        {errMessageIngredients[index]?.ingredient}
+                                    </div>
+                                </div>
 
                                 {/* QUANTITY */}
-
-                                <input
-                                    type="text"
-                                    inputMode="numeric"
-                                    value={item.quantity}
-                                    placeholder="Quantity"
-                                    onChange={(e) =>
-                                        handleQuantityChange(
-                                            index,
-                                            e.target.value
-                                        )
-                                    }
-                                />
-
+                                <div className="ingredient-field">
+                                    <input
+                                        type="text"
+                                        value={item.quantity}
+                                        placeholder="Quantity"
+                                        onChange={(e) =>
+                                            handleQuantityChange(
+                                                index,
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <div className="form-error">
+                                        {errMessageIngredients[index]?.quantity}
+                                    </div>
+                                </div>
 
                                 {/* UNIT */}
-
-                                <input
-                                    type="text"
-                                    value={item.unit}
-                                    placeholder="Unit"
-                                    onChange={(e) =>
-                                        handleTextChange(
-                                            index,
-                                            "unit",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-
+                                <div className="ingredient-field">
+                                    <input
+                                        type="text"
+                                        value={item.unit}
+                                        placeholder="Unit"
+                                        onChange={(e) =>
+                                            handleTextChange(
+                                                index,
+                                                "unit",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <div className="form-error">
+                                        {errMessageIngredients[index]?.unit}
+                                    </div>
+                                </div>
 
                                 {/* MISC */}
-
-                                <input
-                                    type="text"
-                                    value={item.misc}
-                                    placeholder="Misc"
-                                    onChange={(e) =>
-                                        handleTextChange(
-                                            index,
-                                            "misc",
-                                            e.target.value
-                                        )
-                                    }
-                                />
+                                <div className="ingredient-field">
+                                    <input
+                                        type="text"
+                                        value={item.misc}
+                                        placeholder="Misc"
+                                        onChange={(e) =>
+                                            handleTextChange(
+                                                index,
+                                                "misc",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <div className="form-error">
+                                        {errMessageIngredients[index]?.misc}
+                                    </div>
+                                </div>
 
 
                                 {/* DELETE */}

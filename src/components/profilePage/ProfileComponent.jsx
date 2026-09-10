@@ -25,6 +25,11 @@ export default function ProfileComponent() {
     const [editMode, setEditMode] = useState(false);
     const [genderOpen, setGenderOpen] = useState(false);
 
+    const [errMessageName, setErrMessageName] = useState("");
+    const [errMessageEmail, setErrMessageEmail] = useState("");
+    const [errMessageDescription, setErrMessageDescription] = useState("");
+    const [errMessageAge, setErrMessageAge] = useState("");
+
 
     const [publicRecipes, setPublicRecipes] = useState([]);
 
@@ -59,7 +64,6 @@ export default function ProfileComponent() {
 
     const [loadingPrivateRecipes, setLoadingPrivateRecipes] = useState(false);
 
-
     const hasChanges = () => {
         return (
             user.name !== originalUser.name ||
@@ -72,8 +76,6 @@ export default function ProfileComponent() {
 
 
     const initProfile = async () => {
-
-        //if (!token) return;
 
         const resultUser = await getMe(token);
 
@@ -205,6 +207,27 @@ export default function ProfileComponent() {
 
     async function updateInfoHandler() {
 
+        const nameError = validateName(user.name || "");
+        const emailError = validateEmail(user.email || "");
+        const descriptionError = validateDescription(user.description || "");
+        const ageError = validateAge(user.age);
+
+        setErrMessageName(nameError);
+        setErrMessageEmail(emailError);
+        setErrMessageDescription(descriptionError);
+        setErrMessageAge(ageError);
+
+        if (
+            nameError ||
+            emailError ||
+            descriptionError ||
+            ageError
+        ) {
+
+            return;
+
+        }
+
         if (!hasChanges()) {
 
             setEditMode(false);
@@ -219,7 +242,9 @@ export default function ProfileComponent() {
             user.email,
             user.description,
             user.age,
-            user.gender
+            user.gender === ""
+                ? undefined
+                : user.gender
         );
 
         if (data === true) {
@@ -343,6 +368,109 @@ export default function ProfileComponent() {
         }
     };
 
+    function isProfileFormInvalid() {
+        return (
+            validateName(user?.name || "") ||
+            validateEmail(user?.email || "")
+        );
+    }
+
+    function validateName(value) {
+
+        if (value.trim() === "") {
+
+            return "name is required";
+
+        }
+
+        if (value.trim().length < 3) {
+
+            return "name must be at least 3 characters";
+
+        }
+
+        if (value.trim().length > 50) {
+
+            return "name can't be more than 50 characters";
+
+        }
+
+        return "";
+    }
+
+
+    function validateEmail(value) {
+
+        if (value.trim() === "") {
+
+            return "email is required";
+
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+
+            return "invalid email";
+
+        }
+
+        return "";
+    }
+
+
+    function validateDescription(value) {
+
+        if (value.length > 255) {
+
+            return "description can't be longer than 255 characters";
+
+        }
+
+        return "";
+    }
+
+
+    function validateAge(value) {
+
+        if (value === "" || value === null || value === undefined) {
+
+            return "";
+
+        }
+
+        if (!Number.isInteger(Number(value)) || Number(value) <= 0) {
+
+            return "age must be a positive number";
+
+        }
+
+        return "";
+    }
+
+
+
+    function getUserInitials(name) {
+
+        if (!name) {
+            return "";
+        }
+
+        const nameParts = name.trim().split(" ");
+
+        if (nameParts.length >= 2) {
+
+            return (
+                nameParts[0].charAt(0) +
+                nameParts[nameParts.length - 1].charAt(0)
+            ).toUpperCase();
+
+        }
+
+        return nameParts[0].charAt(0).toUpperCase();
+    }
+
+
+
+
 
     return (
 
@@ -360,15 +488,9 @@ export default function ProfileComponent() {
 
             <div className="profile-picture-container">
 
-                <img
-                    src={
-                        user?.gender == "female"
-                            ? "/src/assets/femaleProfile.jpeg"
-                            : "/src/assets/maleProfile.jpeg"
-                    }
-                    alt="Profile"
-                    className="profile-picture"
-                />
+                <div className="profile-picture">
+                    {getUserInitials(user?.name)}
+                </div>
 
             </div>
  
@@ -377,22 +499,30 @@ export default function ProfileComponent() {
 
                 {/*za brisenje na profilo e voa treba da mu se stave event onclich so ke se povika endpointo za brisenje na profilo*/}    
 
-                <i className="fa-solid fa-trash edit-profile-icon-trash"></i>
+                <i className="fa-solid fa-trash edit-other-users-profile-icon-trash"></i>
 
                 {
                     editMode ? (
 
                         <>
 
-                            <i
-                                className="fa-regular fa-square-check edit-profile-icon"
+                            <button
+                                type="button"
+                                className="edit-profile-save-button"
                                 onClick={updateInfoHandler}
-                            ></i>
+                                disabled={isProfileFormInvalid()}
+                            >
+                                <i className="fa-regular fa-square-check"></i>
+                            </button>
 
                             <i
                                 className="fa-solid fa-x edit-profile-icon-x"
                                 onClick={() => {
-
+                                    
+                                    setErrMessageName("");
+                                    setErrMessageEmail("");
+                                    setErrMessageDescription("");
+                                    setErrMessageAge("");
                                     setUser(originalUser);
                                     setEditMode(false);
                                     setGenderOpen(false);
@@ -431,20 +561,34 @@ export default function ProfileComponent() {
 
                     ) : editMode ? (
 
-                        <input
-                            className="profile-input"
-                            value={user?.name}
-                            onChange={(e) => {
+                        <div className="profile-input-field">
+                            <input
+                                className="profile-input"
+                                value={user?.name}
+                                 onChange={(e) => {
 
-                                setUser(prev => ({
-                                    ...prev,
-                                    name: e.target.value
-                                }));
+                                    const value = e.target.value;
 
-                            }}
-                            placeholder="Full Name"
-                        />
+                                    setUser(prev => ({
+                                        ...prev,
+                                        name: value
+                                    }));
 
+                                    setErrMessageName(
+                                        validateName(value)
+                                    );
+
+                                }}
+                                placeholder="Full Name"
+                            />
+                             {
+                                errMessageName && (
+                                    <span className="form-error">
+                                        {errMessageName}
+                                    </span>
+                                )
+                            }
+                        </div>
                     ) : (
 
                         <h1>
@@ -464,21 +608,32 @@ export default function ProfileComponent() {
                         />
 
                     ) : editMode ? (
+                        <div className="profile-input-field">
+                            <input
+                                className="profile-input"
+                                value={user?.email}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setUser(prev => ({
+                                        ...prev,
+                                        email: value
+                                    }));
 
-                        <input
-                            className="profile-input"
-                            value={user?.email}
-                            onChange={(e) => {
+                                    setErrMessageEmail(
+                                        validateEmail(value)
+                                    );
 
-                                setUser(prev => ({
-                                    ...user,
-                                    email: e.target.value
-                                }));
-
-                            }}
-                            placeholder="Email"
-                        />
-
+                                }}
+                                placeholder="Email"
+                            />
+                             {
+                                errMessageEmail && (
+                                    <span className="form-error">
+                                        {errMessageEmail}
+                                    </span>
+                                )
+                            }
+                        </div>
                     ) : (
 
                         <p className="profile-email">
@@ -499,19 +654,35 @@ export default function ProfileComponent() {
 
                     ) : editMode ? (
 
-                        <textarea
-                            className="profile-textarea"
-                            value={user?.description}
-                            onChange={(e) => {
+                        <div className="profile-textarea-field">
+                            <textarea
+                                className="profile-textarea"
+                                value={user?.description || ""}
+                                onChange={(e) => {
 
-                                setUser(prev => ({
-                                    ...user,
-                                    description: e.target.value
-                                }));
+                                    const value = e.target.value;
 
-                            }}
-                            placeholder="Description"
-                        ></textarea>
+                                    setUser(prev => ({
+                                        ...prev,
+                                        description: value
+                                    }));
+
+                                    setErrMessageDescription(
+                                        validateDescription(value)
+                                    );
+
+                                }}
+                                placeholder="Description"
+                            ></textarea>
+
+                            {
+                                errMessageDescription && (
+                                    <span className="form-error">
+                                        {errMessageDescription}
+                                    </span>
+                                )
+                            }
+                        </div>
 
                     ) : (
 
@@ -530,7 +701,6 @@ export default function ProfileComponent() {
 
 
                 <div className="profile-details">
-
 
                     <div className="profile-detail">
 
@@ -577,75 +747,87 @@ export default function ProfileComponent() {
                                 />
 
                             ) : editMode ? (
+                                    <div className="profile-age-field">
 
-                                <input
-                                    type="number"
-                                    className="profile-input-age"
-                                    value={user?.age ?? ""}
-                                    min="0"
-                                    step="1"
+                                        <input
+                                            type="number"
+                                            className="profile-input-age"
+                                            value={user?.age ?? ""}
+                                            min="0"
+                                            step="1"
 
-                                    onKeyDown={(e) => {
+                                            onKeyDown={(e) => {
 
-                                        if (
-                                            [
-                                                "-",
-                                                "+",
-                                                "e",
-                                                "E",
-                                                ".",
-                                                ","
-                                            ].includes(e.key)
-                                        ) {
+                                                if (
+                                                    [
+                                                        "-",
+                                                        "+",
+                                                        "e",
+                                                        "E",
+                                                        ".",
+                                                        ","
+                                                    ].includes(e.key)
+                                                ) {
 
-                                            e.preventDefault();
+                                                    e.preventDefault();
 
+                                                }
+
+                                            }}
+
+                                            onChange={(e) => {
+
+                                                const value = e.target.value;
+
+                                                if (value === "") {
+
+                                                    setUser(prev => ({
+                                                        ...prev,
+                                                        age: ""
+                                                    }));
+
+                                                    setErrMessageAge("");
+
+                                                    return;
+
+                                                }
+
+                                                const numberValue = Number(value);
+
+                                                if (
+                                                    Number.isInteger(numberValue) &&
+                                                    numberValue >= 0
+                                                ) {
+
+                                                    setUser(prev => ({
+                                                        ...prev,
+                                                        age: numberValue
+                                                    }));
+
+                                                    setErrMessageAge(
+                                                        validateAge(numberValue)
+                                                    );
+
+                                                }
+
+                                            }}
+
+                                            placeholder="Age"
+                                        />
+
+                                        {
+                                            errMessageAge && (
+                                                <span className="form-error">
+                                                    {errMessageAge}
+                                                </span>
+                                            )
                                         }
 
-                                    }}
-
-                                    onChange={(e) => {
-
-                                        const value =
-                                            e.target.value;
-
-                                        if (value === "") {
-
-                                            setUser(prev => ({
-                                                ...prev,
-                                                age: ""
-                                            }));
-
-                                            return;
-
-                                        }
-
-                                        const numberValue =
-                                            Number(value);
-
-                                        if (
-                                            Number.isInteger(
-                                                numberValue
-                                            ) &&
-                                            numberValue >= 0
-                                        ) {
-
-                                            setUser(prev => ({
-                                                ...prev,
-                                                age: numberValue
-                                            }));
-
-                                        }
-
-                                    }}
-
-                                    placeholder="Age"
-                                />
-
+                                    </div>
                             ) : (
 
                                 <strong>
-                                    {user?.age} years old
+                                    {user.age ? user.age + " years old": "Age not disclosed"}
                                 </strong>
 
                             )
@@ -692,7 +874,9 @@ export default function ProfileComponent() {
                                             {
                                                 user?.gender === "female"
                                                     ? "Female"
-                                                    : "Male"
+                                                    : user?.gender === "male"
+                                                        ? "Male"
+                                                        : "Not disclosed"
                                             }
 
                                         </span>
@@ -770,6 +954,37 @@ export default function ProfileComponent() {
                                                 </div>
 
 
+                                                <div
+                                                    className={`custom-option ${
+                                                        !user?.gender
+                                                            ? "selected"
+                                                            : ""
+                                                    }`}
+                                                    onClick={() => {
+
+                                                        setUser(prev => ({
+                                                            ...prev,
+                                                            gender: ""
+                                                        }));
+
+                                                        setGenderOpen(false);
+
+                                                    }}
+                                                >
+
+                                                    <span>
+                                                        Not disclosed
+                                                    </span>
+
+                                                    {
+                                                        !user?.gender && (
+                                                            <i className="fa-solid fa-check"></i>
+                                                        )
+                                                    }
+
+                                                </div>
+
+
                                             </div>
 
                                         )
@@ -782,12 +997,11 @@ export default function ProfileComponent() {
                                 <strong>
 
                                     {
-                                        user?.gender
-                                            ? user.gender
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                              user.gender.slice(1)
-                                            : "Not specified"
+                                        user?.gender === "female"
+                                            ? "Female"
+                                            : user?.gender === "male"
+                                                ? "Male"
+                                                : "Not disclosed"
                                     }
 
                                 </strong>
@@ -795,9 +1009,8 @@ export default function ProfileComponent() {
                             )
                         }
 
-                    </div>
-
-
+                    </div> 
+                    
                     <div className="profile-detail">
 
                         <i className="fa-solid fa-clock"></i>
@@ -974,6 +1187,7 @@ export default function ProfileComponent() {
                                                 <ProfileRecipeCardComponent
                                                     recipe={recipe}
                                                     setRecipes={setPublicRecipes}
+                                                    isMe={true}
                                                 />
                                             </ElectricBorder>
                                         </div>
@@ -1097,6 +1311,7 @@ export default function ProfileComponent() {
                                                 <ProfileRecipeCardComponent
                                                     recipe={recipe}
                                                     setRecipes={setPrivateRecipes}
+                                                    isMe={true}
                                                 />
                                             </ElectricBorder>
                                         </div>

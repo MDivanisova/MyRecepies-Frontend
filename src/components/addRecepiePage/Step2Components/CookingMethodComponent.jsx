@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { COOKING_METHODS } from "../../../utils/enum";
 
 
-export default function CookingMethodComponent({recipeData,setRecipeData}) {
+export default function CookingMethodComponent({recipeData, setRecipeData, setErrMessageCookingMethod}) {
 
     const [customMethod, setCustomMethod] = useState("");
     const [addingMethod, setAddingMethod] = useState(false);
@@ -59,7 +59,6 @@ export default function CookingMethodComponent({recipeData,setRecipeData}) {
 
     }, []);
 
-
     function addMethod(method) {
 
         if (!method) return;
@@ -77,6 +76,7 @@ export default function CookingMethodComponent({recipeData,setRecipeData}) {
             ]
         }));
 
+        setErrMessageCookingMethod("");
         setMethodOpen(false);
     }
 
@@ -90,6 +90,9 @@ export default function CookingMethodComponent({recipeData,setRecipeData}) {
                 item => item !== method
             )
         }));
+         if (recipeData.cookingMethods.length === 1) {
+            setErrMessageCookingMethod("cooking method is required");
+        }
     }
 
 
@@ -109,6 +112,8 @@ export default function CookingMethodComponent({recipeData,setRecipeData}) {
                     value
                 ]
             }));
+
+            setErrMessageCookingMethod("");
         }
 
         setCustomMethod("");

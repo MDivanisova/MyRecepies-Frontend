@@ -103,9 +103,12 @@ export async function resendCode(email){
 
 }
 
-export async function getMe(token){
-    
-    const result = await fetch(`${path}/`, {    
+export async function getMe(token, userId){
+    const url = userId
+    ? `${path}/?userId=${userId}`
+    : `${path}/`;
+
+    const result = await fetch(url, {    
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -155,20 +158,24 @@ export async function getMyBookmarks(token, pageNumber, recepieName, creator, in
 }
 
 export async function editUser(token, name, email, description, age, gender){
-    
+    const body = {
+        name: name,
+        email: email,
+        description: description,
+        gender: gender
+    };
+
+    if (age !== "") {
+        body.age = age;
+    }
+
     const result = await fetch(`${path}/`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "authorization": token 
         },
-        body:  JSON.stringify({
-            name: name,
-            email: email,
-            description: description,
-            age: age,
-            gender: gender
-        })
+        body:  JSON.stringify(body)
     });
 
     if (result.status === 201) {
@@ -212,10 +219,12 @@ export async function getUsers(token, pageNumber, userName, email, role){
 }
 
 
-export async function getUsersRecepies(token, pageNumber, name, visibility) {
+export async function getUsersRecepies(token, pageNumber, name, visibility, userId) {
+    const url = userId
+    ? `${path}/recepies?pageSize=${PROFILE_RECIPE_PAGE_SIZE}&pageNumber=${pageNumber}&name=${name}&visibility=${visibility}&userId=${userId}`
+    : `${path}/recepies?pageSize=${PROFILE_RECIPE_PAGE_SIZE}&pageNumber=${pageNumber}&name=${name}&visibility=${visibility}`;
 
-    const result = await fetch(
-        `${path}/recepies?pageSize=${PROFILE_RECIPE_PAGE_SIZE}&pageNumber=${pageNumber}&name=${name}&visibility=${visibility}`,
+    const result = await fetch(url,
         {
             method: "GET",
             headers: {

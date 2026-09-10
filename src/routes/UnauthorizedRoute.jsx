@@ -14,7 +14,7 @@ export default function UnauthorizedRoute(){
         )
     }
     if(isAuth){
-        return <Navigate to='/' replace />
+        return <Navigate to='/profile/me' replace />
     }
     else{
         return <Outlet />

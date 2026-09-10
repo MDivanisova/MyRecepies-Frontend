@@ -30,6 +30,24 @@ export default function AddRecepieComponent() {
     const recepieId = useRef("");
 
 
+
+    const [errMessageRecipeName, setErrMessageRecipeName] = useState("");
+    const [errMessageCategory, setErrMessageCategory] = useState("");
+    const [errMessageCuisine, setErrMessageCuisine] = useState("");
+
+    const [errMessagePreparationTime, setErrMessagePreparationTime] = useState("");
+    const [errMessageCookingTime, setErrMessageCookingTime] = useState("");
+    const [errMessageCookingMethod, setErrMessageCookingMethod] = useState("");
+    const [errMessageTools, setErrMessageTools] = useState("");
+
+    const [errMessageIngredients, setErrMessageIngredients] = useState([]);
+
+    const [errMessageInstructions, setErrMessageInstructions] = useState([]);
+
+    const [errMessageNutrition, setErrMessageNutrition] = useState({});
+
+    const [errMessageImageUrl, setErrMessageImageUrl] = useState("");
+
     const [recipeData, setRecipeData] = useState({
 
         recipeName: "",
@@ -168,6 +186,11 @@ export default function AddRecepieComponent() {
                 </span></>
     }
 
+
+
+
+
+
     /* =========================
        NEXT STEP
     ========================= */
@@ -182,8 +205,6 @@ export default function AddRecepieComponent() {
 
     }
 
-
-
     /* =========================
        PREVIOUS STEP
     ========================= */
@@ -197,8 +218,6 @@ export default function AddRecepieComponent() {
         }
 
     }
-
-
 
     /* =========================
        FINISH
@@ -279,11 +298,6 @@ export default function AddRecepieComponent() {
                     <i className="fa-solid fa-utensils"></i>
 
                 </div>
-
-
-                <p>
-                    Let's make something delicious
-                </p>
 
             </div>
 
@@ -508,120 +522,89 @@ export default function AddRecepieComponent() {
                     {/* =========================
                         STEP 1
                     ========================= */}
-
                     {currentStep === 1 && (
-
                         <AddRecepieStep1Component
-
                             recipeData={recipeData}
-
                             handleChange={handleChange}
-
                             setRecipeData={setRecipeData}
-
+                            errMessageRecipeName={errMessageRecipeName}
+                            setErrMessageRecipeName={setErrMessageRecipeName}
+                            errMessageCategory={errMessageCategory}
+                            setErrMessageCategory={setErrMessageCategory}
+                            errMessageCuisine={errMessageCuisine}
+                            setErrMessageCuisine={setErrMessageCuisine}
                         />
-
                     )}
-
-
 
                     {/* =========================
                         STEP 2
                     ========================= */}
-
                     {currentStep === 2 && (
-
                         <AddRecepieStep2Component
-
                             recipeData={recipeData}
-
                             handleChange={handleChange}
-
                             setRecipeData={setRecipeData}
-
+                            errMessagePreparationTime={errMessagePreparationTime}
+                            setErrMessagePreparationTime={setErrMessagePreparationTime}
+                            errMessageCookingTime={errMessageCookingTime}
+                            setErrMessageCookingTime={setErrMessageCookingTime}
+                            errMessageCookingMethod={errMessageCookingMethod}
+                            setErrMessageCookingMethod={setErrMessageCookingMethod}
+                            errMessageTools={errMessageTools}
+                            setErrMessageTools={setErrMessageTools}
                         />
-
                     )}
-
-
 
                     {/* =========================
                         STEP 3
                     ========================= */}
-
                     {currentStep === 3 && (
-
                         <AddRecepieStep3Component
-
                             recipeData={recipeData}
-
                             handleChange={handleChange}
-
                             setRecipeData={setRecipeData}
-
+                            errMessageIngredients={errMessageIngredients}
+                            setErrMessageIngredients={setErrMessageIngredients}
                         />
-
                     )}
-
-
 
                     {/* =========================
                         STEP 4
                     ========================= */}
-
                     {currentStep === 4 && (
-
                         <AddRecepieStep4Component
-
                             recipeData={recipeData}
-
                             handleChange={handleChange}
-
                             setRecipeData={setRecipeData}
-
+                            errMessageInstructions={errMessageInstructions}
+                            setErrMessageInstructions={setErrMessageInstructions}
                         />
-
                     )}
-
-
 
                     {/* =========================
                         STEP 5
                     ========================= */}
-
                     {currentStep === 5 && (
-
                         <AddRecepieStep5Component
-
                             recipeData={recipeData}
-
                             handleChange={handleChange}
-
                             setRecipeData={setRecipeData}
-
+                            errMessageNutrition={errMessageNutrition}
+                            setErrMessageNutrition={setErrMessageNutrition}
                         />
-
                     )}
-
-
 
                     {/* =========================
                         STEP 6
                     ========================= */}
-
                     {currentStep === 6 && (
-
                         <AddRecepieStep6Component
-
                             recipeData={recipeData}
-
                             handleChange={handleChange}
-
                             setRecipeData={setRecipeData}
-
-
+                            errMessageImageUrl={errMessageImageUrl}
+                            setErrMessageImageUrl={setErrMessageImageUrl}
                         />
-
                     )}
 
 
@@ -673,12 +656,51 @@ export default function AddRecepieComponent() {
                                 type="button"
                                 className="continue-button"
                                 onClick={nextStep}
+                                disabled={
+                                    currentStep === 1 &&
+                                    (
+                                        recipeData.recipeName.trim().length < 3 ||
+                                        recipeData.recipeName.trim().length > 50 ||
+                                        recipeData.categories.length === 0 ||
+                                        recipeData.cuisines.length === 0
+                                    )||
+                                    (currentStep === 2 &&
+                                        (
+                                            recipeData.preparationTime === "" ||
+                                            Number(recipeData.preparationTime) < 0 ||
+                                            recipeData.cookingTime === "" ||
+                                            Number(recipeData.cookingTime) < 0 ||
+                                            recipeData.cookingMethods.length === 0 ||
+                                            recipeData.tools.length === 0
+                                        )
+                                    )||
+                                    (currentStep === 3 &&
+                                        recipeData.ingredients.some(item =>
+                                            item.ingredient.trim() === "" ||
+                                            item.quantity === "" ||
+                                            item.unit.trim() === "" ||
+                                            item.misc.trim() === ""
+                                        )
+                                    )||
+                                    (currentStep === 4 &&
+                                        recipeData.instructions.some(
+                                            instruction => instruction.trim() === ""
+                                        )
+                                    )
+                                     ||
+                                    (currentStep === 5 &&
+                                        Object.values(recipeData.nutrition).some(
+                                            value =>
+                                                value === "" ||
+                                                value === null ||
+                                                value === undefined
+                                        )
+                                    )
+                                }
                             >
-
                                 Continue
 
                                 <i className="fa-solid fa-arrow-right"></i>
-
                             </button>
 
                         )}
@@ -693,7 +715,11 @@ export default function AddRecepieComponent() {
                                 type="button"
                                 className="finish-button"
                                 onClick={finishRecipe}
-                                disabled={loading}
+                                 disabled={
+                                    loading ||
+                                    !recipeData.imageUrl ||
+                                    recipeData.imageUrl.trim() === ""
+                                }
                             >
 
                                 {loading

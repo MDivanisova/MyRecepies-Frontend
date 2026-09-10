@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { TOOLS } from "../../../utils/enum";
 
 
-export default function ToolEquipmentComponent({recipeData,setRecipeData}) 
+export default function ToolEquipmentComponent({recipeData, setRecipeData, setErrMessageTools}) 
 {
 
     const [customTool, setCustomTool] = useState("");
@@ -65,6 +65,7 @@ export default function ToolEquipmentComponent({recipeData,setRecipeData})
             ]
         }));
 
+        setErrMessageTools("");
         setToolOpen(false);
     }
 
@@ -78,6 +79,9 @@ export default function ToolEquipmentComponent({recipeData,setRecipeData})
                 item => item !== tool
             )
         }));
+         if (recipeData.tools.length === 1) {
+            setErrMessageTools("tools are required");
+        }
     }
 
 
@@ -97,6 +101,8 @@ export default function ToolEquipmentComponent({recipeData,setRecipeData})
                     value
                 ]
             }));
+
+            setErrMessageTools("");
         }
 
         setCustomTool("");

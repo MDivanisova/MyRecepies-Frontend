@@ -88,9 +88,10 @@
 .bookmark-recipe-card-content {
     padding: 17px;
 
-    min-height: 180px;
+    min-height: 120px;
 
     display: flex;
+
     flex-direction: column;
 
     gap: 13px;
@@ -110,7 +111,9 @@
     line-height: 1.2;
 
     white-space: nowrap;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
@@ -118,9 +121,13 @@
 /* =========================
    CREATOR
 ========================= */
+/* =========================
+   CREATOR HOVER
+========================= */
 
 .bookmark-recipe-creator {
     display: flex;
+
     align-items: center;
 
     gap: 7px;
@@ -130,6 +137,28 @@
     font-size: 13px;
 
     margin-top: auto;
+
+    width: fit-content;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.bookmark-recipe-creator:hover {
+    color: #fdaa2d;
+
+    transform: translateY(-2px);
+}
+
+
+.bookmark-recipe-creator:hover span {
+    text-decoration: underline;
+
+    text-underline-offset: 3px;
 }
 
 
@@ -137,8 +166,52 @@
     color: #78854f;
 
     font-size: 13px;
+
+    transition:
+        color 0.2s ease;
 }
 
+
+.bookmark-recipe-creator:hover i {
+    color: #fdaa2d;
+}
+
+
+.bookmark-recipe-creator span {
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   PROFILE LOADING
+========================= */
+
+.bookmark-recipe-card {
+    position: relative;
+}
+
+
+.bookmark-recipe-card-loading {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(1, 5, 19, 0.75);
+
+    border-radius: 25px;
+}
 
 /* =========================
    DETAILS
@@ -148,7 +221,9 @@
     width: 100%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     gap: 10px;
@@ -161,14 +236,20 @@
 
 .bookmark-recipe-rating {
     display: flex;
+
     align-items: center;
 
     gap: 7px;
 }
 
 
+/* =========================
+   STARS
+========================= */
+
 .bookmark-stars {
     display: flex;
+
     align-items: center;
 
     gap: 2px;
@@ -181,9 +262,15 @@
     width: 14px;
     height: 14px;
 
-    display: block;
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
 }
 
+
+/* EMPTY STAR */
 
 .bookmark-star > i {
     position: absolute;
@@ -191,11 +278,18 @@
     top: 0;
     left: 0;
 
+    width: 14px;
+    height: 14px;
+
     color: #fdaa2d;
 
     font-size: 14px;
+
+    line-height: 14px;
 }
 
+
+/* FILLED PART */
 
 .bookmark-star-fill {
     position: absolute;
@@ -203,25 +297,41 @@
     top: 0;
     left: 0;
 
-    height: 100%;
+    height: 14px;
 
     overflow: hidden;
 
     white-space: nowrap;
+
+    pointer-events: none;
 }
 
 
+/* FILLED STAR */
+
 .bookmark-star-fill i {
+    display: block;
+
+    width: 14px;
+    height: 14px;
+
     color: #fdaa2d;
 
     font-size: 14px;
+
+    line-height: 14px;
 }
 
+
+/* =========================
+   RATING NUMBER
+========================= */
 
 .bookmark-rating-number {
     color: white;
 
     font-size: 13px;
+
     font-weight: 600;
 }
 
@@ -232,6 +342,7 @@
 
 .bookmark-recipe-total-time {
     display: flex;
+
     align-items: center;
 
     gap: 6px;
@@ -253,27 +364,39 @@
    BUTTON
 ========================= */
 
+/* =========================
+   BUTTON
+========================= */
+
 .bookmark-recipe-button-wrapper {
+
+    width: calc(100% - 34px);
+
+    margin: 0 17px 17px 17px;
+
     display: flex;
+
     flex-direction: row;
 
-    width: 100%;
-
-    margin-top: 0;
+    box-sizing: border-box;
 }
 
 
 .remove-bookmark-recipe-button {
     width: 100%;
+
     height: 40px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     gap: 8px;
 
     border: none;
+
     border-radius: 9px;
 
     background: #854f4f;
@@ -281,6 +404,7 @@
     color: white;
 
     font-size: 13px;
+
     font-weight: 600;
 
     cursor: pointer;

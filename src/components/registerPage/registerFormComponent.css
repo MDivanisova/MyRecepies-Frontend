@@ -17,11 +17,11 @@
     align-items: center;
     justify-content: center;
 
-    padding: 2.5rem;
+    padding: 2rem;
     box-sizing: border-box;
 
     border-radius: 30px;
-    gap: 0.5rem;
+    gap: 10px;
 }
 
 
@@ -43,7 +43,7 @@
 .register-form input,
 .register-form select {
     width: 100%;
-    max-width: 320px;
+    max-width: 350px;
     box-sizing: border-box;
 
     padding: 0.75rem 1rem;
@@ -73,7 +73,7 @@
 
 .form-field-register {
     width: 100%;
-    max-width: 320px;
+    max-width: 350px;
 
     display: flex;
     flex-direction: column;
@@ -147,3 +147,220 @@
 .register-form a:hover {
     text-decoration: underline;
 }
+
+
+
+
+.name-field-register {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.name-field-register .form-field-register {
+    width: 50%;
+    max-width: none;
+    height: 4rem;
+}
+
+.name-field-register input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.name-fields-register .form-field-register > div {
+    min-height: 18px;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+/* =========================
+   SELECT
+========================= */
+
+.custom-gender-select-wrapper {
+    position: relative;
+    width: 270px;
+}
+
+
+.custom-gender-select {
+    width: 100%;
+
+    height: 38px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border: 2px solid #78854f;
+
+    border-radius: 10px;
+
+    border-color: #fdaa2d;
+
+    background: #ffffff;
+
+    font-size: 15px;
+
+    font-family: inherit;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.custom-gender-select span {
+    color: #010513;
+}
+
+
+.custom-gender-select:hover {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        inset 0 0 15px rgba(253, 170, 45, 0.30),
+        0 0 8px rgba(253, 170, 45, 0.15);
+}
+
+
+.custom-gender-select.open {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.12),
+        inset 0 0 15px rgba(253, 170, 45, 0.30);
+}
+
+
+.custom-gender-select i {
+    color: #010513;
+
+    font-size: 12px;
+
+    transition: transform 0.2s ease;
+}
+
+
+.custom-gender-select.open i {
+    color: #fdaa2d;
+
+    transform: rotate(180deg);
+}
+
+
+.custom-gender-select-options {
+    position: absolute;
+
+    top: calc(100% + 6px);
+
+    left: 0;
+
+    width: 100%;
+
+    padding: 5px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 2px solid #78854f;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 20px rgba(243, 154, 53, 0.25),
+        inset 0 0 15px rgba(253, 170, 45, 0.08);
+
+    z-index: 100;
+
+    animation: genderDropdown 0.15s ease;
+}
+
+
+.custom-gender-select-options span {
+    color: #010513 !important;
+}
+
+
+@keyframes genderDropdown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.custom-gender-option {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+
+    font-family: inherit;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.custom-gender-option:hover {
+    background: rgba(248, 177, 69, 0.5);
+}
+
+
+.custom-gender-option.selected {
+    background: #fdaa2d;
+}
+
+
+.custom-gender-option.selected span {
+    color: #010513 !important;
+
+    font-weight: 600;
+}
+
+
+.custom-gender-option.selected i {
+    color: #010513;
+
+    font-size: 13px;
+}
+

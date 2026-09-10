@@ -23,6 +23,23 @@
         border-color 0.2s ease;
 }
 
+.recipe-card {
+    position: relative;
+}
+
+.recipe-card-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(1, 5, 19, 0.75);
+
+    border-radius: 25px;
+}
 
 .recipe-card:hover {
 
@@ -104,8 +121,9 @@
 .recipe-card-content {
 
     padding: 17px;
+    padding-bottom: 5px;
 
-    min-height: 200px;
+    min-height: 140px;
 
     box-sizing: border-box;
 
@@ -160,9 +178,7 @@
 /* =========================
    CREATOR
 ========================= */
-
 .recipe-creator {
-
     display: flex;
 
     align-items: center;
@@ -171,22 +187,47 @@
 
     color: #c5c5c5;
 
-    font-size: 12px;
+    font-size: 13px;
 
     cursor: pointer;
+
+    width: fit-content;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.recipe-creator:hover {
+    color: #fdaa2d;
+
+    transform: translateY(-2px);
+}
+
+
+.recipe-creator:hover span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 
 .recipe-creator i {
-
     color: #78854f;
 
-    font-size: 12px;
+    font-size: 13px;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.recipe-creator:hover i {
+    color: #fdaa2d;
 }
 
 
 .recipe-creator span {
-
     white-space: nowrap;
 
     overflow: hidden;
@@ -239,6 +280,10 @@
 }
 
 
+/* =========================
+   STAR
+========================= */
+
 .star {
 
     position: relative;
@@ -247,9 +292,15 @@
 
     height: 14px;
 
-    display: block;
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
 }
 
+
+/* EMPTY STAR */
 
 .star > i {
 
@@ -259,11 +310,19 @@
 
     left: 0;
 
+    width: 14px;
+
+    height: 14px;
+
     color: #fdaa2d;
 
     font-size: 14px;
+
+    line-height: 14px;
 }
 
+
+/* FILLED PART */
 
 .star-fill {
 
@@ -273,19 +332,31 @@
 
     left: 0;
 
-    height: 100%;
+    height: 14px;
 
     overflow: hidden;
 
     white-space: nowrap;
+
+    pointer-events: none;
 }
 
 
+/* FILLED STAR */
+
 .star-fill i {
+
+    display: block;
+
+    width: 14px;
+
+    height: 14px;
 
     color: #fdaa2d;
 
     font-size: 14px;
+
+    line-height: 14px;
 }
 
 
@@ -339,13 +410,17 @@
 
 .recipe-button-wraper {
 
+    width: calc(100% - 34px);
+
+    margin: 0 17px 17px 17px;
+
     display: flex;
 
     flex-direction: row;
 
-    gap: 20px;
+    gap: 10px;
 
-    margin-top: 0;
+    box-sizing: border-box;
 }
 
 

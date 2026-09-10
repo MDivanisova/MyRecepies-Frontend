@@ -1,11 +1,19 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { removeRecipe } from "../../utils/RecepieEndpoint";
 import { useAuth } from "../../context/useAuth";
+import Spinner from "../Spiner";
+
 
 import "./profileRecipeCardComponent.css";
 
-export default function ProfileRecipeCardComponent({ recipe, setRecipes}) {
+export default function ProfileRecipeCardComponent({ recipe, setRecipes, isMe}) {
 
     const { token } = useAuth();
+
+    const navigate = useNavigate();
+
+    const [profileLoading, setProfileLoading] = useState(false);
 
     const rating = Number(
         recipe.rating?.$numberDecimal ||
@@ -27,7 +35,17 @@ export default function ProfileRecipeCardComponent({ recipe, setRecipes}) {
 
     const totalTime = preparationTime + cookingTime;
 
+    const handleCardClick = (event) => {
+        event.stopPropagation();
 
+        if (!recipe._id || profileLoading) {
+            return;
+        }
+
+        setProfileLoading(true);
+
+        navigate(`/recipe/details/${recipe._id}`);
+    };
 
 
     const handleDelete = async () => { 
@@ -43,10 +61,18 @@ export default function ProfileRecipeCardComponent({ recipe, setRecipes}) {
     return (
 
         <div className="profile-recipe-card">
+            {profileLoading && (
+                <div className="profile-recipe-card-loading">
+                    <Spinner
+                        w={100}
+                        h={100}
+                    />
+                </div>
+            )}
 
             {/* IMAGE */}
 
-            <div className="profile-recipe-card-image">
+            <div className="profile-recipe-card-image" onClick={handleCardClick}>
 
                 <img
                     src={recipe.imageUrl}
@@ -69,7 +95,7 @@ export default function ProfileRecipeCardComponent({ recipe, setRecipes}) {
 
             {/* CONTENT */}
 
-            <div className="profile-recipe-card-content">
+            <div className="profile-recipe-card-content" onClick={handleCardClick}>
 
                 {/* NAME */}
 
@@ -77,6 +103,12 @@ export default function ProfileRecipeCardComponent({ recipe, setRecipes}) {
                     {recipe.name}
                 </div>
 
+ 
+                {/* CREATOR */} 
+                <div className="profile-recipe-creator"> 
+                    <i className="fa-solid fa-user"></i> 
+                    <span> {isMe ? "Me" : recipe.creator?.name} </span> 
+                </div>
 
                 {/* RATING + TIME */}
 
@@ -147,7 +179,9 @@ export default function ProfileRecipeCardComponent({ recipe, setRecipes}) {
                 </div>
 
 
-                {/* DELETE BUTTON */}
+            </div>
+
+            {/* DELETE BUTTON */}
 
                 <div className="profile-recipe-button-wrapper">
 
@@ -166,8 +200,6 @@ export default function ProfileRecipeCardComponent({ recipe, setRecipes}) {
                     </button>
 
                 </div>
-
-            </div>
 
         </div>
     );

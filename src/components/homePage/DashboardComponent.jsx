@@ -29,6 +29,67 @@ export default function DashboardComponent({ filters }) {
         pageSize: PAGE_SIZE
     });
 
+    const [recommendations, setRecommendations] = useState([]);
+
+    // const fetchRecomendations = async () =>{
+    //     const data = await getRecommendations(token);
+    //     console.log(data);
+    // }
+
+    const loadRecommendations = () => {
+
+        const storedRecommendations =
+            localStorage.getItem("recommendations");
+
+        if (
+            !storedRecommendations ||
+            storedRecommendations === "undefined" ||
+            storedRecommendations === "null"
+        ) {
+            setRecommendations([]);
+            return;
+        }
+
+        try {
+
+            const parsed =
+                JSON.parse(storedRecommendations);
+
+            setRecommendations(parsed);
+
+        } catch (error) {
+
+            console.error(
+                "Invalid recommendations:",
+                error
+            );
+
+            localStorage.removeItem("recommendations");
+            setRecommendations([]);
+        }
+    };
+
+    useEffect(() => {
+
+        loadRecommendations();
+
+        const handleRecommendationsUpdated = () => {
+            loadRecommendations();
+        };
+
+        window.addEventListener(
+            "recommendationsUpdated",
+            handleRecommendationsUpdated
+        );
+
+        return () => {
+            window.removeEventListener(
+                "recommendationsUpdated",
+                handleRecommendationsUpdated
+            );
+        };
+
+    }, []);
 
     const fetchRecepies = async () => {
 
@@ -41,16 +102,31 @@ export default function DashboardComponent({ filters }) {
             filters.creator,
             filters.ingredients,
             filters.category,
-            filters.cuisine
+            filters.cuisine,
+            recommendations.length
         );
 
         setLoading(false);
 
         if (response.succ) {
+            //Ovaj kod dole do setRecepies bez toa go pastni u site kaj so imash rfetch
+            if (
+                response.pagination.totalPages > 0 &&
+                pageNumber > response.pagination.totalPages
+            ) {
+
+                setPageNumber(response.pagination.totalPages);
+
+                setLoading(false);
+
+                return;
+            }
 
             setRecepies(response.recepies);
 
             setPagination(response.pagination);
+
+            //await fetchRecomendations();
 
         }
 
@@ -70,8 +146,6 @@ export default function DashboardComponent({ filters }) {
 
     // Load recipes when page or filters change
     useEffect(() => {
-
-        if (!token) return;
 
         fetchRecepies();
 
@@ -145,41 +219,81 @@ export default function DashboardComponent({ filters }) {
 
                     <div className="recipes-grid">
 
-                        {recepies.length > 0 ? (
-
-                            recepies.map(recipe => (
-
+                    {pageNumber === 1 && recommendations.length === 0 && recepies.length > 0 && (
+                        <>
+                            {[1, 2, 3, 4].map(index => (
                                 <ElectricBorder
-                                    key={recipe._id}
-                                    color="#fdaa2d"
+                                    key={`recommendation-loading-${index}`}
+                                    color=" #f35438"
                                     speed={0.1}
                                     chaos={0.01}
                                     thickness={20}
                                 >
-                                    <RecipeCardComponent
-                                        recipe={recipe}
-                                        setRecepies={setRecepies}
-                                        setRefresh={setRefresh}
-                                    />
+                                    <div className="recommendation-loading">
+                                        <i className="fa-solid fa-wand-magic-sparkles"></i>
+                                        <span>
+                                            Waiting for recommendation...
+                                        </span>
+                                    </div>
                                 </ElectricBorder>
+                            ))}
+                        </>
+                    )}
 
-                            ))
+                    {pageNumber === 1 && recommendations.map(recipe => (
+                        <ElectricBorder
+                            key={recipe._id}
+                            color="#f35438"
+                            speed={0.1}
+                            chaos={0.01}
+                            thickness={20}
+                        >
+                            <div className="recommended-card">
 
-                        ) : (
+                                <div className="recommended-badge">
+                                    <i className="fa-solid fa-star"></i>
+                                    <span>Recommended</span>
+                                </div>
 
+                                <RecipeCardComponent
+                                    recipe={recipe}
+                                    setRecepies={setRecepies}
+                                    setRefresh={setRefresh}
+                                />
+
+                            </div>
+                        </ElectricBorder>
+                    ))}
+
+                    {recepies.length > 0 ? (
+                        recepies.map(recipe => (
+                            <ElectricBorder
+                                key={recipe._id}
+                                color="#fdaa2d"
+                                speed={0.1}
+                                chaos={0.01}
+                                thickness={20}
+                            >
+                                <RecipeCardComponent
+                                    recipe={recipe}
+                                    setRecepies={setRecepies}
+                                    setRefresh={setRefresh}
+                                />
+                            </ElectricBorder>
+                        ))
+                    ) : (
+                        recommendations.length === 0 && (
                             <div className="no-recipes-found">
-
                                 <i className="fa-solid fa-utensils"></i>
 
                                 <div className="no-recipes-title">
                                     No recipes found
                                 </div>
-
                             </div>
+                        )
+                    )}
 
-                        )}
-
-                    </div>
+                </div>
                 )}
 
             </div>

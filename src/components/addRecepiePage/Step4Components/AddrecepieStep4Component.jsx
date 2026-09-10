@@ -2,13 +2,11 @@ import { useEffect, useRef } from "react";
 
 import "./addRecepieStep4Component.css";
 
-export default function AddRecepieStep4Component({handleChange,recipeData,setRecipeData})
+export default function AddRecepieStep4Component({handleChange,recipeData,setRecipeData, errMessageInstructions, setErrMessageInstructions})
 {
 
     const instructionsListRef = useRef(null);
 
-
-    // Make sure there are initially at least 4 instruction rows
 
     useEffect(() => {
 
@@ -64,6 +62,22 @@ export default function AddRecepieStep4Component({handleChange,recipeData,setRec
     }
 
 
+    function validateInstruction(index, value) {
+
+        setErrMessageInstructions(prev => {
+
+            const errors = [...prev];
+
+            if (value.trim() === "") {
+                errors[index] = "instruction is required";
+            } else {
+                errors[index] = "";
+            }
+
+            return errors;
+        });
+    }
+
     function updateInstruction(index, value) {
 
         setRecipeData(prev => {
@@ -84,14 +98,14 @@ export default function AddRecepieStep4Component({handleChange,recipeData,setRec
 
         });
 
+        validateInstruction(index, value);
+
     }
 
 
     function removeInstruction(index) {
 
         setRecipeData(prev => {
-
-            // Always keep at least one instruction
 
             if (prev.instructions.length <= 1) {
 
@@ -111,6 +125,9 @@ export default function AddRecepieStep4Component({handleChange,recipeData,setRec
             };
 
         });
+        setErrMessageInstructions(prev =>
+            prev.filter((_, i) => i !== index)
+        );
 
     }
 
@@ -163,17 +180,21 @@ export default function AddRecepieStep4Component({handleChange,recipeData,setRec
 
 
                                 {/* INSTRUCTION */}
-
-                                <textarea
-                                    value={instruction}
-                                    placeholder="Describe this step..."
-                                    onChange={(e) =>
-                                        updateInstruction(
-                                            index,
-                                            e.target.value
-                                        )
-                                    }
-                                />
+                                <div className="instruction-field">
+                                    <textarea
+                                        value={instruction}
+                                        placeholder="Describe this step..."
+                                        onChange={(e) =>
+                                            updateInstruction(
+                                                index,
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <div className="form-error">
+                                        {errMessageInstructions[index]}
+                                    </div>
+                                </div>
 
 
                                 {/* DELETE */}

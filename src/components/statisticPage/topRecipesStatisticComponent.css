@@ -1,0 +1,397 @@
+.top-recipes-statistic {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    padding: 22px;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-recipes-header {
+
+    width: 100%;
+
+    margin-bottom: 15px;
+
+    flex-shrink: 0;
+
+}
+
+
+.top-recipes-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+/* =========================================================
+   TITLE ICON
+========================================================= */
+
+.top-recipes-title-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: rgba(253, 170, 45, 0.15);
+
+    border: 1px solid rgba(253, 170, 45, 0.35);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+}
+
+
+.top-recipes-title-icon i {
+
+    color: #fdaa2d;
+
+    font-size: 18px;
+
+}
+
+
+/* =========================================================
+   TITLE CONTENT
+========================================================= */
+
+.top-recipes-title-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+.top-recipes-title-content h3 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+}
+
+
+.top-recipes-title-content span {
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.top-recipes-list {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    overflow-y: auto;
+
+    padding-right: 3px;
+
+}
+
+
+/* =========================================================
+   RECIPE ITEM
+========================================================= */
+
+.top-recipe-item {
+
+    width: 100%;
+
+    min-height: 55px;
+
+    padding: 8px 12px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(120, 133, 79, 0.2);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    box-sizing: border-box;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+    cursor: pointer;
+
+}
+
+
+.top-recipe-item:hover {
+
+    background: rgba(253, 170, 45, 0.06);
+
+    border-color: rgba(253, 170, 45, 0.35);
+
+    transform: translateX(3px);
+
+}
+
+
+/* =========================================================
+   RANK
+========================================================= */
+
+.top-recipe-rank {
+
+    width: 30px;
+
+    flex-shrink: 0;
+
+    color: #fdaa2d;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   RECIPE INFO
+========================================================= */
+
+.top-recipe-info {
+
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+.top-recipe-name {
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.top-recipe-creator {
+
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 10px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+.top-recipe-creator:hover{
+     cursor: pointer;
+    transform: translateY(-2px);
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   STATISTIC VALUE
+========================================================= */
+
+.top-recipe-statistic {
+
+    min-width: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 5px;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    flex-shrink: 0;
+
+}
+
+
+.top-recipe-statistic i {
+
+    color: #fdaa2d;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.top-recipes-empty {
+
+    flex: 1;
+
+    min-height: 150px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    color: rgba(255, 255, 255, 0.4);
+
+    font-size: 12px;
+
+}
+
+
+.top-recipes-empty i {
+
+    font-size: 25px;
+
+    color: rgba(253, 170, 45, 0.6);
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.top-recipes-list::-webkit-scrollbar {
+
+    width: 4px;
+
+}
+
+
+.top-recipes-list::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+
+.top-recipes-list::-webkit-scrollbar-thumb {
+
+    background: rgba(253, 170, 45, 0.35);
+
+    border-radius: 10px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .top-recipes-statistic {
+
+        padding: 16px;
+
+    }
+
+
+    .top-recipe-item {
+
+        gap: 8px;
+
+        padding: 8px;
+
+    }
+
+
+    .top-recipe-name {
+
+        font-size: 12px;
+
+    }
+
+
+    .top-recipe-creator {
+
+        font-size: 9px;
+
+    }
+
+}

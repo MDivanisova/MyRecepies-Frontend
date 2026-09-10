@@ -27,6 +27,22 @@
         border-color 0.2s ease;
 }
 
+.user-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.user-card-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(1, 5, 19, 0.75);
+    border-radius: 25px;
+}
+
 .user-card:hover {
     transform: translateY(-3px);
 

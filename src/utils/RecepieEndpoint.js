@@ -40,10 +40,56 @@ export async function createRecepie(token, recepie) {
     
 }
 
+export const editRecepie = async (token, recipeId,recipeData) => 
+    {
+        const response = await fetch(`${path}/${recipeId}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": token
+                },
+                body: JSON.stringify({
+                    name: recipeData.name,
+                    preparationTime: Number(recipeData.preparationTime),
+                    cookingTime: Number(recipeData.cookingTime),
+                    category: recipeData.category,
+                    cuisine: recipeData.cuisine,
+                    ingredients: recipeData.ingredients,
+                    instructions: recipeData.instructions,
+                    cookingMethods: recipeData.cookingMethods,
+                    tools: recipeData.tools,
+                    nutrition: recipeData.nutrition,
+                    imageUrl: recipeData.imageUrl,
+                    visibility: recipeData.visibility
+                })
+            }
+        );
 
-export async function getAllRecepies(token, pageNumber, recepieName, creator, ingredient, category, cuisine){
+        const data = await response.json();
 
-    const result = await fetch(`${path}/recepies?pageSize=${PAGESIZE}&pageNumber=${pageNumber}&creator=${creator}&name=${recepieName}&ingredient=${ingredient}&category=${category}&cuisine=${cuisine}`, {
+        console.log("EDIT RECIPE RESPONSE:", data);
+        console.log("EDIT RECIPE STATUS:", response.status);
+
+        if(response.status === 200){
+            return {
+                succ: true,
+                ...data
+            }
+        }
+
+        return {
+            succ: false,
+            msg: data.msg,
+            status: response.status
+        };
+
+    }
+
+
+export async function getAllRecepies(token, pageNumber, recepieName, creator, ingredient, category, cuisine, numOfRecomended){
+
+    const result = await fetch(`${path}/recepies?pageSize=${PAGESIZE}&pageNumber=${pageNumber}&creator=${creator}&name=${recepieName}&ingredient=${ingredient}&category=${category}&cuisine=${cuisine}&numOfRecomended=${numOfRecomended}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -68,28 +114,51 @@ export async function getAllRecepies(token, pageNumber, recepieName, creator, in
 }
 
 
+export async function removeRecipe(token, recepieId) {
 
+    const result = await fetch(`${path}/${recepieId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "authorization": token 
+        }
+    })
 
-    export async function removeRecipe(token, recepieId) {
+    const data = await result.json();
 
-        const result = await fetch(`${path}/${recepieId}`, {
-            method: "DELETE",
+    if(result.status === 200){
+        return {
+            succ: true
+        }
+    }
+    return {
+        ...data,
+        status: result.status
+    }
+    
+}
+
+export const getRecepie = async (token, recepieId) => {
+
+    const response = await fetch(`${path}/${recepieId}`,
+        {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": token 
-            }
-        })
-
-        const data = await result.json();
-
-        if(result.status === 200){
-            return {
-                succ: true
+                "authorization": token
             }
         }
+    );
+    const data = await response.json();
+
+    if(response.status === 200){
         return {
-            ...data,
-            status: result.status
+            succ: true,
+            ...data
         }
-        
     }
+    return {
+        ...data,
+        status: response.status,
+    }
+};

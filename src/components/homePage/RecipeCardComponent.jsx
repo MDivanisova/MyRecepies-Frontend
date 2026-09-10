@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     createBookmark,
@@ -5,6 +6,8 @@ import {
 } from "../../utils/BookmarkEndpoint";
 import { removeRecipe } from "../../utils/RecepieEndpoint";
 import { useAuth } from "../../context/useAuth";
+
+import Spinner from "../Spiner";
 
 import "./recipeCardComponent.css";
 
@@ -17,6 +20,8 @@ export default function RecipeCardComponent({
     const { token, user } = useAuth();
 
     const navigate = useNavigate();
+
+    const [profileLoading, setProfileLoading] = useState(false);
 
 
     /* =========================
@@ -48,9 +53,35 @@ export default function RecipeCardComponent({
        OPEN RECIPE
     ========================= */
 
-    const handleCardClick = () => {
+    function handleCardClick(event) {
 
-        navigate("/PageNotfound");
+       event.stopPropagation();
+
+        if (!recipe._id || profileLoading) {
+            return;
+        }
+
+        setProfileLoading(true);
+
+        navigate(`/recipe/details/${recipe._id}`);
+
+    }
+
+    /* =========================
+       OPEN CREATOR PROFILE
+    ========================= */
+
+    const handleCreatorClick = (event) => {
+
+        event.stopPropagation();
+
+        if (!recipe.creator || profileLoading) {
+            return;
+        }
+
+        setProfileLoading(true);
+
+        navigate(`/profile/${recipe.creator._id}`);
 
     };
 
@@ -155,20 +186,32 @@ export default function RecipeCardComponent({
 
         <div className="recipe-card">
 
+            {profileLoading && (
+
+                <div className="recipe-card-loading">
+
+                    <Spinner
+                        w={100}
+                        h={100}
+                    />
+
+                </div>
+
+            )}
+
 
             {/* =========================
                 IMAGE
             ========================= */}
 
-            <div className="recipe-card-image">
+            <div className="recipe-card-image" onClick={handleCardClick}>
 
                 <img
                     src={recipe.imageUrl}
                     alt={recipe.name}
                     onError={(e) => {
 
-                        e.currentTarget.src =
-                            "https://imgs.search.brave.com/0LcoNeVoMi9UGquyOMvqqdzDA7k3gC0E2C49J7rD81g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L3ByZW1pdW0tdmVj/dG9yLzQwNC1wYWdl/LWZvdW5kLXNlYXJj/aC1lcnJvci13ZWIt/aWxsdXN0cmF0aW9u/XzU4NTAyNC00NTku/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MCZxPTgw";
+                        e.currentTarget.src = "https://imgs.search.brave.com/0LcoNeVoMi9UGquyOMvqqdzDA7k3gC0E2C49J7rD81g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L3ByZW1pdW0tdmVj/dG9yLzQwNC1wYWdl/LWZvdW5kLXNlYXJj/aC1lcnJvci13ZWIt/aWxsdXN0cmF0aW9u/XzU4NTAyNC00NTku/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MCZxPTgw";
 
                     }}
                     onClick={handleCardClick}
@@ -193,7 +236,8 @@ export default function RecipeCardComponent({
                 CONTENT
             ========================= */}
 
-            <div className="recipe-card-content">
+            <div className="recipe-card-content" 
+                    onClick={handleCardClick} >
 
 
                 {/* =========================
@@ -202,7 +246,6 @@ export default function RecipeCardComponent({
 
                 <div
                     className="recipe-name"
-                    onClick={handleCardClick}
                 >
 
                     {recipe.name}
@@ -223,15 +266,13 @@ export default function RecipeCardComponent({
 
                     <div
                         className="recipe-creator"
-                        onClick={handleCardClick}
+                        onClick={handleCreatorClick}
                     >
 
                         <i className="fa-solid fa-user"></i>
 
                         <span>
-                            {recipe.creator?.name ||
-                                recipe.user?.name ||
-                                "Unknown"}
+                            {recipe.creator ? recipe.creator.name :"Anonimus"}
                         </span>
 
                     </div>
@@ -322,10 +363,13 @@ export default function RecipeCardComponent({
 
                 </div>
 
+            </div>
+
 
                 {/* =========================
                     BUTTONS
                 ========================= */}
+
 
                 <div className="recipe-button-wraper">
 
@@ -365,7 +409,8 @@ export default function RecipeCardComponent({
 
                     {(user.role.roleName === "admin" ||
                         user.role.roleName ===
-                        "contentMenager") && (
+                        "contentMenager" ||
+                        user._id === recipe.creator?._id) && (
 
                         <button
                             type="button"
@@ -376,13 +421,11 @@ export default function RecipeCardComponent({
                             <i className="fa-solid fa-trash"></i>
 
                         </button>
-
                     )}
 
                 </div>
 
 
-            </div>
 
         </div>
 

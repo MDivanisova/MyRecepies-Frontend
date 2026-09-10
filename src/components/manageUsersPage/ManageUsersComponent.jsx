@@ -6,6 +6,7 @@ import { getUsers } from "../../utils/UserEndpoints";
 import { useAuth } from "../../context/useAuth";
 
 import Spinner from "../Spiner";
+import { useNavigate } from "react-router-dom";
 import "./manageUsersComponent.css";
 
 
@@ -20,8 +21,9 @@ export default function ManageUsersComponent() {
     const {token, logout} = useAuth();
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
-    const [refresh, setRefresh] =useState(1);
+    const [refresh, setRefresh] = useState(1);
 
+const navigate = useNavigate();
 
 
     async function fetchUsers(token, pageNumber, name, email, role){
@@ -33,7 +35,7 @@ export default function ManageUsersComponent() {
 
             totalUsers.current = data.pagination.numUsers;
             totalPages.current = data.pagination.totalPages;
-            
+            console.log(data.users)
             setUsers(data.users);
         }
         else if(data.status === 401){
@@ -88,6 +90,14 @@ export default function ManageUsersComponent() {
                     </div>
 
                     <RoleSelectComponent value={roleFilter} onChange={setRoleFilter} />
+                    <button
+                        type="button"
+                        className="add-new-role-button"
+                        onClick={() => navigate("/addNewRole")}
+                    >
+                        <i className="fa-solid fa-plus"></i>
+                        Add New Role
+                    </button>
 
                 </div>
 

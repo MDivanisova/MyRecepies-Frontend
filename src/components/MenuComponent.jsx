@@ -15,6 +15,7 @@ export default function MenuComponent({path}){
 
     function logOutHandle(){
         logout();
+        localStorage.removeItem("recommendations")
     }
 
     const canAccess = (item) => menuAccess[item].includes(role);
@@ -24,9 +25,9 @@ export default function MenuComponent({path}){
             <div className="sidebar-logo"></div>
 
             <Link to='/' className={path == "home" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-house"></i>Home</Link>
-            <Link to='/profile' className={path == "profile" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-circle-user"></i>Profile</Link>
+            <Link to='/profile/me' className={path == "profile/me" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-circle-user"></i>Profile</Link>
             <Link to='/bookmarks' className={path == "bookmarks" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-bookmark"></i>Bookmark</Link>
-            <Link to='/pageNotfound' className={path == "statistic" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-square-poll-vertical"></i>Statistic</Link>
+            <Link to='/statistic' className={path == "statistic" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-square-poll-vertical"></i>Statistic</Link>
 
             {canAccess('addRecipe') && (
                 <Link to='/addRecepie' className={path == "addRecepie" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-square-plus"></i>Add Recepie</Link>

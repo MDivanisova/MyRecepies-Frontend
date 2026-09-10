@@ -42,6 +42,25 @@
 }
 
 
+.ingredient-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+}
+
+.ingredient-field input {
+    width: 100%;
+}
+
+.ingredient-field .form-error {
+    margin-top: 3px;
+    min-height: 18px;
+    font-size: 12px;
+}
+
+
+
 /* =========================
    INGREDIENT ROW
    ========================= */
@@ -56,9 +75,7 @@
         minmax(150px, 1.5fr)
         40px;
 
-    gap: 10px;
-
-    padding: 8px 0;
+    gap: 3px;
 
     align-items: center;
 
@@ -212,6 +229,8 @@
     color: rgba(255, 255, 255, 0.45);
 
     cursor: pointer;
+
+    transform: translateY(-10px);
 
     transition:
         background 0.2s ease,

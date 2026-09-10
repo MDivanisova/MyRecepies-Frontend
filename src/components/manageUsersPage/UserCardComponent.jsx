@@ -1,34 +1,44 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import { editUserRole, GetRole } from "../../utils/RoleEndpoint";
 import { deleteUser } from "../../utils/UserEndpoints";
+import Spinner from "../Spiner";
 import "./userCardComponent.css";
 
-export default function UserCardComponent({ user, setUsers, setLoading, setRefresh }) {
-    const {token} = useAuth();
+export default function UserCardComponent({
+    user,
+    setUsers,
+    setLoading,
+    setRefresh
+}) {
+    const { token } = useAuth();
+    const navigate = useNavigate();
+
     const [edit, setEdit] = useState(false);
     const [roleOpen, setRoleOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState("");
-    const [roles,setRoles] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [profileLoading, setProfileLoading] = useState(false);
 
     const roleSelectRef = useRef(null);
 
     useEffect(() => {
-    
-            async function fetchRoles() {
 
-                const data = await GetRole(token);
-    
-                if (data.succ === true && Array.isArray(data.roles)) {
-                    setRoles(data.roles);
-                } else {
-                    setRoles([]);
-                }
-        
+        async function fetchRoles() {
+
+            const data = await GetRole(token);
+
+            if (data.succ === true && Array.isArray(data.roles)) {
+                setRoles(data.roles);
+            } else {
+                setRoles([]);
             }
-    
-            fetchRoles();
-    
+
+        }
+
+        fetchRoles();
+
     }, [token]);
 
 
@@ -42,6 +52,7 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
             ) {
                 setRoleOpen(false);
             }
+
         }
 
         function handleEscape(event) {
@@ -49,6 +60,7 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
             if (event.key === "Escape") {
                 setRoleOpen(false);
             }
+
         }
 
         document.addEventListener("mousedown", handleClickOutside);
@@ -61,45 +73,124 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
 
     }, []);
 
-    async function handleDelete(userId){
+
+    function handleCardClick() {
+
+        if (edit || profileLoading) {
+            return;
+        }
+
+        setProfileLoading(true);
+
+        navigate(`/profile/${user._id}`);
+
+    }
+
+
+    async function handleDelete(userId) {
+
         const data = await deleteUser(token, userId);
 
-        if(data.succ === true){
-            
+        if (data.succ === true) {
+
             setUsers(prevUsers =>
-                prevUsers.filter(user => user.id !== userId)
+                prevUsers.filter(user => user._id !== userId)
             );
-            setRefresh(prev=>prev+1);
+
+            setRefresh(prev => prev + 1);
 
         }
+
     }
 
-    async function handleEdit(userId){
+
+    async function handleEdit(userId) {
+
+        if (!selectedRole?._id) {
+            return;
+        }
+
         setLoading(true);
-        const data = await editUserRole(token, userId, selectedRole._id);
-        if(data.succ === true){
+
+        const data = await editUserRole(
+            token,
+            userId,
+            selectedRole._id
+        );
+
+        if (data.succ === true) {
+
             setUsers(prevUsers =>
                 prevUsers.map(user =>
-                user._id === userId
-                    ? {
-                        ...user,
-                        role: selectedRole
-                    }
-                    : user
+                    user._id === userId
+                        ? {
+                            ...user,
+                            role: selectedRole
+                        }
+                        : user
                 )
             );
+
             setEdit(false);
+
         }
+
         setLoading(false);
+
     }
 
+
+    function handleEditClick(event) {
+
+        event.stopPropagation();
+
+        setSelectedRole(user.role);
+        setEdit(true);
+
+    }
+
+
+    function handleSaveClick(event) {
+
+        event.stopPropagation();
+
+        handleEdit(user._id);
+
+    }
+
+
+    function handleDeleteClick(event) {
+
+        event.stopPropagation();
+
+        handleDelete(user._id);
+
+    }
+
+
     return (
-        <div className="user-card">
+        <div
+            className={`user-card ${edit ? "user-card-editing" : ""}`}
+            onClick={handleCardClick}
+        >
+
+            {profileLoading && (
+                <div className="user-card-loading">
+
+                    <Spinner
+                        w={100}
+                        h={100}
+                    />
+
+                </div>
+            )}
+
 
             {/* TOP SECTION */}
             <div className="user-card-top">
 
                 <div className="user-avatar">
+
                     {user.name
                         .split(" ")
                         .map(word => word[0])
@@ -107,34 +198,52 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
                         .slice(0, 2)
                         .toUpperCase()
                     }
+
                 </div>
+
 
                 <div className="user-card-status">
 
-                    {(
-                        <div className={user.isVerified ? "verified-badge": "notverified-badge"}>
-                            <i className={
-                                    user.isVerified
-                                        ? "fa-solid fa-check verified"
-                                        : "fa-solid fa-xmark not-verified"
-                                }
-                            ></i>
-                            Verified
-                        </div>
-                    )}
-                    
+                    <div
+                        className={
+                            user.isVerified
+                                ? "verified-badge"
+                                : "notverified-badge"
+                        }
+                    >
+
+                        <i
+                            className={
+                                user.isVerified
+                                    ? "fa-solid fa-check verified"
+                                    : "fa-solid fa-xmark not-verified"
+                            }
+                        ></i>
+
+                        Verified
+
+                    </div>
+
 
                     {edit ? (
-                        <div className="category-select" ref={roleSelectRef}>
+
+                        <div
+                            className="category-select"
+                            ref={roleSelectRef}
+                            onClick={(event) => event.stopPropagation()}
+                        >
 
                             <button
                                 type="button"
                                 className="category-select-button"
-                                onClick={() => setRoleOpen(prev => !prev)}
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    setRoleOpen(prev => !prev);
+                                }}
                             >
 
                                 <span>
-                                    {selectedRole.roleName || "Select a role"}
+                                    {selectedRole?.roleName || "Select a role"}
                                 </span>
 
                                 <i
@@ -147,6 +256,7 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
 
 
                             {roleOpen && (
+
                                 <div className="category-select-options">
 
                                     {roles.map(role => (
@@ -159,10 +269,13 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
                                                     ? "selected"
                                                     : ""
                                             }`}
+                                            onClick={(event) => {
 
-                                            onClick={() => {
+                                                event.stopPropagation();
+
                                                 setSelectedRole(role);
                                                 setRoleOpen(false);
+
                                             }}
                                         >
                                             {role.roleName}
@@ -171,13 +284,19 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
                                     ))}
 
                                 </div>
+
                             )}
 
                         </div>
-                    ):(
-                        <div className={`role-badge role-${user.role.roleName.toLowerCase()}`}>
+
+                    ) : (
+
+                        <div
+                            className={`role-badge role-${user.role.roleName.toLowerCase()}`}
+                        >
                             {user.role.roleName}
                         </div>
+
                     )}
 
                 </div>
@@ -199,22 +318,35 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
             <div className="user-card-stats">
 
                 <div className="user-stat">
-                    <i className={
-                        user.gender === "male"
-                            ? "fa-solid fa-mars"
-                            : "fa-solid fa-venus"
-                    }></i>
+
+                    <i
+                        className={
+                            user.gender === "male"
+                                ? "fa-solid fa-mars"
+                                : "fa-solid fa-venus"
+                        }
+                    ></i>
+
                     <span>{user.age}y</span>
+
                 </div>
 
+
                 <div className="user-stat">
+
                     <i className="fa-regular fa-pen-to-square"></i>
+
                     <span>{user.reviewsWriten}</span>
+
                 </div>
 
+
                 <div className="user-stat">
+
                     <i className="fa-regular fa-bookmark"></i>
+
                     <span>{user.bookmarks}</span>
+
                 </div>
 
             </div>
@@ -222,31 +354,50 @@ export default function UserCardComponent({ user, setUsers, setLoading, setRefre
 
             {/* LAST SEEN */}
             <div className="user-last-seen">
-                Last seen: {new Date(user?.lastLogedIn).toLocaleString("en-UK", {
-                                month: "long",
-                                day: "numeric",
-                                year: "numeric",
-                                hour: "2-digit",
-                                minute: "2-digit"
-                            })}
+
+                Last seen:{" "}
+
+                {new Date(user?.lastLogedIn).toLocaleString("en-UK", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                })}
+
             </div>
 
 
             {/* ACTIONS */}
             <div className="user-card-actions">
-                {edit? (
-                    <button className="save-edit-user-button" onClick={()=>{setEdit(prev=>!prev); handleEdit(user._id)}}>
+
+                {edit ? (
+
+                    <button
+                        className="save-edit-user-button"
+                        onClick={handleSaveClick}
+                    >
                         <i className="fa-solid fa-check verified"></i>
                         Save
                     </button>
-                ):(
-                    <button className="edit-user-button" onClick={()=>{setEdit(prev=>!prev)}}>
+
+                ) : (
+
+                    <button
+                        className="edit-user-button"
+                        onClick={handleEditClick}
+                    >
                         <i className="fa-solid fa-pen"></i>
                         Edit
-                    </button>)}
-                
+                    </button>
 
-                <button className="delete-user-button" onClick={()=>{handleDelete(user._id)}}>
+                )}
+
+
+                <button
+                    className="delete-user-button"
+                    onClick={handleDeleteClick}
+                >
                     <i className="fa-solid fa-trash"></i>
                     Delete
                 </button>

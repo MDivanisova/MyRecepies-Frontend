@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./bookmarkRecipeCardComponent.css";
 import { removeBookmark } from "../../utils/BookmarkEndpoint";
 import { useAuth } from "../../context/useAuth";
+import Spinner from "../Spiner";
 
 export default function BookmarkRecipeCardComponent({
     bookmark,
@@ -11,6 +13,8 @@ export default function BookmarkRecipeCardComponent({
 
     const { token, logout } = useAuth();
     const navigate = useNavigate();
+
+    const [profileLoading, setProfileLoading] = useState(false);
 
     const recipe = bookmark.recepie;
 
@@ -29,8 +33,29 @@ export default function BookmarkRecipeCardComponent({
     const totalTime = preparationTime + cookingTime;
 
 
-    const handleCardClick = () => {
-        navigate("/PageNotfound");
+    const handleCardClick = (event) => {
+        event.stopPropagation();
+
+        if (!recipe._id || profileLoading) {
+            return;
+        }
+
+        setProfileLoading(true);
+
+        navigate(`/recipe/details/${recipe._id}`);
+    };
+
+
+    const handleCreatorClick = (event) => {
+        event.stopPropagation();
+
+        if (!recipe.creator || profileLoading) {
+            return;
+        }
+
+        setProfileLoading(true);
+
+        navigate(`/profile/${recipe.creator._id}`);
     };
 
 
@@ -68,18 +93,25 @@ export default function BookmarkRecipeCardComponent({
 
         <div className="bookmark-recipe-card">
 
+            {profileLoading && (
+                <div className="bookmark-recipe-card-loading">
+                    <Spinner
+                        w={100}
+                        h={100}
+                    />
+                </div>
+            )}
+
             {/* IMAGE */}
 
-            <div className="bookmark-recipe-card-image">
+            <div className="bookmark-recipe-card-image" onClick={handleCardClick}>
 
                 <img
                     src={recipe.imageUrl}
                     alt={recipe.name}
                     onError={(e) => {
-                        e.currentTarget.src =
-                            "https://imgs.search.brave.com/0LcoNeVoMi9UGquyOMvqqdzDA7k3gC0E2C49J7rD81g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L3ByZW1pdW0tdmVj/dG9yLzQwNC1wYWdl/LWZvdW5kLXNlYXJj/aC1lcnJvci13ZWIt/aWxsdXN0cmF0aW9u/XzU4NTAyNC00NTku/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MCZxPTgw";
+                        e.currentTarget.src = "https://imgs.search.brave.com/0LcoNeVoMi9UGquyOMvqqdzDA7k3gC0E2C49J7rD81g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L3ByZW1pdW0tdmVj/dG9yLzQwNC1wYWdl/LWZvdW5kLXNlYXJj/aC1lcnJvci13ZWIt/aWxsdXN0cmF0aW9u/XzU4NTAyNC00NTku/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MCZxPTgw";
                     }}
-                    onClick={handleCardClick}
                 />
 
 
@@ -87,7 +119,6 @@ export default function BookmarkRecipeCardComponent({
 
                 <div
                     className="bookmark-recipe-category"
-                    onClick={handleCardClick}
                 >
                     {recipe.category?.[0]}
                 </div>
@@ -97,13 +128,12 @@ export default function BookmarkRecipeCardComponent({
 
             {/* CONTENT */}
 
-            <div className="bookmark-recipe-card-content">
+            <div className="bookmark-recipe-card-content" onClick={handleCardClick}>
 
                 {/* RECIPE NAME */}
 
                 <div
                     className="bookmark-recipe-name"
-                    onClick={handleCardClick}
                 >
                     {recipe.name}
                 </div>
@@ -113,12 +143,12 @@ export default function BookmarkRecipeCardComponent({
 
                 <div
                     className="bookmark-recipe-creator"
-                    onClick={handleCardClick}
+                    onClick={handleCreatorClick}
                 >
                     <i className="fa-solid fa-user"></i>
 
                     <span>
-                        {recipe.creator?.name}
+                        {recipe.creator?.name || "Anonimus"}
                     </span>
                 </div>
 
@@ -127,7 +157,6 @@ export default function BookmarkRecipeCardComponent({
 
                 <div
                     className="bookmark-recipe-details"
-                    onClick={handleCardClick}
                 >
 
                     {/* RATING */}
@@ -194,8 +223,9 @@ export default function BookmarkRecipeCardComponent({
 
                 </div>
 
+            </div>
 
-                {/* REMOVE BOOKMARK */}
+            {/* REMOVE BOOKMARK */}
 
                 <div className="bookmark-recipe-button-wrapper">
 
@@ -214,8 +244,6 @@ export default function BookmarkRecipeCardComponent({
                     </button>
 
                 </div>
-
-            </div>
 
         </div>
     );

@@ -1,6 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-import LoginPage from "../pages/LoginPage";
 import Spinner from "../components/Spiner";
 
 export default function ProtectedRoute(){

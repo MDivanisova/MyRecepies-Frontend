@@ -113,6 +113,22 @@
     box-sizing: border-box;
 }
 
+.instruction-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+}
+
+.instruction-field textarea {
+    width: 100%;
+}
+
+.instruction-field .form-error {
+    margin-top: 3px;
+    min-height: 18px;
+    font-size: 12px;
+}
 
 /* =========================
    STEP NUMBER
@@ -144,6 +160,9 @@
     font-size: 16px;
 
     font-weight: 700;
+
+    transform: translateY(30px);
+    transform: translateX(10px);
 }
 
 
@@ -244,6 +263,8 @@
         rgba(255, 255, 255, 0.45);
 
     cursor: pointer;
+
+    transform: translateY(-10px);
 
     transition:
         background 0.2s ease,

@@ -13,6 +13,9 @@ import ProfilePage from './pages/ProfilePage';
 import AddRecepiePage from './pages/AddRecepiePage';
 import ManageUsersPage from './pages/ManageUsersPage';
 import BookmarkPage from './pages/BookmarkPage';
+import StatisticPage from './pages/StatisticPage';
+import RecipeDetailPage from './pages/RecipeDetailPage';
+import AddNewRolePage from './pages/AddNewRolePage';
 
 function App() {
 
@@ -30,15 +33,18 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<HomePage />}></Route>
           <Route path='/help' element={<HelpPage />} />
-          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/profile/me' element={<ProfilePage />} />
+          <Route path='/profile/:userId' element={<ProfilePage />} />
           <Route path='/addRecepie' element={<AddRecepiePage />} />
-          <Route path='manageUsers' element={<ManageUsersPage />} />
+          <Route path='/manageUsers' element={<ManageUsersPage />} />
           <Route path='/bookmarks' element={<BookmarkPage />} />
+          <Route path='/statistic' element={<StatisticPage />} />
+          <Route path='/recipe/details/:recipeId' element={<RecipeDetailPage />} />
+          <Route path='/addNewRole' element={<AddNewRolePage />} />
         </Route>
 
         <Route path='/pageNotFound' element={<NotFoundPage />} />
         <Route path='/internalServerError' element={<InternalServerPage />} />
-
         
         <Route path='*' element={<NotFoundPage />}/>        
       </Routes>

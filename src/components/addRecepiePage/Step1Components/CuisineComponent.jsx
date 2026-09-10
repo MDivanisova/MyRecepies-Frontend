@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CUISINES } from "../../../utils/enum";
 
-export default function CuisineComponent({
-    recipeData,
-    setRecipeData
-}) {
+export default function CuisineComponent({ recipeData, setRecipeData, setErrMessageCuisine}) {
 
     const [customCuisine, setCustomCuisine] = useState("");
     const [addingCuisine, setAddingCuisine] = useState(false);
@@ -25,20 +22,14 @@ export default function CuisineComponent({
                 setCuisineOpen(false);
             }
         }
-
-
         function handleEscape(event) {
 
             if (event.key === "Escape") {
                 setCuisineOpen(false);
             }
         }
-
-
         document.addEventListener("mousedown",handleClickOutside);
         document.addEventListener("keydown",handleEscape);
-
-
         return () => {
 
             document.removeEventListener("mousedown",handleClickOutside);
@@ -64,7 +55,7 @@ export default function CuisineComponent({
                 cuisine
             ]
         }));
-
+        setErrMessageCuisine("");
         setCuisineOpen(false);
     }
 
@@ -77,6 +68,9 @@ export default function CuisineComponent({
                 item => item !== cuisine
             )
         }));
+        if (recipeData.cuisines.length === 1) {
+            setErrMessageCuisine("cuisine is required");
+        }
     }
 
 
@@ -84,7 +78,7 @@ export default function CuisineComponent({
 
         const value = customCuisine.trim();
 
-        if (!value) return;
+        if (!value) return; 
 
         if (!recipeData.cuisines.includes(value)) {
 
@@ -95,6 +89,7 @@ export default function CuisineComponent({
                     value
                 ]
             }));
+            setErrMessageCuisine("");
         }
 
         setCustomCuisine("");
@@ -222,7 +217,6 @@ export default function CuisineComponent({
                         onChange={(e) =>
                             setCustomCuisine(e.target.value)
                         }
-                        className={hasFieldError("cuisine") ? "input-error" : ""}
                         placeholder="Enter your cuisine"
                         autoFocus
                     />

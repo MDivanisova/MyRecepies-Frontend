@@ -472,3 +472,39 @@
     color: rgba(255, 255, 255, 0.8);
 
 }
+
+
+
+.add-new-role-button {
+    height: 42px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    border: 1px solid #78854f;
+    background: rgba(1, 5, 19, 0.65) !important;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.add-new-role-button i {
+    color: #fdaa2d;
+    font-size: 14px;
+}
+
+.add-new-role-button:hover {
+    background: #fdaa2d;
+    border-color: #fdaa2d;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.add-new-role-button:hover i {
+    color: white;
+}

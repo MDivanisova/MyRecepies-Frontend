@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "./addRecepieStep7Component.css"
 
 export default function AddRecepieStep7Component({ recepieId, resetForm }) {
+
     return (
         <div className="step7-container">
 
@@ -34,7 +35,7 @@ export default function AddRecepieStep7Component({ recepieId, resetForm }) {
                 </Link>
 
                 <Link
-                    to={`/recepie/${recepieId.current}`}
+                    to={`/recipe/details/${recepieId.current}`}
                     className="step7-real-button"
                 >
                     View Recipe

@@ -1,7 +1,22 @@
 import "./addRecepieStep6Component.css";
 
-export default function AddRecepieStep6Component({handleChange,recipeData,setRecipeData})
+export default function AddRecepieStep6Component({handleChange, recipeData, setRecipeData, errMessageImageUrl,setErrMessageImageUrl})
 {
+
+    function handleImageUrlChange(e) {
+
+        const { value } = e.target;
+
+        handleChange(e);
+
+        if (value.trim() === "") {
+            setErrMessageImageUrl("image URL is required");
+            return;
+        }
+
+        setErrMessageImageUrl("");
+    }
+
 
     return (
         <div className="recipe-step-content">
@@ -46,10 +61,12 @@ export default function AddRecepieStep6Component({handleChange,recipeData,setRec
                             type="url"
                             name="imageUrl"
                             value={recipeData.imageUrl}
-                            onChange={handleChange}
+                            onChange={handleImageUrlChange}
                             placeholder="https://example.com/recipe-image.jpg"
                         />
-
+                    </div>
+                    <div className="form-error">
+                        {errMessageImageUrl}
                     </div>
 
                 </div>

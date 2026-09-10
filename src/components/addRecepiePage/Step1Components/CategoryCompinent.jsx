@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CATEGORIES } from "../../../utils/enum";
 
-export default function CategoryComponent({recipeData,setRecipeData}) 
+export default function CategoryComponent({recipeData, setRecipeData, setErrMessageCategory}) 
 {
 
     const [customCategory, setCustomCategory] = useState("");
@@ -55,7 +55,7 @@ export default function CategoryComponent({recipeData,setRecipeData})
                 category
             ]
         }));
-
+        setErrMessageCategory("");
         setCategoryOpen(false);
     }
 
@@ -69,6 +69,10 @@ export default function CategoryComponent({recipeData,setRecipeData})
                 item => item !== category
             )
         }));
+
+        if (recipeData.categories.length === 1) {
+            setErrMessageCategory("category is required");
+        }
     }
 
 
@@ -88,6 +92,7 @@ export default function CategoryComponent({recipeData,setRecipeData})
                     value
                 ]
             }));
+            setErrMessageCategory("");
         }
 
         setCustomCategory("");
