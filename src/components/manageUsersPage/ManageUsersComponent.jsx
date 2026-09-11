@@ -90,14 +90,6 @@ const navigate = useNavigate();
                     </div>
 
                     <RoleSelectComponent value={roleFilter} onChange={setRoleFilter} />
-                    <button
-                        type="button"
-                        className="add-new-role-button"
-                        onClick={() => navigate("/addNewRole")}
-                    >
-                        <i className="fa-solid fa-plus"></i>
-                        Add New Role
-                    </button>
 
                 </div>
 

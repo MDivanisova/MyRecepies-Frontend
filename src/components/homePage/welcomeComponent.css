@@ -664,3 +664,190 @@
     border-color: #fdaa2d;
     box-shadow: 0 0 0 2px rgba(253, 170, 45, 0.1);
 }
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   HOME RECIPE TYPE
+========================================================= */
+
+.home-recipe-type-select {
+    position: relative;
+
+    width: 190px;
+    min-width: 190px;
+
+    box-sizing: border-box;
+
+    flex: 0 0 150px;
+}
+
+
+/* =========================
+   RECIPE TYPE BUTTON
+========================= */
+
+.home-recipe-type-select-button {
+    width: 100%;
+
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #78854f;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(1, 5, 19, 0.4);
+
+    color: white;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.home-recipe-type-select-button:hover {
+    border-color: rgba(253, 170, 45, 0.4);
+}
+
+
+.home-recipe-type-select-button:focus {
+    border-color: #fdaa2d;
+
+    box-shadow:
+        0 0 0 2px rgba(253, 170, 45, 0.1);
+}
+
+
+.home-recipe-type-select-button span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.home-recipe-type-select-button i {
+    font-size: 11px;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    margin-left: 8px;
+
+    flex-shrink: 0;
+
+    transition: transform 0.2s ease;
+}
+
+
+.home-recipe-type-select-button i.rotate {
+    transform: rotate(180deg);
+}
+
+
+/* =========================
+   RECIPE TYPE OPTIONS
+========================= */
+
+.home-recipe-type-select-options {
+    position: absolute;
+
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+
+    max-height: 180px;
+
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #2b301a;
+
+    border: 1px solid rgba(120, 133, 79, 0.6);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+
+    scrollbar-width: none;
+}
+
+
+.home-recipe-type-select-options::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================
+   RECIPE TYPE OPTION
+========================= */
+
+.home-recipe-type-select-option {
+    width: 100%;
+
+    padding: 9px 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.home-recipe-type-select-option:hover {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}
+
+
+.home-recipe-type-select-option.selected {
+    background: rgba(253, 170, 45, 0.15);
+
+    color: #fdaa2d;
+}

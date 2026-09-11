@@ -16,6 +16,8 @@ export default function HomePage() {
         cuisine: "all"
     });
 
+    const [typeRecipes, setTypeRecipes] = useState("recipes");
+
     return (
         <div className="dashboard-page">
 
@@ -26,10 +28,14 @@ export default function HomePage() {
                 <WelcomeComponent
                     filters={filters}
                     setFilters={setFilters}
+                    typeRecipes = {typeRecipes}
+                    setTypeRecipes = {setTypeRecipes}
                 />
 
+                
                 <DashboardComponent
                     filters={filters}
+                    typeRecipes = {typeRecipes}
                 />
 
             </div>

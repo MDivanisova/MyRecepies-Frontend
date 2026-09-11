@@ -19,7 +19,8 @@ export const createReview = async ( token, recipeId, text) => {
 
 
         const data = await response.json();
-
+        console.log(data);
+        console.log("Review created.");
         if(response.status === 200){
             return {
                 succ: true

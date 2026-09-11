@@ -1,4 +1,4 @@
-import { editUser, getMe, getUsersRecepies, resendCode } from "../../utils/UserEndpoints";
+import { deleteUser, editUser, getMe, getUsersRecepies, resendCode } from "../../utils/UserEndpoints";
 import { useEffect, useState, useRef } from "react";
 import { useAuth } from "../../context/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ import "./profileComponent.css";
 
 export default function ProfileComponent() {
 
-    const { token } = useAuth();
+    const { token, logout } = useAuth();
     const navigate = useNavigate();
 
     const [user, setUser] = useState({});
@@ -469,7 +469,36 @@ export default function ProfileComponent() {
     }
 
 
+    async function handleDelete(){
+        const data = await deleteUser(token, user._id);
 
+        if(data.succ === true){
+            logout();
+            alert("You have deleted your profile redirecting to sign up");
+            navigate("/login");
+        }
+        else if (data.status === 400) {
+
+                console.log(data.error);
+
+                //za validaciskite errori ni gi dava
+
+            } else if (data.status === 401) {
+
+                //popup deka sesijata mu e istecena
+
+                // da se dodade otposle da pamte do kaj zastanal usero na koja strana ako mu izmine tokeno kako ke se logira direktno tam da go nose
+
+            } else if (data.status === 404) {
+
+                navigate("/pageNotFound");
+
+            } else if (data.status === 500) {
+
+                navigate("/internalServerError");
+
+            }
+    }
 
 
     return (
@@ -499,7 +528,7 @@ export default function ProfileComponent() {
 
                 {/*za brisenje na profilo e voa treba da mu se stave event onclich so ke se povika endpointo za brisenje na profilo*/}    
 
-                <i className="fa-solid fa-trash edit-other-users-profile-icon-trash"></i>
+                <i className="fa-solid fa-trash edit-other-users-profile-icon-trash" onClick={()=> handleDelete()}></i>
 
                 {
                     editMode ? (

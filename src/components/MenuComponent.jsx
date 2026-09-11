@@ -34,8 +34,9 @@ export default function MenuComponent({path}){
             )}
 
             {canAccess('editUsers') && (
-                <Link to='/manageUsers' className={path == "manageUsers" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-user-pen"></i>Manage Users</Link>
+                <Link to='/manageUsers' className={path == "manageUsers" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-users-gear"></i>Manage Users</Link>
             )}
+
 
             <div className="menu-bottom-group">
                 <Link to='/help' className={path == "help" ? "menu-item menu-item-selected" : "menu-item"}><i className="fa-solid fa-circle-info"></i>Help</Link>

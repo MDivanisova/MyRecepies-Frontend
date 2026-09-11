@@ -80,7 +80,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
         if (data.succ === true) {
 
             setIsReviewd(true);
-
+            console.log(data);
             setRating(data.rating);
             setReview(data.review);
 
@@ -108,6 +108,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
             navigate("/internalServerError");
 
         }
+        console.log(isReviewd)
 
         setLoading(false);
     }
@@ -300,7 +301,6 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
             selectedRating,
             recipe._id
         );
-        console.log(ratingData)
         if (ratingData.succ === true) {
 
             const reviewData = await createReview(
@@ -308,7 +308,6 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
                 recipe._id,
                 reviewText.trim()
             );
-            console.log(reviewData)
 
             if (reviewData.succ === true) {
 
@@ -383,18 +382,16 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
 
         const data = await deleteReview(token, reviewId);
         if (data.succ === true) {
-            console.log(data)
             const ratingData = await deleteRating(token, ratingId);
-            console.log(ratingData);
 
             if (ratingData.succ === true) {
-                console.log(ratingData);
                 setReview({});
                 setIsReviewd(false);
                 setDeletingReview(null);
                 setSelectedRating(0);
                 setHoverRating(0);
                 setReviewText("");
+                setRefetchRecipe(prev=>!prev);
 
                 return;
             }
@@ -668,7 +665,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
                                 </button>
 
 
-                                {(user?.role.roleName === "admin" || user?.role.roleName === "contentManager" || user?._id === review.reviewer._id
+                                {(user?.role.roleName === "admin" || user?.role.roleName === "contentManager" || user?._id === review?.reviewer?._id
                                     
                                 ) && (
                                     <button

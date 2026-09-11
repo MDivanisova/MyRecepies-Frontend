@@ -632,7 +632,7 @@ export default function RecipeDetailComponent() {
 
 
     async function fetchRecipe(recipeId) {
-
+        
         const data = await getRecepie(token, recipeId);
 
         if(data.succ === true){
@@ -2571,10 +2571,6 @@ export default function RecipeDetailComponent() {
 
                         </div>
 
-
-                        {/* =================================================
-                            MOST HELPFUL POSITIVE REVIEW
-                        ================================================= */}
 
 
                     </div>

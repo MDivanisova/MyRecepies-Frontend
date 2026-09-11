@@ -5,7 +5,7 @@ import { CATEGORIES, CUISINES } from "../../utils/enum";
 
 import "./welcomeComponent.css";
 
-export default function WelcomeComponent({ filters, setFilters }) {
+export default function WelcomeComponent({ filters, setFilters, typeRecipes, setTypeRecipes }) {
 
     const creatorRef = useRef(null);
     const categoryRef = useRef(null);
@@ -25,6 +25,11 @@ export default function WelcomeComponent({ filters, setFilters }) {
 
     const [recipeName, setRecipeName] = useState("");
     const [ingredientSearch, setIngredientSearch] = useState("");
+
+
+
+    const [recipeTypeOpen, setRecipeTypeOpen] = useState(false);
+    const recipeTypeRef = useRef(null);
 
     const { user, token } = useAuth();
 
@@ -247,6 +252,86 @@ export default function WelcomeComponent({ filters, setFilters }) {
             <div className="home-search">
 
                 <div className="home-search-toolbar">
+
+                    {/*****************Recomended filter************************/}
+
+                    <div className="home-recipe-type-select" ref={recipeTypeRef} >
+
+                        <button
+                            type="button"
+                            className="home-recipe-type-select-button"
+                            onClick={() => {
+
+                                setRecipeTypeOpen(prev => !prev);
+
+                                setCategoryOpen(false);
+                                setCuisineOpen(false);
+
+                            }}
+                        >
+
+                            <span>
+
+                                {typeRecipes === "recipes"
+                                    ? "Normal Recipes"
+                                    : "Recommended Recipes"}
+
+                            </span>
+
+                            <i
+                                className={`fa-solid fa-chevron-down ${
+                                    recipeTypeOpen ? "rotate" : ""
+                                }`}
+                            ></i>
+
+                        </button>
+
+
+                        {recipeTypeOpen && (
+
+                            <div className="home-recipe-type-select-options">
+
+                                <button
+                                    type="button"
+                                    className={`home-recipe-type-select-option ${
+                                        typeRecipes === "recipes"
+                                            ? "selected"
+                                            : ""
+                                    }`}
+                                    onClick={() => {
+
+                                        setTypeRecipes("recipes");
+                                        setRecipeTypeOpen(false);
+
+                                    }}
+                                >
+                                    Normal Recipes
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    className={`home-recipe-type-select-option ${
+                                        typeRecipes === "recommended"
+                                            ? "selected"
+                                            : ""
+                                    }`}
+                                    onClick={() => {
+
+                                        setTypeRecipes("recommended");
+                                        setRecipeTypeOpen(false);
+
+                                    }}
+                                >
+                                    Recommended Recipes
+                                </button>
+
+                            </div>
+
+                        )}
+
+                    </div>
+
 
 
                     {/* =========================

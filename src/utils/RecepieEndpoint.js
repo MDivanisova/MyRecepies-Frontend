@@ -87,9 +87,9 @@ export const editRecepie = async (token, recipeId,recipeData) =>
     }
 
 
-export async function getAllRecepies(token, pageNumber, recepieName, creator, ingredient, category, cuisine, numOfRecomended){
+export async function getAllRecepies(token, pageNumber, recepieName, creator, ingredient, category, cuisine){
 
-    const result = await fetch(`${path}/recepies?pageSize=${PAGESIZE}&pageNumber=${pageNumber}&creator=${creator}&name=${recepieName}&ingredient=${ingredient}&category=${category}&cuisine=${cuisine}&numOfRecomended=${numOfRecomended}`, {
+    const result = await fetch(`${path}/recepies?pageSize=${PAGESIZE}&pageNumber=${pageNumber}&creator=${creator}&name=${recepieName}&ingredient=${ingredient}&category=${category}&cuisine=${cuisine}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

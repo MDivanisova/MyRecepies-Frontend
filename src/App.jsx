@@ -15,7 +15,6 @@ import ManageUsersPage from './pages/ManageUsersPage';
 import BookmarkPage from './pages/BookmarkPage';
 import StatisticPage from './pages/StatisticPage';
 import RecipeDetailPage from './pages/RecipeDetailPage';
-import AddNewRolePage from './pages/AddNewRolePage';
 
 function App() {
 
@@ -40,7 +39,6 @@ function App() {
           <Route path='/bookmarks' element={<BookmarkPage />} />
           <Route path='/statistic' element={<StatisticPage />} />
           <Route path='/recipe/details/:recipeId' element={<RecipeDetailPage />} />
-          <Route path='/addNewRole' element={<AddNewRolePage />} />
         </Route>
 
         <Route path='/pageNotFound' element={<NotFoundPage />} />
