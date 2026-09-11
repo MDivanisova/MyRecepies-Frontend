@@ -1,4 +1,5 @@
-const path = 'http://localhost:55555/api/statistic';
+const API_URL = import.meta.env.VITE_API_URL;
+const path = `${API_URL}statistic`;
 
 export const getSummaryStatistics = async (token) => {
 

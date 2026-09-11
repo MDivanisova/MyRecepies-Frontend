@@ -1,4 +1,5 @@
-const path = 'http://localhost:55555/api/recepie';
+const API_URL = import.meta.env.VITE_API_URL;
+const path = `${API_URL}recepie`;
 const PAGESIZE = 8;
 
 export async function createRecepie(token, recepie) {

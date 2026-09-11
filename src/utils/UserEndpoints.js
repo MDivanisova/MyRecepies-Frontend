@@ -1,4 +1,6 @@
-const path = 'http://localhost:55555/api/user';
+const API_URL = import.meta.env.VITE_API_URL;
+const path = `${API_URL}user`
+;
 import { PAGE_SIZE, PROFILE_RECIPE_PAGE_SIZE } from "./enum";
 
 export  async function logIn(email, password){

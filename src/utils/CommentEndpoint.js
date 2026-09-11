@@ -1,4 +1,5 @@
-const path = 'http://localhost:55555/api/comment';
+const API_URL = import.meta.env.VITE_API_URL;
+const path = `${API_URL}comment`;
 
 export const getComments = async (token, reviewId, skip, limit=2) =>{
      const response = await fetch(`${path}/${reviewId}?skip=${skip}&limit=${limit}`,

@@ -1,4 +1,5 @@
-const path = 'http://localhost:55555/api/bookmark';
+const API_URL = import.meta.env.VITE_API_URL;
+const path = `${API_URL}bookmark`;
 const PAGESIZE = 8;
 
 export async function createBookmark(token, recepie) {

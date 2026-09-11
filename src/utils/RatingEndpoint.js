@@ -1,4 +1,5 @@
-const path = 'http://localhost:55555/api/rating';
+const API_URL = import.meta.env.VITE_API_URL;
+const path = `${API_URL}rating`;
 
 export const getRating = async (token, recipeId) =>{
      const response = await fetch(`${path}/${recipeId}`,

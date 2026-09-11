@@ -5,7 +5,7 @@ import { CATEGORIES, CUISINES } from "../../utils/enum";
 
 import "./welcomeComponent.css";
 
-export default function WelcomeComponent({ filters, setFilters, typeRecipes, setTypeRecipes }) {
+export default function WelcomeComponent({ setFilters, typeRecipes, setTypeRecipes }) {
 
     const creatorRef = useRef(null);
     const categoryRef = useRef(null);
