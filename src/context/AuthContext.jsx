@@ -43,6 +43,8 @@ export function AuthProvider({children}){
     function logout(){
         setToken(null);
         setUser(null);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
     }
 
     const value = {
