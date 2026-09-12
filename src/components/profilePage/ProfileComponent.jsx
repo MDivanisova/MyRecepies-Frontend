@@ -249,7 +249,7 @@ export default function ProfileComponent() {
                 ? undefined
                 : user.gender
         );
-
+        console.log("Edit user response:", data);
         if (data === true) {
 
             setEditMode(false);
