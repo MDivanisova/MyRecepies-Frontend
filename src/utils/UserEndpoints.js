@@ -4,7 +4,7 @@ const path = `${API_URL}user`
 import { PAGE_SIZE, PROFILE_RECIPE_PAGE_SIZE } from "./enum";
 
 export  async function logIn(email, password){
-    console.log("Login called")
+    
     const result = await fetch(`${path}/login`,{
             method:"POST",
             headers: {

@@ -29,7 +29,6 @@ export default function LoginFormComponent (){
 
         setLoading(true);
         const data = await logIn(email, pass);
-        consoel.log(data);
         setLoading(false);
         if(data.succ === true){
             login(data.token, data.user);
