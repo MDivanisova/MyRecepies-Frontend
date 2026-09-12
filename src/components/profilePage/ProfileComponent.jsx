@@ -257,13 +257,12 @@ export default function ProfileComponent() {
             initProfile();
 
         } else {
-
             if (data.status === 200) {
                 localStorage.setItem(
                     "codeSentAt",
                     new Date().toISOString()
                 );
-
+                logout();
                 navigate(`/verify?email=${data.email}`);
 
             } else if (data.status === 400) {
