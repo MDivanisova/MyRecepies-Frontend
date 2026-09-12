@@ -116,6 +116,7 @@ export default function OtherProfileComponent({userId}) {
                     pageSize: PROFILE_RECIPE_PAGE_SIZE
                 }
             );
+            console.log("Public recipes fetched successfully:", response.recepies);
 
         } else if (response.status === 401) {
 
@@ -835,7 +836,7 @@ export default function OtherProfileComponent({userId}) {
                 <div className="my-profile-recipes">
 
                     <h2>
-                        MY RECIPES
+                        This user has {publicPagination.numRecepies} public recipe
                     </h2>
 
                     <div className="my-profile-recipes-section">
@@ -843,7 +844,7 @@ export default function OtherProfileComponent({userId}) {
                         <div className="my-profile-recipes-section-header">
 
                             <h3>
-                                MY PUBLIC RECIPES
+                                THIS USERS RECIPES
                             </h3>
 
                             <div className="my-profile-recipes-search">
