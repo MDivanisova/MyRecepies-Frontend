@@ -6,6 +6,9 @@ import { PROFILE_RECIPE_PAGE_SIZE } from "../../utils/enum";
 import ProfileRecipeCardComponent from "./ProfileRecipeCardComponent";
 import ElectricBorder from "../ElectricBorder";
 
+
+import profileYellow from "../../assets/profileYellow.jpeg";
+
 import Spinner from "../Spiner";
 import "./profileComponent.css";
 
@@ -484,10 +487,9 @@ export default function ProfileComponent() {
                 //za validaciskite errori ni gi dava
 
             } else if (data.status === 401) {
-
-                //popup deka sesijata mu e istecena
-
-                // da se dodade otposle da pamte do kaj zastanal usero na koja strana ako mu izmine tokeno kako ke se logira direktno tam da go nose
+                logout();
+                alert("Your session has expired, please log in again");
+                navigate("/login");
 
             } else if (data.status === 404) {
 
@@ -508,7 +510,7 @@ export default function ProfileComponent() {
             <div className="profile-cover">
 
                 <img
-                    src="/src/assets/profileYellow.jpeg"
+                    src={profileYellow}
                     alt="Profile cover"
                 />
 

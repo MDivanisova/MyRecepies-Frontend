@@ -6,11 +6,10 @@ import { PROFILE_RECIPE_PAGE_SIZE } from "../../utils/enum";
 import ProfileRecipeCardComponent from "./ProfileRecipeCardComponent";
 import ElectricBorder from "../ElectricBorder";
 
+import profileYellow from "../../assets/profileYellow.jpeg";
+
 import Spinner from "../Spiner";
 import "./profileComponent.css";
-
-//treba uste da se dodade ako on izbrise nesto od toa so e zadolzitelno da mu se pojave ili popup ili nes takvo deka
-//tie polinja se zadolzitelni kako Full Name email i gender 
 
 
 export default function OtherProfileComponent({userId}) {
@@ -260,7 +259,7 @@ export default function OtherProfileComponent({userId}) {
             <div className="profile-cover">
 
                 <img
-                    src="/src/assets/profileYellow.jpeg"
+                    src={profileYellow}
                     alt="Profile cover"
                 />
                 <button
