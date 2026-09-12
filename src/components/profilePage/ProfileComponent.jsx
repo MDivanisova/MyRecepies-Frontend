@@ -262,8 +262,9 @@ export default function ProfileComponent() {
                     "codeSentAt",
                     new Date().toISOString()
                 );
-                logout();
                 navigate(`/verify?email=${data.email}`);
+                
+                logout();
 
             } else if (data.status === 400) {
 
