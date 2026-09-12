@@ -181,12 +181,13 @@ export async function editUser(token, name, email, description, age, gender){
     });
 
     if (result.status === 201) {
-        return true;
+        return {succ: true};
     }
 
     const data = await result.json();
 
     return {
+        succ: false,
         ...data,
         status: result.status
     };  

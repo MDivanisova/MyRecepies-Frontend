@@ -250,7 +250,7 @@ export default function ProfileComponent() {
                 : user.gender
         );
         console.log("Edit user response:", data);
-        if (data === true) {
+        if (data.succ === true) {
 
             setEditMode(false);
 
