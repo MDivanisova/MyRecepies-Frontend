@@ -132,6 +132,9 @@
 
     width: 100%;
 
+    flex: 1;          /* ново */
+    min-height: 0;    /* ново */
+
     display: flex;
 
     flex-direction: column;

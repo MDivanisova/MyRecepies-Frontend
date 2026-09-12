@@ -11,8 +11,8 @@ import "./statisticComponent.css";
 
 
 export default function StatisticComponent() {
-
-    const { token, logout } = useAuth();
+    
+    const { token, logout, user } = useAuth(); 
 
     const navigate = useNavigate();
 
@@ -150,7 +150,7 @@ export default function StatisticComponent() {
         setLoadingStatistics(true);
 
         const response =
-            await getRatingStatistics( token, 5, selectedPeriod );
+            await getRatingStatistics( token, 7, selectedPeriod );
 
         if (response.succ) {
 
@@ -178,7 +178,7 @@ export default function StatisticComponent() {
 
         console.log("Bookmark");
 
-        const response = await getBookmarkStatistics( token, 5, selectedPeriod );
+        const response = await getBookmarkStatistics( token, 7, selectedPeriod );
 
         if (response.succ) {
 
@@ -200,7 +200,7 @@ export default function StatisticComponent() {
 
         const response = await getCategoryStatistic(
             token,
-            5,
+            7,
             selectedPeriod
         );
 
@@ -462,80 +462,82 @@ export default function StatisticComponent() {
                 {/* SUMMARY */}
                 {/* ================================================= */}
 
-                {loadingSummary ? (
+                {(user?.role?.roleName === "chief" || user?.role?.roleName === "admin") && (
+                    loadingSummary ? (
 
-                    <div className="statistic-summary-loading">
-                        <Spinner
-                            className="statistic-spinner" w={30} h={30}/>
-                    </div>
+                        <div className="statistic-summary-loading">
+                            <Spinner
+                                className="statistic-spinner" w={30} h={30}/>
+                        </div>
 
-                ) : (
+                    ) : (
 
-                    <div className="statistic-summary">
+                        <div className="statistic-summary">
 
-                        <div className="statistic-summary-card">
+                            <div className="statistic-summary-card">
 
-                            <div className="statistic-summary-icon">
-                                <i className="fa-solid fa-utensils"></i>
+                                <div className="statistic-summary-icon">
+                                    <i className="fa-solid fa-utensils"></i>
+                                </div>
+
+                                <div className="statistic-summary-content">
+
+                                    <span className="statistic-summary-label">
+                                        Total Recipes
+                                    </span>
+
+                                    <span className="statistic-summary-value">
+                                        {summary.totalRecipes}
+                                    </span>
+
+                                </div>
+
                             </div>
 
-                            <div className="statistic-summary-content">
 
-                                <span className="statistic-summary-label">
-                                    Total Recipes
-                                </span>
+                            <div className="statistic-summary-card">
 
-                                <span className="statistic-summary-value">
-                                    {summary.totalRecipes}
-                                </span>
+                                <div className="statistic-summary-icon">
+                                    <i className="fa-solid fa-star"></i>
+                                </div>
+
+                                <div className="statistic-summary-content">
+
+                                    <span className="statistic-summary-label">
+                                        Average Rating
+                                    </span>
+
+                                    <span className="statistic-summary-value">
+                                        {summary.averageRating}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div className="statistic-summary-card">
+
+                                <div className="statistic-summary-icon">
+                                    <i className="fa-solid fa-bookmark"></i>
+                                </div>
+
+                                <div className="statistic-summary-content">
+
+                                    <span className="statistic-summary-label">
+                                        Average Bookmarks
+                                    </span>
+
+                                    <span className="statistic-summary-value">
+                                        {summary.averageBookmarks}
+                                    </span>
+
+                                </div>
 
                             </div>
 
                         </div>
-
-
-                        <div className="statistic-summary-card">
-
-                            <div className="statistic-summary-icon">
-                                <i className="fa-solid fa-star"></i>
-                            </div>
-
-                            <div className="statistic-summary-content">
-
-                                <span className="statistic-summary-label">
-                                    Average Rating
-                                </span>
-
-                                <span className="statistic-summary-value">
-                                    {summary.averageRating}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div className="statistic-summary-card">
-
-                            <div className="statistic-summary-icon">
-                                <i className="fa-solid fa-bookmark"></i>
-                            </div>
-
-                            <div className="statistic-summary-content">
-
-                                <span className="statistic-summary-label">
-                                    Average Bookmarks
-                                </span>
-
-                                <span className="statistic-summary-value">
-                                    {summary.averageBookmarks}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    )
                 )}
 
             </div>
@@ -548,35 +550,35 @@ export default function StatisticComponent() {
             <div className="statistic-body">
 
                 {/* TOP RECIPES */}
+                {(user?.role?.roleName === "chief" || user?.role?.roleName === "admin") && (
+                    <div className="statistic-box">
 
-                <div className="statistic-box">
+                        {loadingStatistics ? (
 
-                    {loadingStatistics ? (
+                            <div className="statistic-spinner-container">
+                                <Spinner w={100} h={100} />
+                            </div>
 
-                        <div className="statistic-spinner-container">
-                            <Spinner w={100} h={100} />
-                        </div>
+                        ) : statisticType === "rating" ? (
 
-                    ) : statisticType === "rating" ? (
+                            <TopRecipesStatisticComponent
+                                statisticType="rating"
+                                period={ratingStatistics?.period || period}
+                                recipes={ratingStatistics?.userTopRecipes || []}
+                            />
 
-                        <TopRecipesStatisticComponent
-                            statisticType="rating"
-                            period={ratingStatistics?.period || period}
-                            recipes={ratingStatistics?.userTopRecipes || []}
-                        />
+                        ) : (
 
-                    ) : (
+                            <TopRecipesStatisticComponent
+                                statisticType="bookmarks"
+                                period={bookmarkStatistics?.period || period}
+                                recipes={bookmarkStatistics?.userTopBookmarked || []}
+                            />
 
-                        <TopRecipesStatisticComponent
-                            statisticType="bookmarks"
-                            period={bookmarkStatistics?.period || period}
-                            recipes={bookmarkStatistics?.userTopBookmarked || []}
-                        />
+                        )}
 
-                    )}
-
-                </div>
-
+                    </div>
+                )}
 
                 {/* OTHER STATISTICS */}
 
@@ -635,8 +637,6 @@ export default function StatisticComponent() {
                     )}
 
                 </div>
-
-                <div className="statistic-box"></div>
 
             </div>
 

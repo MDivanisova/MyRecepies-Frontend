@@ -124,6 +124,9 @@
 
     width: 100%;
 
+    flex: 1;          /* ново - да ја пополни преостанатата висина */
+    min-height: 0;    /* ново - потребно за overflow-y: auto да работи правилно во flex контејнер */
+
     display: flex;
 
     flex-direction: column;

@@ -259,9 +259,6 @@ export default function ProfileComponent() {
         } else {
 
             if (data.status === 200) {
-
-                await resendCode(data.email);
-
                 localStorage.setItem(
                     "codeSentAt",
                     new Date().toISOString()
@@ -276,10 +273,9 @@ export default function ProfileComponent() {
                 //za validaciskite errori ni gi dava
 
             } else if (data.status === 401) {
-
-                //popup deka sesijata mu e istecena
-
-                // da se dodade otposle da pamte do kaj zastanal usero na koja strana ako mu izmine tokeno kako ke se logira direktno tam da go nose
+                logout();
+                alert("Your session has expired, please log in again");
+                navigate("/login");
 
             } else if (data.status === 404) {
 
@@ -1149,262 +1145,262 @@ export default function ProfileComponent() {
 
                 </div>
 
+                {(user?.role?.roleName === "chief" || user?.role?.roleName === "admin") && (
+                    <div className="my-profile-recipes">
 
-                <div className="my-profile-recipes">
+                        <h2>
+                            MY RECIPES
+                        </h2>
 
-                    <h2>
-                        MY RECIPES
-                    </h2>
+                        <div className="my-profile-recipes-section">
 
-                    <div className="my-profile-recipes-section">
+                            <div className="my-profile-recipes-section-header">
 
-                        <div className="my-profile-recipes-section-header">
+                                <h3>
+                                    MY PUBLIC RECIPES
+                                </h3>
 
-                            <h3>
-                                MY PUBLIC RECIPES
-                            </h3>
+                                <div className="my-profile-recipes-search">
 
-                            <div className="my-profile-recipes-search">
+                                    <i className="fa-solid fa-magnifying-glass"></i>
 
-                                <i className="fa-solid fa-magnifying-glass"></i>
+                                    <input
+                                        type="text"
+                                        placeholder="Search public recipe..."
+                                        value={publicSearch}
+                                        onChange={(e) =>
+                                            setPublicSearch(e.target.value)
+                                        }
+                                    />
 
-                                <input
-                                    type="text"
-                                    placeholder="Search public recipe..."
-                                    value={publicSearch}
-                                    onChange={(e) =>
-                                        setPublicSearch(e.target.value)
-                                    }
-                                />
+                                    <button
+                                        type="button"
+                                        onClick={handlePublicSearch}
+                                    >
+                                        <i className="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            {
+                                loadingPublicRecipes ? (
+
+                                    <div className="profile-recipes-loading">
+
+                                        <Spinner
+                                            w={100}
+                                            h={100}
+                                        />
+
+                                    </div>
+
+                                ) : publicRecipes.length > 0 ? (
+
+                                    <div className="profile-recipes-grid">
+
+                                        {
+                                            publicRecipes.map(recipe => (
+
+                                            <div className="profile-recipe-border"
+                                                    key={recipe._id}>
+                                                <ElectricBorder
+                                                    color="#fdaa2d"
+                                                    speed={0.1}
+                                                    chaos={0.01}
+                                                    thickness={10}
+                                                >
+                                                    <ProfileRecipeCardComponent
+                                                        recipe={recipe}
+                                                        setRecipes={setPublicRecipes}
+                                                        isMe={true}
+                                                    />
+                                                </ElectricBorder>
+                                            </div>
+
+                                            ))
+                                        }
+
+                                    </div>
+
+                                ) : (
+
+                                    <div className="no-profile-recipes">
+
+                                        <i className="fa-solid fa-utensils"></i>
+
+                                        <span>
+                                            No public recipes found.
+                                        </span>
+
+                                    </div>
+
+                                )
+                            }
+
+                            <div className="profile-recipes-pagination">
 
                                 <button
                                     type="button"
-                                    onClick={handlePublicSearch}
+                                    disabled={
+                                        publicPage === 1 ||
+                                        loadingPublicRecipes
+                                    }
+                                    onClick={handlePublicPrevious}
                                 >
-                                    <i className="fa-solid fa-magnifying-glass"></i>
+                                    <i className="fa-solid fa-arrow-left"></i>
+                                    Back
+                                    
+                                </button>
+
+                                <span>
+                                    Page {publicPage} of{" "}
+                                    {publicPagination.totalPages || 1}
+                                </span>
+
+                                <button
+                                    type="button"
+                                    disabled={
+                                        publicPage >= publicPagination.totalPages ||
+                                        loadingPublicRecipes ||
+                                        publicPagination.totalPages === 0
+                                    }
+                                    onClick={handlePublicNext}
+                                >
+                                    <i className="fa-solid fa-arrow-right"></i>
+                                    Next
                                 </button>
 
                             </div>
 
                         </div>
 
-                        {
-                            loadingPublicRecipes ? (
 
-                                <div className="profile-recipes-loading">
+                        <div className="my-profile-recipes-section private-profile-recipes-section">
 
-                                    <Spinner
-                                        w={100}
-                                        h={100}
+                            <div className="my-profile-recipes-section-header">
+
+                                <h3>
+                                    MY PRIVATE RECIPES
+                                </h3>
+
+                                <div className="my-profile-recipes-search">
+
+                                    <i className="fa-solid fa-magnifying-glass"></i>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Search private recipe..."
+                                        value={privateSearch}
+                                        onChange={(e) =>
+                                            setPrivateSearch(e.target.value)
+                                        }
                                     />
 
-                                </div>
-
-                            ) : publicRecipes.length > 0 ? (
-
-                                <div className="profile-recipes-grid">
-
-                                    {
-                                        publicRecipes.map(recipe => (
-
-                                        <div className="profile-recipe-border"
-                                                key={recipe._id}>
-                                            <ElectricBorder
-                                                color="#fdaa2d"
-                                                speed={0.1}
-                                                chaos={0.01}
-                                                thickness={10}
-                                            >
-                                                <ProfileRecipeCardComponent
-                                                    recipe={recipe}
-                                                    setRecipes={setPublicRecipes}
-                                                    isMe={true}
-                                                />
-                                            </ElectricBorder>
-                                        </div>
-
-                                        ))
-                                    }
+                                    <button
+                                        type="button"
+                                        onClick={handlePrivateSearch}
+                                    >
+                                        <i className="fa-solid fa-magnifying-glass"></i>
+                                    </button>
 
                                 </div>
 
-                            ) : (
+                            </div>
 
-                                <div className="no-profile-recipes">
+                            {
+                                loadingPrivateRecipes ? (
 
-                                    <i className="fa-solid fa-utensils"></i>
+                                    <div className="profile-recipes-loading">
 
-                                    <span>
-                                        No public recipes found.
-                                    </span>
+                                        <Spinner
+                                            w={100}
+                                            h={100}
+                                        />
 
-                                </div>
+                                    </div>
 
-                            )
-                        }
+                                ) : privateRecipes.length > 0 ? (
 
-                        <div className="profile-recipes-pagination">
+                                    <div className="profile-recipes-grid">
 
-                            <button
-                                type="button"
-                                disabled={
-                                    publicPage === 1 ||
-                                    loadingPublicRecipes
-                                }
-                                onClick={handlePublicPrevious}
-                            >
-                                <i className="fa-solid fa-arrow-left"></i>
-                                Back
-                                
-                            </button>
+                                        {
+                                            privateRecipes.map(recipe => (
+                                            <div className="profile-recipe-border" 
+                                                    key={recipe._id}>
+                                                <ElectricBorder
+                                                    color="#fdaa2d"
+                                                    speed={0.1}
+                                                    chaos={0.01}
+                                                    thickness={10}
+                                                >
+                                                    <ProfileRecipeCardComponent
+                                                        recipe={recipe}
+                                                        setRecipes={setPrivateRecipes}
+                                                        isMe={true}
+                                                    />
+                                                </ElectricBorder>
+                                            </div>
 
-                            <span>
-                                Page {publicPage} of{" "}
-                                {publicPagination.totalPages || 1}
-                            </span>
+                                            ))
+                                        }
 
-                            <button
-                                type="button"
-                                disabled={
-                                    publicPage >= publicPagination.totalPages ||
-                                    loadingPublicRecipes ||
-                                    publicPagination.totalPages === 0
-                                }
-                                onClick={handlePublicNext}
-                            >
-                                <i className="fa-solid fa-arrow-right"></i>
-                                Next
-                            </button>
+                                    </div>
 
-                        </div>
+                                ) : (
 
-                    </div>
+                                    <div className="no-profile-recipes">
 
+                                        <i className="fa-solid fa-lock"></i>
 
-                    <div className="my-profile-recipes-section private-profile-recipes-section">
+                                        <span>
+                                            No private recipes found.
+                                        </span>
 
-                        <div className="my-profile-recipes-section-header">
+                                    </div>
 
-                            <h3>
-                                MY PRIVATE RECIPES
-                            </h3>
+                                )
+                            }
 
-                            <div className="my-profile-recipes-search">
-
-                                <i className="fa-solid fa-magnifying-glass"></i>
-
-                                <input
-                                    type="text"
-                                    placeholder="Search private recipe..."
-                                    value={privateSearch}
-                                    onChange={(e) =>
-                                        setPrivateSearch(e.target.value)
-                                    }
-                                />
+                            <div className="profile-recipes-pagination">
 
                                 <button
                                     type="button"
-                                    onClick={handlePrivateSearch}
+                                    disabled={
+                                        privatePage === 1 ||
+                                        loadingPrivateRecipes
+                                    }
+                                    onClick={handlePrivatePrevious}
                                 >
-                                    <i className="fa-solid fa-magnifying-glass"></i>
+                                    <i className="fa-solid fa-arrow-left"></i>
+                                    Back
+                                </button>
+
+                                <span>
+                                    Page {privatePage} of{" "}
+                                    {privatePagination.totalPages || 1}
+                                </span>
+
+                                <button
+                                    type="button"
+                                    disabled={
+                                        privatePage >= privatePagination.totalPages ||
+                                        loadingPrivateRecipes ||
+                                        privatePagination.totalPages === 0
+                                    }
+                                    onClick={handlePrivateNext}
+                                >
+                                    Next
+                                    <i className="fa-solid fa-arrow-right"></i>
                                 </button>
 
                             </div>
 
                         </div>
 
-                        {
-                            loadingPrivateRecipes ? (
-
-                                <div className="profile-recipes-loading">
-
-                                    <Spinner
-                                        w={100}
-                                        h={100}
-                                    />
-
-                                </div>
-
-                            ) : privateRecipes.length > 0 ? (
-
-                                <div className="profile-recipes-grid">
-
-                                    {
-                                        privateRecipes.map(recipe => (
-                                        <div className="profile-recipe-border" 
-                                                key={recipe._id}>
-                                            <ElectricBorder
-                                                color="#fdaa2d"
-                                                speed={0.1}
-                                                chaos={0.01}
-                                                thickness={10}
-                                            >
-                                                <ProfileRecipeCardComponent
-                                                    recipe={recipe}
-                                                    setRecipes={setPrivateRecipes}
-                                                    isMe={true}
-                                                />
-                                            </ElectricBorder>
-                                        </div>
-
-                                        ))
-                                    }
-
-                                </div>
-
-                            ) : (
-
-                                <div className="no-profile-recipes">
-
-                                    <i className="fa-solid fa-lock"></i>
-
-                                    <span>
-                                        No private recipes found.
-                                    </span>
-
-                                </div>
-
-                            )
-                        }
-
-                        <div className="profile-recipes-pagination">
-
-                            <button
-                                type="button"
-                                disabled={
-                                    privatePage === 1 ||
-                                    loadingPrivateRecipes
-                                }
-                                onClick={handlePrivatePrevious}
-                            >
-                                <i className="fa-solid fa-arrow-left"></i>
-                                Back
-                            </button>
-
-                            <span>
-                                Page {privatePage} of{" "}
-                                {privatePagination.totalPages || 1}
-                            </span>
-
-                            <button
-                                type="button"
-                                disabled={
-                                    privatePage >= privatePagination.totalPages ||
-                                    loadingPrivateRecipes ||
-                                    privatePagination.totalPages === 0
-                                }
-                                onClick={handlePrivateNext}
-                            >
-                                Next
-                                <i className="fa-solid fa-arrow-right"></i>
-                            </button>
-
-                        </div>
-
                     </div>
-
-                </div>
-
+                )}
 
             </div>
 
