@@ -7,14 +7,14 @@ import Spinner from "../Spiner";
 
 export default function BookmarkRecipeCardComponent({
     bookmark,
-    setBookmarks,
-    setPagination
+    onRemoved
 }) {
 
     const { token, logout } = useAuth();
     const navigate = useNavigate();
 
     const [profileLoading, setProfileLoading] = useState(false);
+    const [removing, setRemoving] = useState(false);
 
     const recipe = bookmark.recepie;
 
@@ -61,20 +61,14 @@ export default function BookmarkRecipeCardComponent({
 
     const handleRemoveBookmark = async () => {
 
+        setRemoving(true);
+
         const data = await removeBookmark(token, recipe._id);
 
         if (data.succ === true) {
 
-        setBookmarks(prevBookmarks =>
-                prevBookmarks.filter(
-                    b => b._id !== bookmark._id
-                )
-            );
+            onRemoved();
 
-            setPagination(prev => ({
-                ...prev,
-                numRecepies: Math.max(prev.numRecepies - 1, 0)
-            }));
         }
         else if (data.status === 401) {
             logout();
@@ -83,9 +77,11 @@ export default function BookmarkRecipeCardComponent({
 
         } else if (data.status === 500) {
 
-            // page not found
+            navigate("/InternalServerError");
 
         }
+
+        setRemoving(false);
     };
 
 
@@ -93,7 +89,7 @@ export default function BookmarkRecipeCardComponent({
 
         <div className="bookmark-recipe-card">
 
-            {profileLoading && (
+            {(profileLoading || removing) && (
                 <div className="bookmark-recipe-card-loading">
                     <Spinner
                         w={100}
@@ -233,6 +229,7 @@ export default function BookmarkRecipeCardComponent({
                         type="button"
                         className="remove-bookmark-recipe-button"
                         onClick={handleRemoveBookmark}
+                        disabled={removing}
                     >
 
                         <i className="fa-solid fa-heart"></i>

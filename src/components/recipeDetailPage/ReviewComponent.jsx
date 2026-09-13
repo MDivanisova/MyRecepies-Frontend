@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/useAuth";
 import { createReview, editReview , deleteReview} from "../../utils/ReviewEndpoint.js";
 import { createRating, editRating, getRating, deleteRating } from "../../utils/RatingEndpoint.js";
-import { getComments } from "../../utils/CommentEndpoint.js";
+import { getComments, likeComment, dislikeComment, deleteComment } from "../../utils/CommentEndpoint.js";
 
 import "./reviewComponent.css";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
     const [loading, setLoading] = useState(false);
 
     const [deletingReview, setDeletingReview] = useState(null);
+    const [deletingComment, setDeletingComment] = useState(null);
 
     // =========================================================
     // COMMENTS
@@ -161,6 +162,139 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
 
         }
     }
+
+    async function handleLikeComment(commentId) {
+
+        setReview(prev => ({
+            ...prev,
+            comments: prev.comments.map(comment =>
+                comment._id === commentId
+                    ? {
+                        ...comment,
+                        liker: comment.liker?.some(
+                            id => id.toString() === user._id.toString()
+                        )
+                            ? comment.liker.filter(
+                                id => id.toString() !== user._id.toString()
+                            )
+                            : [
+                                ...(comment.liker || []),
+                                user._id
+                            ],
+
+                        disliker: comment.disliker?.filter(
+                            id => id.toString() !== user._id.toString()
+                        ) || []
+                    }
+                    : comment
+            )
+        }));
+
+        const data = await likeComment(token, commentId);
+
+        if (data.succ === true) {
+            return;
+        }
+
+        if (data.status === 401) {
+            logout();
+            alert("Your token has expired please login again.");
+            navigate("/login");
+        }
+        else if (data.status === 404) {
+            navigate("/pageNotFound");
+        }
+        else if (data.status === 500) {
+            navigate("/internalServerError");
+        }
+    }
+
+    async function handleDislikeComment(commentId) {
+
+        setReview(prev => ({
+            ...prev,
+            comments: prev.comments.map(comment =>
+                comment._id === commentId
+                    ? {
+                        ...comment,
+                        disliker: comment.disliker?.some(
+                            id => id.toString() === user._id.toString()
+                        )
+                            ? comment.disliker.filter(
+                                id => id.toString() !== user._id.toString()
+                            )
+                            : [
+                                ...(comment.disliker || []),
+                                user._id
+                            ],
+
+                        liker: comment.liker?.filter(
+                            id => id.toString() !== user._id.toString()
+                        ) || []
+                    }
+                    : comment
+            )
+        }));
+
+        const data = await dislikeComment(token, commentId);
+
+        if (data.succ === true) {
+            return;
+        }
+
+        if (data.status === 401) {
+            logout();
+            alert("Your token has expired please login again.");
+            navigate("/login");
+        }
+        else if (data.status === 404) {
+            navigate("/pageNotFound");
+        }
+        else if (data.status === 500) {
+            navigate("/internalServerError");
+        }
+    }
+
+    async function handleDeleteComment(commentId) {
+
+        setDeletingComment(commentId);
+
+        const data = await deleteComment(token, commentId);
+
+        if (data.succ === true) {
+
+            setReview(prev => ({
+                ...prev,
+                comments: prev.comments.filter(
+                    comment => comment._id !== commentId
+                )
+            }));
+
+            setDeletingComment(null);
+            return;
+        }
+
+        if (data.status === 401) {
+            setDeletingComment(null);
+            logout();
+            alert("Your token has expired please login again.");
+            navigate("/login");
+        }
+        else if (data.status === 404) {
+            setDeletingComment(null);
+            navigate("/pageNotFound");
+        }
+        else if (data.status === 500) {
+            setDeletingComment(null);
+            navigate("/internalServerError");
+        }
+
+        setDeletingComment(null);
+    }
+
+
+
+
 
 
     // =========================================================
@@ -583,7 +717,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
                                     setReviewText(e.target.value)
                                 }
                                 placeholder="What did you think about the recipe?"
-                                maxLength={1000}
+                                maxLength={5000}
                             />
 
                             <span
@@ -593,7 +727,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
                                         : ""
                                 }`}
                             >
-                                {reviewText.length}/1000
+                                {reviewText.length}/5000
                             </span>
                         </div>
 
@@ -764,7 +898,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
 
                                 <div className="review-comments">
 
-                                    {review.comments?.length === 0 ? ( 
+                                    {review.comments?.length === 0 ? (
 
                                         <div className="no-comment-review">
                                             No comments
@@ -776,9 +910,99 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
 
                                             <div
                                                 key={comment._id}
-                                                className="review-comment"
+                                                className="review-comment-row"
                                             >
-                                                {comment.text}
+
+                                                <i className="fa-solid fa-reply comment-reply-icon"></i>
+
+                                                <div className="review-comment">
+
+                                                    <div className="comment-top">
+
+                                                        <div className="comment-user">
+
+                                                            <div className="comment-user-name-row">
+                                                                <i className="fa-solid fa-user"></i>
+
+                                                                <span
+                                                                    className="comment-user-name"
+                                                                    onClick={() => {
+                                                                        navigate(`/profile/${comment.user?._id}`);
+                                                                    }}
+                                                                >
+                                                                    {comment.user?.name}
+                                                                </span>
+
+                                                                {(user?.role.roleName === "admin" ||
+                                                                    user?.role.roleName === "contentManager" ||
+                                                                    user?._id === comment.user?._id) && (
+                                                                    deletingComment === comment._id ? (
+                                                                        <i className="fa-solid fa-spinner fa-spin"></i>
+                                                                    ) : (
+                                                                        <i
+                                                                            className="fa-solid fa-trash"
+                                                                            onClick={() =>
+                                                                                handleDeleteComment(comment._id)
+                                                                            }
+                                                                        ></i>
+                                                                    )
+                                                                )}
+                                                            </div>
+
+                                                            <span className="comment-date">
+                                                                {new Date(comment.createdAt).toLocaleDateString()}
+                                                            </span>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div className="comment-text">
+                                                        {comment.text}
+                                                    </div>
+
+
+                                                    <div className="comment-footer">
+
+                                                        <div className="comment-reactions">
+
+                                                            <span>
+                                                                <i
+                                                                    className={
+                                                                        comment.liker?.some(
+                                                                            id => id.toString() === user._id.toString()
+                                                                        )
+                                                                            ? "fa-solid fa-thumbs-up"
+                                                                            : "fa-regular fa-thumbs-up"
+                                                                    }
+                                                                    onClick={() => handleLikeComment(comment._id)}
+                                                                ></i>
+
+                                                                {comment.liker?.length || 0}
+                                                            </span>
+
+                                                            <span>
+                                                                <i
+                                                                    className={
+                                                                        comment.disliker?.some(
+                                                                            id => id.toString() === user._id.toString()
+                                                                        )
+                                                                            ? "fa-solid fa-thumbs-down"
+                                                                            : "fa-regular fa-thumbs-down"
+                                                                    }
+                                                                    onClick={() => handleDislikeComment(comment._id)}
+                                                                ></i>
+
+                                                                {comment.disliker?.length || 0}
+                                                            </span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
                                             </div>
 
                                         ))
@@ -965,7 +1189,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
                                     setReviewText(e.target.value)
                                 }
                                 placeholder="What did you think about the recipe?"
-                                maxLength={1000}
+                                maxLength={5000}
                             />
 
                             <span
@@ -975,7 +1199,7 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
                                         : ""
                                 }`}
                             >
-                                {reviewText.length}/1000
+                                {reviewText.length}/5000
                             </span>
                         </div>
 

@@ -14,7 +14,7 @@ import "./recipeCardComponent.css";
 export default function RecipeCardComponent({
     recipe,
     setRecepies,
-    setRefresh
+    onRemoved
 }) {
 
     const { token, user } = useAuth();
@@ -22,6 +22,7 @@ export default function RecipeCardComponent({
     const navigate = useNavigate();
 
     const [profileLoading, setProfileLoading] = useState(false);
+    const [removing, setRemoving] = useState(false);
 
 
     /* =========================
@@ -92,6 +93,8 @@ export default function RecipeCardComponent({
 
     async function handleRemoveRecipe() {
 
+        setRemoving(true);
+
         const data = await removeRecipe(
             token,
             recipe._id
@@ -100,13 +103,7 @@ export default function RecipeCardComponent({
 
         if (data.succ === true) {
 
-            setRecepies(prevRecipes =>
-                prevRecipes.filter(
-                    r => r._id !== recipe._id
-                )
-            );
-
-            setRefresh(prev => prev + 1);
+            onRemoved();
 
         }
 
@@ -122,19 +119,35 @@ export default function RecipeCardComponent({
 
         }
 
+        setRemoving(false);
+
     }
 
 
-    /* =========================
-       BOOKMARK
+
+   /* =========================
+    BOOKMARK
     ========================= */
 
     const handleBookmark = async () => {
 
+        const wasBookmarked = recipe.isBookmarked;
+
+        // Optimistically toggle immediately
+        setRecepies(prevRecipes =>
+            prevRecipes.map(r =>
+                r._id === recipe._id
+                    ? {
+                        ...r,
+                        isBookmarked: !wasBookmarked
+                    }
+                    : r
+            )
+        );
+
         let data;
 
-
-        if (recipe.isBookmarked) {
+        if (wasBookmarked) {
 
             data = await removeBookmark(
                 token,
@@ -153,30 +166,32 @@ export default function RecipeCardComponent({
 
         if (data.succ === true) {
 
-            setRecepies(prevRecipes =>
-                prevRecipes.map(r =>
-                    r._id === recipe._id
-                        ? {
-                            ...r,
-                            isBookmarked:
-                                !r.isBookmarked
-                        }
-                        : r
-                )
-            );
+            // veke e ažurirano optimistically
+            return;
 
         }
 
-        else if (data.status === 401) {
+        // Rollback za bilo koj neuspeh (401, 500, ili drugo)
+        setRecepies(prevRecipes =>
+            prevRecipes.map(r =>
+                r._id === recipe._id
+                    ? {
+                        ...r,
+                        isBookmarked: wasBookmarked
+                    }
+                    : r
+            )
+        );
 
-            // relogin
+        if (data.status === 401) {
+            logout();
+            alert("Your session has expired. Please log in again.");
+            navigate("/login");
 
         }
 
         else if (data.status === 500) {
-
-            // page not found
-
+            navigate("/InternalServerError");
         }
 
     };
@@ -416,9 +431,14 @@ export default function RecipeCardComponent({
                             type="button"
                             className="remove-recipe-button"
                             onClick={handleRemoveRecipe}
+                            disabled={removing}
                         >
 
-                            <i className="fa-solid fa-trash"></i>
+                            {removing ? (
+                                <i className="fa-solid fa-spinner fa-spin"></i>
+                            ) : (
+                                <i className="fa-solid fa-trash"></i>
+                            )}
 
                         </button>
                     )}

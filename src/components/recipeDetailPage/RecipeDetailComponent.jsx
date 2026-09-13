@@ -92,6 +92,37 @@ export default function RecipeDetailComponent() {
 
     const [deleting, setDeleting] = useState(false);
 
+    const nutritionUnits = {
+        calories: "kcal",
+        protein: "g",
+        carbohydrates: "g",
+        fat: "g",
+        saturatedFat: "g",
+        unsaturatedFat: "g",
+        fiber: "g",
+        sugar: "g",
+        cholesterol: "mg",
+        sodium: "mg"
+    };
+
+    function formatNutritionForSave(nutrition) {
+
+        const formatted = {};
+
+        for (const key in nutritionUnits) {
+
+            const value = nutrition[key];
+
+            formatted[key] =
+                value !== "" && value !== undefined && value !== null
+                    ? `${value} ${nutritionUnits[key]}`
+                    : "";
+        }
+
+        return formatted;
+    }
+
+
     const toggleChecked = (index) => {
 
         setChecked((prev) => ({
@@ -617,7 +648,7 @@ export default function RecipeDetailComponent() {
                 instructions: editRecipeData.instructions,
                 cookingMethods: editRecipeData.cookingMethods,
                 tools: editRecipeData.tools,
-                nutrition: editRecipeData.nutrition,
+                nutrition: formatNutritionForSave (editRecipeData.nutrition),
                 imageUrl: editRecipeData.imageUrl,
                 visibility: editRecipeData.visibility
             }

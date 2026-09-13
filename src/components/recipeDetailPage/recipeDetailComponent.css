@@ -362,6 +362,8 @@
 
 .recipe-detail-creator strong {
 
+    position: relative;
+
     color: #d9d6c5;
     
     cursor: pointer;
@@ -369,6 +371,41 @@
     font-weight: 600;
 
     overflow-wrap: anywhere;
+
+}
+
+.recipe-detail-creator strong::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -8px;
+
+    height: 1px;
+
+    background: #d9d6c5;
+
+    opacity: 0;
+
+    transform: scaleX(0.6);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        bottom 0.2s ease;
+
+}
+
+.recipe-detail-creator strong:hover::after {
+
+    opacity: 1;
+
+    transform: scaleX(1);
+
+    bottom: -2px;
 
 }
 

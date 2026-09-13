@@ -3,7 +3,7 @@ import { CATEGORIES, CUISINES, PAGE_SIZE } from "../../utils/enum";
 import "./bookmarkComponent.css";
 import { getMyBookmarks, getUsers} from "../../utils/UserEndpoints";
 import { useAuth } from "../../context/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ElectricBorder from "../ElectricBorder"
 import Spinner from "../Spiner";
 import BookmarkRecipeCardComponent from "./BookmarkRecipeCardComponent";
@@ -16,6 +16,8 @@ export default function BookmarkComponent() {
     const { token, logout } = useAuth();
 
     const navigate = useNavigate();
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
 
     /* =========================
@@ -32,33 +34,46 @@ export default function BookmarkComponent() {
     ========================= */
 
     const [bookmarks, setBookmarks] = useState([]);
+    const [filling, setFilling] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
 
     /* =========================
-       SEARCH INPUTS
+       SEARCH INPUTS (init from URL)
     ========================= */
 
-    const [nameSearch, setNameSearch] = useState("");
+    const [nameSearch, setNameSearch] = useState(
+        searchParams.get("name") || ""
+    );
 
-    const [creatorSearch, setCreatorSearch] = useState("");
+    const [creatorSearch, setCreatorSearch] = useState(
+        searchParams.get("creatorName") || ""
+    );
 
     const [creatorSuggestions, setCreatorSuggestions] = useState([]);
 
     // Ova go čuva ID-to na selektiraniot creator
-    const [selectedCreator, setSelectedCreator] = useState("");
+    const [selectedCreator, setSelectedCreator] = useState(
+        searchParams.get("creator") || ""
+    );
 
-    const [ingredientSearch, setIngredientSearch] = useState("");
+    const [ingredientSearch, setIngredientSearch] = useState(
+        searchParams.get("ingredients") || ""
+    );
 
 
     /* =========================
-       CATEGORY / CUISINE
+       CATEGORY / CUISINE (init from URL)
     ========================= */
 
-    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [selectedCategory, setSelectedCategory] = useState(
+        searchParams.get("category") || "all"
+    );
 
-    const [selectedCuisine, setSelectedCuisine] = useState("all");
+    const [selectedCuisine, setSelectedCuisine] = useState(
+        searchParams.get("cuisine") || "all"
+    );
 
 
     /* =========================
@@ -71,23 +86,25 @@ export default function BookmarkComponent() {
 
 
     /* =========================
-       APPLIED FILTERS
+       APPLIED FILTERS (init from URL)
     ========================= */
 
     const [filters, setFilters] = useState({
-        name: "",
-        creator: "",
-        ingredients: "",
-        category: "all",
-        cuisine: "all"
+        name: searchParams.get("name") || "",
+        creator: searchParams.get("creator") || "",
+        ingredients: searchParams.get("ingredients") || "",
+        category: searchParams.get("category") || "all",
+        cuisine: searchParams.get("cuisine") || "all"
     });
 
 
     /* =========================
-       PAGINATION
+       PAGINATION (init from URL)
     ========================= */
 
-    const [pageNumber, setPageNumber] = useState(1);
+    const [pageNumber, setPageNumber] = useState(
+        Number(searchParams.get("page")) || 1
+    );
 
 
     const [pagination, setPagination] = useState({
@@ -96,6 +113,27 @@ export default function BookmarkComponent() {
         pageNumber: 1,
         pageSize: PAGE_SIZE
     });
+
+
+    /* =========================
+       SYNC STATE -> URL
+    ========================= */
+
+    useEffect(() => {
+
+        const params = {};
+
+        if (filters.name) params.name = filters.name;
+        if (filters.creator) params.creator = filters.creator;
+        if (creatorSearch) params.creatorName = creatorSearch;
+        if (filters.ingredients) params.ingredients = filters.ingredients;
+        if (filters.category && filters.category !== "all") params.category = filters.category;
+        if (filters.cuisine && filters.cuisine !== "all") params.cuisine = filters.cuisine;
+        if (pageNumber && pageNumber !== 1) params.page = pageNumber;
+
+        setSearchParams(params, { replace: true });
+
+    }, [filters, pageNumber]);
 
 
     /* =========================
@@ -178,12 +216,16 @@ export default function BookmarkComponent() {
        FETCH BOOKMARKS
     ========================= */
 
-    const fetchBookmarks = async () => {
+    const fetchBookmarks = async (options = {}) => {
+
+        const { silent = false } = options;
 
         if (!token) return;
 
 
-        setLoading(true);
+        if (!silent) {
+            setLoading(true);
+        }
 
 
         const response = await getMyBookmarks(
@@ -199,19 +241,26 @@ export default function BookmarkComponent() {
 
         if (response.succ) {
 
-            setBookmarks(
-                response.bookmarks?.recepies || []
-            );
+            const fetchedBookmarks = response.bookmarks?.recepies || [];
+            const fetchedPagination = response.bookmarks?.pagination || {
+                numRecepies: 0,
+                totalPages: 0,
+                pageNumber: 1,
+                pageSize: PAGE_SIZE
+            };
 
+            // Ako stranicava e prazna a ima prethodna stranica, vrati se
+            if (
+                fetchedBookmarks.length === 0 &&
+                pageNumber > 1
+            ) {
+                setPageNumber(prev => prev - 1);
+                if (!silent) setLoading(false);
+                return;
+            }
 
-            setPagination(
-                response.bookmarks?.pagination || {
-                    numRecepies: 0,
-                    totalPages: 0,
-                    pageNumber: 1,
-                    pageSize: PAGE_SIZE
-                }
-            );
+            setBookmarks(fetchedBookmarks);
+            setPagination(fetchedPagination);
 
         }
 
@@ -228,8 +277,9 @@ export default function BookmarkComponent() {
 
         }
 
-
-        setLoading(false);
+        if (!silent) {
+            setLoading(false);
+        }
 
     };
 
@@ -760,25 +810,50 @@ export default function BookmarkComponent() {
 
                 ) : bookmarks.length > 0 ? (
 
-                    bookmarks.map(bookmark => (
+                    <>
 
-                        <ElectricBorder
-                            key={bookmark._id}
-                            color="#fdaa2d"
-                            speed={0.1}
-                            chaos={0.01}
-                            thickness={20}
-                        >
+                        {bookmarks.map(bookmark => (
 
-                            <BookmarkRecipeCardComponent
-                                bookmark={bookmark}
-                                setBookmarks={setBookmarks}
-                                setPagination={setPagination}
-                            />
+                            <ElectricBorder
+                                key={bookmark._id}
+                                color="#fdaa2d"
+                                speed={0.1}
+                                chaos={0.01}
+                                thickness={20}
+                            >
 
-                        </ElectricBorder>
+                                <BookmarkRecipeCardComponent
+                                    bookmark={bookmark}
+                                    onRemoved={async () => {
 
-                    ))
+                                        setBookmarks(prev =>
+                                            prev.filter(b => b._id !== bookmark._id)
+                                        );
+
+                                        setFilling(true);
+
+                                        await fetchBookmarks({ silent: true });
+
+                                        setFilling(false);
+                                    }}
+                                />
+
+                            </ElectricBorder>
+
+                        ))}
+
+                        {filling && bookmarks.length < PAGE_SIZE && (
+
+                            <div className="bookmark-recipe-card-skeleton">
+                                <Spinner
+                                    w={60}
+                                    h={60}
+                                />
+                            </div>
+
+                        )}
+
+                    </>
 
                 ) : (
 

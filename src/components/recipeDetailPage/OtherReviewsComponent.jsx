@@ -618,15 +618,29 @@ export default function OtherReviewsComponent({ recipe, reviews, setReviews }) {
                                     </div>
 
 
-                                    <textarea
-                                        className="review-reply-textarea"
-                                        value={replyText}
-                                        onChange={(e) =>
-                                            setReplyText(e.target.value)
-                                        }
-                                        placeholder="Write your comment..."
-                                        maxLength={1000}
-                                    />
+                                    <div className="review-reply-textarea-container">
+
+                                        <textarea
+                                            className="review-reply-textarea"
+                                            value={replyText}
+                                            onChange={(e) =>
+                                                setReplyText(e.target.value)
+                                            }
+                                            placeholder="Write your comment..."
+                                            maxLength={5000}
+                                        />
+
+                                        <span
+                                            className={`review-reply-letter-counter ${
+                                                replyText.trim().length === 0
+                                                    ? "review-reply-letter-counter-error"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {replyText.length}/5000
+                                        </span>
+
+                                    </div>
 
 
                                     <div className="review-reply-actions">

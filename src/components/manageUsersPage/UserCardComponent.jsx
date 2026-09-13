@@ -8,9 +8,8 @@ import "./userCardComponent.css";
 
 export default function UserCardComponent({
     user,
-    setUsers,
-    setLoading,
-    setRefresh
+    onRemoved,
+    onEdited
 }) {
     const { token } = useAuth();
     const navigate = useNavigate();
@@ -20,6 +19,8 @@ export default function UserCardComponent({
     const [selectedRole, setSelectedRole] = useState("");
     const [roles, setRoles] = useState([]);
     const [profileLoading, setProfileLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     const roleSelectRef = useRef(null);
 
@@ -89,17 +90,17 @@ export default function UserCardComponent({
 
     async function handleDelete(userId) {
 
+        setDeleting(true);
+
         const data = await deleteUser(token, userId);
 
         if (data.succ === true) {
 
-            setUsers(prevUsers =>
-                prevUsers.filter(user => user._id !== userId)
-            );
-
-            setRefresh(prev => prev + 1);
+            onRemoved();
 
         }
+
+        setDeleting(false);
 
     }
 
@@ -110,7 +111,7 @@ export default function UserCardComponent({
             return;
         }
 
-        setLoading(true);
+        setSaving(true);
 
         const data = await editUserRole(
             token,
@@ -120,22 +121,16 @@ export default function UserCardComponent({
 
         if (data.succ === true) {
 
-            setUsers(prevUsers =>
-                prevUsers.map(user =>
-                    user._id === userId
-                        ? {
-                            ...user,
-                            role: selectedRole
-                        }
-                        : user
-                )
-            );
+            onEdited({
+                ...user,
+                role: selectedRole
+            });
 
             setEdit(false);
 
         }
 
-        setLoading(false);
+        setSaving(false);
 
     }
 
@@ -174,7 +169,7 @@ export default function UserCardComponent({
             onClick={handleCardClick}
         >
 
-            {profileLoading && (
+            {(profileLoading || deleting) && (
                 <div className="user-card-loading">
 
                     <Spinner
@@ -376,9 +371,16 @@ export default function UserCardComponent({
                     <button
                         className="save-edit-user-button"
                         onClick={handleSaveClick}
+                        disabled={saving}
                     >
-                        <i className="fa-solid fa-check verified"></i>
-                        Save
+                        {saving ? (
+                            <i className="fa-solid fa-spinner fa-spin"></i>
+                        ) : (
+                            <>
+                                <i className="fa-solid fa-check verified"></i>
+                                Save
+                            </>
+                        )}
                     </button>
 
                 ) : (
@@ -397,9 +399,16 @@ export default function UserCardComponent({
                 <button
                     className="delete-user-button"
                     onClick={handleDeleteClick}
+                    disabled={deleting}
                 >
-                    <i className="fa-solid fa-trash"></i>
-                    Delete
+                    {deleting ? (
+                        <i className="fa-solid fa-spinner fa-spin"></i>
+                    ) : (
+                        <>
+                            <i className="fa-solid fa-trash"></i>
+                            Delete
+                        </>
+                    )}
                 </button>
 
             </div>

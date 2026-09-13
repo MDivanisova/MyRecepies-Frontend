@@ -12,16 +12,19 @@ import "./dashboardComponent.css";
 import { getRecommendations } from "../../utils/RecommendationEndpoint";
 
 
-export default function DashboardComponent({ filters, typeRecipes }) {
+export default function DashboardComponent({
+    filters,
+    typeRecipes,
+    pageNumber,
+    setPageNumber
+}) {
 
     const { token, logout } = useAuth();
     const navigate = useNavigate();
 
     const [recepies, setRecepies] = useState([]);
-    const [refresh, setRefresh] = useState(1);
     const [loading, setLoading] = useState(false);
-
-    const [pageNumber, setPageNumber] = useState(1);
+    const [filling, setFilling] = useState(false);
 
     const [pagination, setPagination] = useState({
         numRecepies: 0,
@@ -30,50 +33,59 @@ export default function DashboardComponent({ filters, typeRecipes }) {
         pageSize: PAGE_SIZE
     });
 
-   
-    const fetchRecepies = async () => {
 
-        setLoading(true);
+    const fetchRecepies = async (options = {}) => {
+
+        const { silent = false } = options;
+
+        if (!silent) {
+            setLoading(true);
+        }
+
         let response;
-        if(typeRecipes === "recipes"){
-                response = await getAllRecepies(
-                    token,
-                    pageNumber,
-                    filters.name,
-                    filters.creator,
-                    filters.ingredients,
-                    filters.category,
-                    filters.cuisine
-                );
+
+        if (typeRecipes === "recipes") {
+            response = await getAllRecepies(
+                token,
+                pageNumber,
+                filters.name,
+                filters.creator,
+                filters.ingredients,
+                filters.category,
+                filters.cuisine
+            );
         }
-        else{
+        else {
             response = await getRecommendations(
-                    token,
-                    pageNumber,
-                    filters.name,
-                    filters.creator,
-                    filters.ingredients,
-                    filters.category,
-                    filters.cuisine
-                );
+                token,
+                pageNumber,
+                filters.name,
+                filters.creator,
+                filters.ingredients,
+                filters.category,
+                filters.cuisine
+            );
         }
-        setLoading(false);
+
         console.log(response)
 
         if (response.succ) {
-            if (response.pagination.totalPages > 0 && pageNumber > response.pagination.totalPages
+
+            if (
+                response.pagination.totalPages > 0 &&
+                pageNumber > response.pagination.totalPages
             ) {
 
                 setPageNumber(response.pagination.totalPages);
 
-                setLoading(false);
-                console.log(response);
+                if (!silent) setLoading(false);
+
                 return;
             }
+
             setRecepies(response.recepies);
 
             setPagination(response.pagination);
-
 
         }
 
@@ -88,6 +100,10 @@ export default function DashboardComponent({ filters, typeRecipes }) {
             navigate("/login");
         }
 
+        if (!silent) {
+            setLoading(false);
+        }
+
     };
 
 
@@ -100,22 +116,6 @@ export default function DashboardComponent({ filters, typeRecipes }) {
         token,
         pageNumber,
         filters,
-        refresh,
-        typeRecipes,
-    ]);
-
-
-    // When search filters change, return to first page
-    useEffect(() => {
-
-        setPageNumber(1);
-
-    }, [
-        filters.name,
-        filters.creator,
-        filters.ingredients,
-        filters.category,
-        filters.cuisine,
         typeRecipes,
     ]);
 
@@ -169,30 +169,56 @@ export default function DashboardComponent({ filters, typeRecipes }) {
                     <div className="recipes-grid">
 
                     {recepies.length > 0 ? (
-                        recepies.map(recipe => (
-                            <ElectricBorder
-                                key={recipe._id}
-                                color={typeRecipes === "recipes" ? "#fdaa2d": "#f35438"}
-                                speed={0.1}
-                                chaos={0.01}
-                                thickness={20}
-                            >
-                                 <div className="recommended-card">
-                                    {typeRecipes !== "recipes" &&(
-                                        <div className="recommended-badge">
-                                            <i className="fa-solid fa-star"></i>
-                                            <span>Recommended</span>
-                                        </div>)}
+                        <>
 
-                                        <RecipeCardComponent
-                                            recipe={recipe}
-                                            setRecepies={setRecepies}
-                                            setRefresh={setRefresh}
-                                        />
+                            {recepies.map(recipe => (
+                                <ElectricBorder
+                                    key={recipe._id}
+                                    color={typeRecipes === "recipes" ? "#fdaa2d": "#f35438"}
+                                    speed={0.1}
+                                    chaos={0.01}
+                                    thickness={20}
+                                >
+                                     <div className="recommended-card">
+                                        {typeRecipes !== "recipes" &&(
+                                            <div className="recommended-badge">
+                                                <i className="fa-solid fa-star"></i>
+                                                <span>Recommended</span>
+                                            </div>)}
 
+                                            <RecipeCardComponent
+                                                recipe={recipe}
+                                                setRecepies={setRecepies}
+                                                onRemoved={async () => {
+
+                                                    setRecepies(prev =>
+                                                        prev.filter(r => r._id !== recipe._id)
+                                                    );
+
+                                                    setFilling(true);
+
+                                                    await fetchRecepies({ silent: true });
+
+                                                    setFilling(false);
+                                                }}
+                                            />
+
+                                    </div>
+                                </ElectricBorder>
+                            ))}
+
+                            {filling && recepies.length < PAGE_SIZE && (
+
+                                <div className="recipe-card-skeleton">
+                                    <Spinner
+                                        w={60}
+                                        h={60}
+                                    />
                                 </div>
-                            </ElectricBorder>
-                        ))
+
+                            )}
+
+                        </>
                     ) : (
 
                             <div className="no-recipes-found">
