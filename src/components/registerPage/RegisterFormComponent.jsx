@@ -156,7 +156,6 @@ export default function RegisterFormComponent(){
 
         let data;
          if(gender === "Not disclosed"){
-                console.log("No gender")
             data = await register(
                 fullName,
                 email,
@@ -178,13 +177,12 @@ export default function RegisterFormComponent(){
         }
 
         if(data.status === 500){
-                navigate('/internalServerError')
+            navigate('/internalServerError')
         }
 
-        if(data.msg !== undefined){
+        if(data.error !== undefined){
             setErrMessage(data.error[0].message)
         }
-        
         else{
             setErrMessage(data.msg);
         }

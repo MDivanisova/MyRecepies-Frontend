@@ -435,7 +435,6 @@ export default function OtherReviewsComponent({ recipe, reviews, setReviews }) {
         setDeletingReview(reviewId);
 
         const data = await deleteReview(token, reviewId);
-        console.log(data)
         if (data.succ === true) {
 
             setReviews(prev =>

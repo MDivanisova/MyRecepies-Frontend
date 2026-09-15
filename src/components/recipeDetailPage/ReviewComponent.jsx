@@ -81,7 +81,6 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
         if (data.succ === true) {
 
             setIsReviewd(true);
-            console.log(data);
             setRating(data.rating);
             setReview(data.review);
 
@@ -109,7 +108,6 @@ export default function ReviewComponent({ recipe, setRefetchRecipe }) {
             navigate("/internalServerError");
 
         }
-        console.log(isReviewd)
 
         setLoading(false);
     }

@@ -24,7 +24,6 @@ export  async function logIn(email, password){
         }
     }
     const data = await result.json();
-    console.log(data);
 
     return {
         ...data,

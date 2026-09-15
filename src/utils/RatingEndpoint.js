@@ -48,8 +48,6 @@ export const createRating = async ( token, rating, recipeId ) => {
 
 
       const data = await response.json();
-      console.log("Rating created.");
-        console.log(data);
         if(response.status === 200){
             return {
                 succ: true
@@ -84,7 +82,6 @@ export const editRating = async ( token, rating, ratingId ) => {
 
 
       const data = await response.json();
-        console.log(data);
         if(response.status === 200){
             return {
                 succ: true

@@ -69,9 +69,6 @@ export const editRecepie = async (token, recipeId,recipeData) =>
 
         const data = await response.json();
 
-        console.log("EDIT RECIPE RESPONSE:", data);
-        console.log("EDIT RECIPE STATUS:", response.status);
-
         if(response.status === 200){
             return {
                 succ: true,

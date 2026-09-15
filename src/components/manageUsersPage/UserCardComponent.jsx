@@ -8,8 +8,9 @@ import "./userCardComponent.css";
 
 export default function UserCardComponent({
     user,
-    onRemoved,
-    onEdited
+    setUsers,
+    onEdited,
+    setRefresh,
 }) {
     const { token } = useAuth();
     const navigate = useNavigate();
@@ -96,7 +97,8 @@ export default function UserCardComponent({
 
         if (data.succ === true) {
 
-            onRemoved();
+            setUsers(prev => prev.filter(u => u._id !== userId));
+            setRefresh(prev => !prev);
 
         }
 

@@ -40,7 +40,6 @@ export default function VerifyFormComponent({email}){
 
     //on Mount
     useEffect(()=>{
-        console.log(email);
         if(email === null){
             navigate('/pageNotFound');
         }

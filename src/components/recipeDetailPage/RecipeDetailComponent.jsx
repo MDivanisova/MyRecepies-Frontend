@@ -235,7 +235,7 @@ export default function RecipeDetailComponent() {
         updateIngredient(
             index,
             "quantity",
-            value
+            value!== "" ? value : "N/A"
         );
 
     }
@@ -243,16 +243,10 @@ export default function RecipeDetailComponent() {
 
     function handleTextChange(index, field, value) {
 
-        if (/\d/.test(value)) {
-
-            return;
-
-        }
-
         updateIngredient(
             index,
             field,
-            value
+            value!== "" ? value : "N/A"
         );
 
     }
@@ -480,7 +474,6 @@ export default function RecipeDetailComponent() {
     async function fetchRatingStatistics(recipeId) {
 
         const data = await getRatingStatistics(token, recipeId);
-        console.log(data);
 
         if(data.succ === true){
 
@@ -796,7 +789,6 @@ export default function RecipeDetailComponent() {
 
     function handleRatingFilter(rating) {
         setSelectedRatingFilter(rating);
-        console.log("Filter reviews by:", rating, "stars");
     }
 
     return (
@@ -1413,7 +1405,7 @@ export default function RecipeDetailComponent() {
 
                                                         <input
                                                             type="text"
-                                                            value={item.quantity}
+                                                            value={item.quantity!== "N/A" ? item.quantity : ""}
                                                             placeholder="Quantity"
                                                             onChange={(e) =>
                                                                 handleQuantityChange(
@@ -1435,7 +1427,7 @@ export default function RecipeDetailComponent() {
 
                                                         <input
                                                             type="text"
-                                                            value={item.unit}
+                                                            value={item.unit!== "N/A" ? item.unit : ""}
                                                             placeholder="Unit"
                                                             onChange={(e) =>
                                                                 handleTextChange(
@@ -1458,7 +1450,7 @@ export default function RecipeDetailComponent() {
 
                                                         <input
                                                             type="text"
-                                                            value={item.misc}
+                                                            value={item.misc!=="N/A" ? item.misc : ""}
                                                             placeholder="Misc"
                                                             onChange={(e) =>
                                                                 handleTextChange(
@@ -1547,7 +1539,7 @@ export default function RecipeDetailComponent() {
                                             }
                                         >
 
-                                            {item.quantity && (
+                                            {item.quantity!=="N/A" && (
 
                                                 <span className="ingredient-quantity">
                                                     {item.quantity}
@@ -1556,7 +1548,7 @@ export default function RecipeDetailComponent() {
                                             )}
 
 
-                                            {item.unit && (
+                                            {item.unit!== "N/A" && (
 
                                                 <span className="ingredient-unit">
                                                     {" "}{item.unit}
@@ -1570,7 +1562,7 @@ export default function RecipeDetailComponent() {
                                             {item.ingredient}
 
 
-                                            {item.misc && (
+                                            {item.misc !== "N/A" && (
 
                                                 <span className="ingredient-misc">
                                                     {" "}({item.misc})

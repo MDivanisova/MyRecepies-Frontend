@@ -1096,3 +1096,45 @@
     cursor: not-allowed;
     transform: none;
 }
+
+
+
+
+
+/* =========================
+   NAME FIELDS (First + Last)
+========================= */
+
+.profile-name-fields {
+    display: flex;
+
+    gap: 10px;
+
+    width: 400px;
+
+    max-width: 100%;
+}
+
+.profile-name-fields .profile-input-field {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 0;
+}
+
+.profile-name-fields .profile-input {
+    width: 100%;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+}
+
+.profile-name-fields .form-error {
+    width: 100%;
+
+    word-break: break-word;
+}

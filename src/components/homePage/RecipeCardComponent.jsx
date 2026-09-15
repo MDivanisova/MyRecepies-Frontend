@@ -422,10 +422,9 @@ export default function RecipeCardComponent({
 
                     {/* REMOVE RECIPE */}
 
-                    {(user.role.roleName === "admin" ||
-                        user.role.roleName ===
-                        "contentMenager" ||
-                        user._id === recipe.creator?._id) && (
+                    {(user?.role?.roleName === "admin" ||
+                        user?.role?.roleName === "contentMenager" ||
+                        user?._id === recipe.creator?._id) && (
 
                         <button
                             type="button"

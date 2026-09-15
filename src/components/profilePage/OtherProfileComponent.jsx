@@ -116,18 +116,10 @@ export default function OtherProfileComponent({userId}) {
                     pageSize: PROFILE_RECIPE_PAGE_SIZE
                 }
             );
-            console.log("Public recipes fetched successfully:", response.recepies);
 
         } else if (response.status === 401) {
 
             navigate("/login");
-
-        } else {
-
-            console.log(
-                "Failed to fetch public recipes:",
-                response
-            );
 
         }
 

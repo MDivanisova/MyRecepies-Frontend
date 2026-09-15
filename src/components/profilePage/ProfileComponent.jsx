@@ -28,7 +28,11 @@ export default function ProfileComponent() {
     const [editMode, setEditMode] = useState(false);
     const [genderOpen, setGenderOpen] = useState(false);
 
-    const [errMessageName, setErrMessageName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    const [errMessageFirstName, setErrMessageFirstName] = useState("");
+    const [errMessageLastName, setErrMessageLastName] = useState("");
     const [errMessageEmail, setErrMessageEmail] = useState("");
     const [errMessageDescription, setErrMessageDescription] = useState("");
     const [errMessageAge, setErrMessageAge] = useState("");
@@ -208,20 +212,75 @@ export default function ProfileComponent() {
     }, [token, privatePage, privateFilter]);
 
 
+    function validateFirstName(value) {
+
+        const trimmedValue = value.trim();
+
+        if (trimmedValue.length === 0) {
+
+            return "first name is required";
+
+        }
+
+        if (trimmedValue.length < 3) {
+
+            return "first name must be at least 3 characters";
+
+        }
+
+        if (trimmedValue.length > 50) {
+
+            return "first name can't be more than 50 characters";
+
+        }
+
+        return "";
+    }
+
+
+    function validateLastName(value) {
+
+        const trimmedValue = value.trim();
+
+        if (trimmedValue.length === 0) {
+
+            return "last name is required";
+
+        }
+
+        if (trimmedValue.length < 3) {
+
+            return "last name must be at least 3 characters";
+
+        }
+
+        if (trimmedValue.length > 50) {
+
+            return "last name can't be more than 50 characters";
+
+        }
+
+        return "";
+    }
+
+
     async function updateInfoHandler() {
 
-        const nameError = validateName(user.name || "");
+        const firstNameError = validateFirstName(firstName);
+        const lastNameError = validateLastName(lastName);
         const emailError = validateEmail(user.email || "");
         const descriptionError = validateDescription(user.description || "");
         const ageError = validateAge(user.age);
 
-        setErrMessageName(nameError);
+        setErrMessageFirstName(firstNameError);
+        setErrMessageLastName(lastNameError);
         setErrMessageEmail(emailError);
         setErrMessageDescription(descriptionError);
         setErrMessageAge(ageError);
 
         if (
-            nameError ||
+            firstNameError ||
+            lastNameError ||
             emailError ||
             descriptionError ||
             ageError
@@ -248,8 +307,7 @@ export default function ProfileComponent() {
             user.gender === ""
                 ? undefined
                 : user.gender
-        );
-        console.log("Edit user response:", data);
+        );  
         if (data.succ === true) {
 
             setEditMode(false);
@@ -281,7 +339,10 @@ export default function ProfileComponent() {
 
                 navigate("/pageNotFound");
 
-            } else if (data.status === 500) {
+            }else if (data.status === 409) {
+                setErrMessageEmail("Email already exists");
+            } 
+            else if (data.status === 500) {
 
                 navigate("/internalServerError");
 
@@ -368,33 +429,13 @@ export default function ProfileComponent() {
     };
 
     function isProfileFormInvalid() {
+
         return (
-            validateName(user?.name || "") ||
-            validateEmail(user?.email || "")
+            validateFirstName(firstName) ||
+            validateLastName(lastName) ||
+            validateEmail(user?.email || "") ||
+            errMessageEmail
         );
-    }
-
-    function validateName(value) {
-
-        if (value.trim() === "") {
-
-            return "name is required";
-
-        }
-
-        if (value.trim().length < 3) {
-
-            return "name must be at least 3 characters";
-
-        }
-
-        if (value.trim().length > 50) {
-
-            return "name can't be more than 50 characters";
-
-        }
-
-        return "";
     }
 
 
@@ -545,12 +586,18 @@ export default function ProfileComponent() {
                             <i
                                 className="fa-solid fa-x edit-profile-icon-x"
                                 onClick={() => {
-                                    
-                                    setErrMessageName("");
+
+                                    setErrMessageFirstName("");
+                                    setErrMessageLastName("");
                                     setErrMessageEmail("");
                                     setErrMessageDescription("");
                                     setErrMessageAge("");
                                     setUser(originalUser);
+
+                                    const parts = (originalUser?.name || "").trim().split(" ");
+                                    setFirstName(parts[0] || "");
+                                    setLastName(parts.slice(1).join(" ") || "");
+
                                     setEditMode(false);
                                     setGenderOpen(false);
 
@@ -568,6 +615,14 @@ export default function ProfileComponent() {
                                 setOriginalUser(
                                     structuredClone(user)
                                 );
+
+                                const parts = (user?.name || "").trim().split(" ");
+
+                                setFirstName(parts[0] || "");
+                                setLastName(parts.slice(1).join(" ") || "");
+
+                                setErrMessageFirstName("");
+                                setErrMessageLastName("");
 
                                 setEditMode(true);
 
@@ -588,33 +643,80 @@ export default function ProfileComponent() {
 
                     ) : editMode ? (
 
-                        <div className="profile-input-field">
-                            <input
-                                className="profile-input"
-                                value={user?.name}
-                                 onChange={(e) => {
+                        <div className="profile-name-fields">
 
-                                    const value = e.target.value;
+                            <div className="profile-input-field">
 
-                                    setUser(prev => ({
-                                        ...prev,
-                                        name: value
-                                    }));
+                                <input
+                                    className="profile-input"
+                                    value={firstName}
+                                    onChange={(e) => {
 
-                                    setErrMessageName(
-                                        validateName(value)
-                                    );
+                                        const value = e.target.value;
 
-                                }}
-                                placeholder="Full Name"
-                            />
-                             {
-                                errMessageName && (
-                                    <span className="form-error">
-                                        {errMessageName}
-                                    </span>
-                                )
-                            }
+                                        setFirstName(value);
+
+                                        const fullName = (value + " " + lastName).trim();
+
+                                        setUser(prev => ({
+                                            ...prev,
+                                            name: fullName
+                                        }));
+
+                                        setErrMessageFirstName(
+                                            validateFirstName(value)
+                                        );
+
+                                    }}
+                                    placeholder="First Name"
+                                />
+
+                                {
+                                    errMessageFirstName && (
+                                        <span className="form-error">
+                                            {errMessageFirstName}
+                                        </span>
+                                    )
+                                }
+
+                            </div>
+
+                            <div className="profile-input-field">
+
+                                <input
+                                    className="profile-input"
+                                    value={lastName}
+                                    onChange={(e) => {
+
+                                        const value = e.target.value;
+
+                                        setLastName(value);
+
+                                        const fullName = (firstName + " " + value).trim();
+
+                                        setUser(prev => ({
+                                            ...prev,
+                                            name: fullName
+                                        }));
+
+                                        setErrMessageLastName(
+                                            validateLastName(value)
+                                        );
+
+                                    }}
+                                    placeholder="Last Name"
+                                />
+
+                                {
+                                    errMessageLastName && (
+                                        <span className="form-error">
+                                            {errMessageLastName}
+                                        </span>
+                                    )
+                                }
+
+                            </div>
+
                         </div>
                     ) : (
 
@@ -748,7 +850,7 @@ export default function ProfileComponent() {
                             ) : (
 
                                 <strong>
-                                    {user?.role.roleName}
+                                    {user?.role?.roleName}
                                 </strong>
 
                             )

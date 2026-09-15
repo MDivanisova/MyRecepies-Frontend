@@ -35,7 +35,6 @@ const navigate = useNavigate();
 
             totalUsers.current = data.pagination.numUsers;
             totalPages.current = data.pagination.totalPages;
-            console.log(data.users)
             setUsers(data.users);
         }
         else if(data.status === 401){

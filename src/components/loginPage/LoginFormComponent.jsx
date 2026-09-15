@@ -45,9 +45,6 @@ export default function LoginFormComponent (){
                 navigate(`/verify?email=${data.email}`);                
             }
            errMessgae.current.textContent = "Invalid Credentials";
-           emailInput.current.value = "";
-           passInput.current.value = "";
-
            button.current.disabled = false;
         }
 

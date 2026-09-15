@@ -67,8 +67,6 @@ export default function DashboardComponent({
             );
         }
 
-        console.log(response)
-
         if (response.succ) {
 
             if (

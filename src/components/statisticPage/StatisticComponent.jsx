@@ -156,8 +156,6 @@ export default function StatisticComponent() {
 
             setRatingStatistics( response.statistics );
 
-            console.log(response);
-
         } else if (response.status === 401) {
 
             logout();
@@ -176,7 +174,6 @@ export default function StatisticComponent() {
 
         setLoadingStatistics(true);
 
-        console.log("Bookmark");
 
         const response = await getBookmarkStatistics( token, 7, selectedPeriod );
 
@@ -204,11 +201,7 @@ export default function StatisticComponent() {
             selectedPeriod
         );
 
-        console.log("CATEGORY RESPONSE:", response);
-
         if (response.succ) {
-
-            console.log("CATEGORY STATISTICS:", response.statistics);
 
             setCategoryStatistics(response.statistics);
 
